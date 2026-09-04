@@ -1,5 +1,14 @@
-import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import {
+    BookMarked,
+    FileCheck,
+    Globe,
+    Home,
+    LayoutGrid,
+    MessageSquare,
+    Newspaper,
+    Users,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -13,38 +22,83 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
+import type { NavItem, SharedData } from '@/types';
 
 export function AppSidebar() {
+    const { auth } = usePage<SharedData>().props;
+    const userRole = auth.user?.role || 'admin';
+
+    const navItems: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: '/admin/dashboard',
+            icon: LayoutGrid,
+        },
+    ];
+
+    // Humas / Admin / Super Admin
+    if (userRole === 'super_admin' || userRole === 'admin') {
+        navItems.push(
+            {
+                title: 'Berita & Galeri',
+                href: '/admin/news',
+                icon: Newspaper,
+            },
+            {
+                title: 'Pengaduan',
+                href: '/admin/complaints',
+                icon: MessageSquare,
+            },
+            {
+                title: 'E-Legalisir',
+                href: '/admin/legalization',
+                icon: FileCheck,
+            }
+        );
+    }
+
+    // Pengurus Asrama / Super Admin
+    if (userRole === 'super_admin' || userRole === 'pengurus_asrama') {
+        navItems.push({
+            title: 'Profil Asrama',
+            href: '/admin/dormitory',
+            icon: Home,
+        });
+    }
+
+    // Pustakawan / Super Admin
+    if (userRole === 'super_admin' || userRole === 'pustakawan') {
+        navItems.push({
+            title: 'Perpustakaan',
+            href: '/admin/books',
+            icon: BookMarked,
+        });
+    }
+
+    // Super Admin only
+    if (userRole === 'super_admin') {
+        navItems.push({
+            title: 'Kelola Admin',
+            href: '/admin/users',
+            icon: Users,
+        });
+    }
+
+    const footerNavItems: NavItem[] = [
+        {
+            title: 'Halaman Publik',
+            href: '/',
+            icon: Globe,
+        },
+    ];
+
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="sidebar">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href="/admin/dashboard" prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -53,7 +107,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={navItems} />
             </SidebarContent>
 
             <SidebarFooter>

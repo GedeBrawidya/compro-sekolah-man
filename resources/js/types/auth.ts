@@ -2,6 +2,7 @@ export type User = {
     id: number;
     name: string;
     email: string;
+    role?: 'super_admin' | 'admin' | 'pengurus_asrama' | 'pustakawan';
     avatar?: string;
     email_verified_at: string | null;
     /* @chisel-2fa */

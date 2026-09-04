@@ -27,12 +27,53 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
+
+    /**
+     * Role Constants
+     */
+    public const ROLE_SUPER_ADMIN = 'super_admin';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_PENGURUS_ASRAMA = 'pengurus_asrama';
+    public const ROLE_PUSTAKAWAN = 'pustakawan';
+
+    /**
+     * Role checking helpers
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === self::ROLE_SUPER_ADMIN;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN || $this->isSuperAdmin();
+    }
+
+    public function isPengurusAsrama(): bool
+    {
+        return $this->role === self::ROLE_PENGURUS_ASRAMA || $this->isSuperAdmin();
+    }
+
+    public function isPustakawan(): bool
+    {
+        return $this->role === self::ROLE_PUSTAKAWAN || $this->isSuperAdmin();
+    }
+
+    public function hasRole(array|string $roles): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        $roles = is_array($roles) ? $roles : [$roles];
+        return in_array($this->role, $roles, true);
+    }
 
     /**
      * Get the attributes that should be cast.
@@ -50,3 +91,4 @@ class User extends Authenticatable implements PasskeyUser
         ];
     }
 }
+
