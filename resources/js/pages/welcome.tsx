@@ -906,23 +906,24 @@ export default function Welcome({
                                                 </div>
 
                                                 {/* Editorial Paragraphs */}
-                                                <div className="space-y-5 text-xs sm:text-sm lg:text-base font-normal text-slate-100 leading-relaxed relative z-10 max-w-3xl">
-                                                    <p className="italic font-bold text-white text-sm sm:text-base lg:text-lg">
-                                                        Assalamu'alaikum Warahmatullahi Wabarakatuh,
-                                                    </p>
-
-                                                    <p className="italic">
-                                                        {settings.principal_bio ||
-                                                            'Assalamu\'alaikum Warahmatullahi Wabarakatuh Selamat Datang di web Madrasah kami... Pada kesempatan yang baik ini, marilah kita panjatkan puji dan syukur...'}
-                                                    </p>
-
-                                                    <p>
-                                                        Sebagai lembaga pendidikan unggulan, kami berkomitmen menyelenggarakan pembelajaran bermutu tinggi yang melahirkan generasi cerdas, berkarakter Pancasila, serta tangguh menghadapi tantangan global.
-                                                    </p>
-
-                                                    <p className="italic font-bold text-white pt-2">
-                                                        Wassalamu'alaikum Warahmatullahi Wabarakatuh.
-                                                    </p>
+                                                <div className="space-y-4 text-xs sm:text-sm lg:text-base font-normal text-slate-100 leading-relaxed relative z-10 max-w-3xl">
+                                                    {settings.principal_bio ? (
+                                                        <div className="whitespace-pre-line space-y-3 font-medium">
+                                                            {settings.principal_bio}
+                                                        </div>
+                                                    ) : (
+                                                        <>
+                                                            <p className="italic font-bold text-white text-sm sm:text-base lg:text-lg">
+                                                                Assalamu'alaikum Warahmatullahi Wabarakatuh,
+                                                            </p>
+                                                            <p>
+                                                                Selamat datang di portal resmi {settings.school_name || 'MAN Tanjungpinang'}. Sebagai lembaga pendidikan unggulan, kami berkomitmen menyelenggarakan pembelajaran bermutu tinggi yang melahirkan generasi cerdas, berkarakter Pancasila, serta tangguh menghadapi tantangan global.
+                                                            </p>
+                                                            <p className="italic font-bold text-white pt-1">
+                                                                Wassalamu'alaikum Warahmatullahi Wabarakatuh.
+                                                            </p>
+                                                        </>
+                                                    )}
                                                 </div>
 
                                                 {/* Principal Name & Title (Clean Signature without Line) */}
