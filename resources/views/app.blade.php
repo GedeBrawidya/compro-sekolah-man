@@ -30,9 +30,13 @@
             }
         </style>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        @php
+            $logoPath = \App\Models\LandingPageSetting::get('school_logo');
+            $schoolLogoUrl = $logoPath ? \Illuminate\Support\Facades\Storage::url($logoPath) : '/favicon.png';
+        @endphp
+        <link rel="icon" href="{{ $schoolLogoUrl }}" sizes="any">
+        <link rel="shortcut icon" href="{{ $schoolLogoUrl }}">
+        <link rel="apple-touch-icon" href="{{ $schoolLogoUrl }}">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
