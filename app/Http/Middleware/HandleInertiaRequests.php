@@ -35,9 +35,15 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $schoolName = \App\Models\LandingPageSetting::get('school_name') ?: 'MAN Tanjungpinang';
+        $logoPath = \App\Models\LandingPageSetting::get('school_logo');
+        $schoolLogoUrl = $logoPath ? \Illuminate\Support\Facades\Storage::url($logoPath) : null;
+
         return [
             ...parent::share($request),
-            'name' => config('app.name'),
+            'name' => $schoolName,
+            'school_name' => $schoolName,
+            'school_logo_url' => $schoolLogoUrl,
             'auth' => [
                 'user' => $request->user(),
             ],

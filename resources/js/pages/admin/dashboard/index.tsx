@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     BookMarked,
     Clock,
@@ -51,6 +51,9 @@ export default function AdminDashboard({
     recentNews,
     userRole,
 }: Props) {
+    const pageProps = usePage().props as any;
+    const schoolLogoUrl = pageProps.school_logo_url;
+
     const roleLabels: Record<string, { label: string; color: string }> = {
         super_admin: { label: 'Super Admin', color: 'bg-[#9db588]/20 text-[#265243] border-[#9db588]/40' },
         admin: { label: 'Humas / Admin', color: 'bg-blue-500/10 text-blue-700 border-blue-200' },
@@ -62,24 +65,31 @@ export default function AdminDashboard({
 
     return (
         <>
-            <Head title="Admin Dashboard - Profil Sekolah" />
+            <Head title="Dashboard - Admin - MAN TANJUNG PINANG" />
 
             <div className="flex flex-col gap-6 p-4 sm:p-6 w-full">
                 {/* Header Welcome Banner with Natural Forest & Sage Gradient */}
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#265243] via-[#316150] to-[#5e8363] p-6 sm:p-8 text-white shadow-md">
                     <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div>
-                            <div className="flex items-center gap-2 mb-2">
-                                <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/20 text-white backdrop-blur-md border border-white/30 tracking-wide uppercase">
-                                    {activeRole.label}
-                                </span>
+                        <div className="flex items-start sm:items-center gap-4">
+                            {schoolLogoUrl && (
+                                <div className="p-2.5 rounded-2xl bg-white/15 text-white backdrop-blur-md border border-white/20 shadow-sm shrink-0 flex items-center justify-center w-12 h-12">
+                                    <img src={schoolLogoUrl} alt="Logo Sekolah" className="w-full h-full object-contain" />
+                                </div>
+                            )}
+                            <div>
+                                <div className="flex items-center gap-2 mb-1.5">
+                                    <span className="px-3 py-0.5 text-xs font-bold rounded-full bg-white/20 text-white backdrop-blur-md border border-white/30 tracking-wide uppercase">
+                                        {activeRole.label}
+                                    </span>
+                                </div>
+                                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                                    Selamat Datang di Panel CMS Sekolah 👋
+                                </h1>
+                                <p className="mt-1 text-sm sm:text-base text-slate-100 max-w-2xl">
+                                    Kelola konten website profil sekolah, berita & galeri, profil asrama, perpustakaan digital, hingga layanan publik dalam satu dashboard yang bersih dan terpadu.
+                                </p>
                             </div>
-                            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                                Selamat Datang di Panel CMS Sekolah 👋
-                            </h1>
-                            <p className="mt-1.5 text-sm sm:text-base text-slate-100 max-w-2xl">
-                                Kelola konten website profil sekolah, berita & galeri, profil asrama, perpustakaan digital, hingga layanan publik dalam satu dashboard yang bersih dan terpadu.
-                            </p>
                         </div>
                         <div className="flex items-center gap-3">
                             <Link
@@ -205,7 +215,7 @@ export default function AdminDashboard({
                         ) : (
                             <div className="space-y-3">
                                 {recentLegalizations.map((req) => (
-                                    <div key={req.id} className="p-3.5 rounded-xl bg-[#faf9f5] dark:bg-slate-800/60 border border-[#e1e7db] dark:border-slate-700 flex items-center justify-between text-xs">
+                                    <div key={req.id} className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-[#e1e7db] dark:border-slate-700 flex items-center justify-between text-xs">
                                         <div>
                                             <p className="font-bold text-[#212c34] dark:text-white">{req.alumni_name}</p>
                                             <p className="text-slate-500">{req.document_type}</p>

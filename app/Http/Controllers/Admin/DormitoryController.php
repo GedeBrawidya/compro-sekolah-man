@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
+use App\Models\LandingPageSetting;
+
 class DormitoryController extends Controller
 {
     public function index(Request $request)
@@ -23,10 +25,50 @@ class DormitoryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
+        $settings = LandingPageSetting::getAllAsArray();
+        if (!empty($settings['dormitory_pengasuh_photo'])) {
+            $settings['dormitory_pengasuh_photo_url'] = Storage::url($settings['dormitory_pengasuh_photo']);
+        }
+
         return Inertia::render('admin/dormitory/index', [
             'posts' => $posts,
+            'settings' => $settings,
             'filters' => ['search' => $search],
         ]);
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'dormitory_pengasuh_name'  => 'nullable|string|max:255',
+            'dormitory_pengasuh_title' => 'nullable|string|max:255',
+            'dormitory_title'          => 'nullable|string|max:255',
+            'dormitory_description'    => 'nullable|string',
+            'dormitory_wa_putra'       => 'nullable|string|max:500',
+            'dormitory_wa_putri'       => 'nullable|string|max:500',
+            'dormitory_instagram'      => 'nullable|string|max:500',
+            'dormitory_tiktok'         => 'nullable|string|max:500',
+            'dormitory_pengasuh_photo' => 'nullable|image|max:3072',
+        ]);
+
+        $allData = $request->except(['dormitory_pengasuh_photo']);
+
+        if ($request->hasFile('dormitory_pengasuh_photo')) {
+            $old = LandingPageSetting::get('dormitory_pengasuh_photo');
+            if ($old) {
+                Storage::disk('public')->delete($old);
+            }
+            $allData['dormitory_pengasuh_photo'] = $request->file('dormitory_pengasuh_photo')->store(
+                'dormitory-pengasuh',
+                'public'
+            );
+        }
+
+        foreach ($allData as $key => $value) {
+            LandingPageSetting::set($key, $value);
+        }
+
+        return back()->with('success', 'Pengaturan profil asrama & pengurus berhasil disimpan.');
     }
 
     public function store(Request $request)

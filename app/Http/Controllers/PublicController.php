@@ -11,6 +11,7 @@ use App\Models\Gallery;
 use App\Models\LandingPageSetting;
 use App\Models\LegalizationRequest;
 use App\Models\News;
+use App\Models\SchoolMilestone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -36,7 +37,7 @@ class PublicController extends Controller
 
         // 2. Settings
         $settings = LandingPageSetting::getAllAsArray();
-        foreach (['school_logo', 'principal_photo', 'principal_media_photo', 'footer_banner_bg'] as $key) {
+        foreach (['school_logo', 'principal_photo', 'principal_media_photo', 'footer_banner_bg', 'dormitory_pengasuh_photo'] as $key) {
             if (!empty($settings[$key])) {
                 $settings[$key . '_url'] = Storage::url($settings[$key]);
             }
@@ -46,7 +47,6 @@ class PublicController extends Controller
         $news = News::with('author:id,name')
             ->where('status', 'published')
             ->latest('published_at')
-            ->take(6)
             ->get()
             ->map(function ($item) {
                 return [
@@ -57,14 +57,13 @@ class PublicController extends Controller
                     'thumbnail'    => $item->thumbnail,
                     'published_at' => $item->published_at ? $item->published_at->format('d M Y') : null,
                     'author'       => $item->author ? $item->author->name : 'Humas Sekolah',
+                    'views_count'  => $item->views_count ?? 0,
                 ];
             });
 
-        // 4. Galleries (Active only)
+        // 4. Galleries (Active only - newest first)
         $galleries = Gallery::where('is_active', true)
-            ->orderBy('order')
             ->latest()
-            ->take(8)
             ->get()
             ->map(function ($g) {
                 return [
@@ -79,7 +78,7 @@ class PublicController extends Controller
                 ];
             });
 
-        // 5. Books (all for filtering on client)
+        // 5. Books (all for filtering & pagination on client)
         $books = Book::withCount(['copies', 'copies as available_copies_count' => function ($q) {
                 $q->where('status', 'available');
             }])
@@ -106,7 +105,6 @@ class PublicController extends Controller
         // 6. Dormitory Posts
         $dormitory = DormitoryPost::with('author:id,name')
             ->latest()
-            ->take(6)
             ->get()
             ->map(function ($d) {
                 return [
@@ -127,6 +125,17 @@ class PublicController extends Controller
             'total_dormitory' => DormitoryPost::count(),
         ];
 
+        // 8. Milestones (Sejarah Singkat)
+        $milestones = SchoolMilestone::orderBy('order')->orderBy('year')->get()->map(function ($m) {
+            return [
+                'id'          => $m->id,
+                'year'        => $m->year,
+                'title'       => $m->title,
+                'description' => $m->description,
+                'order'       => $m->order,
+            ];
+        });
+
         return Inertia::render('welcome', [
             'banners'         => $banners,
             'settings'        => $settings,
@@ -135,6 +144,7 @@ class PublicController extends Controller
             'books'           => $books,
             'bookCategories'  => $bookCategories,
             'dormitory'       => $dormitory,
+            'milestones'      => $milestones,
             'stats'           => $stats,
             'flash'           => [
                 'success' => session('success'),
@@ -152,6 +162,8 @@ class PublicController extends Controller
             })
             ->firstOrFail();
 
+        $newsItem->increment('views_count');
+
         // Recent news excluding current article
         $recentNews = News::with('author:id,name')
             ->where('status', 'published')
@@ -168,6 +180,7 @@ class PublicController extends Controller
                     'thumbnail'    => $item->thumbnail,
                     'published_at' => $item->published_at ? $item->published_at->format('d M Y') : $item->created_at->format('d M Y'),
                     'author'       => $item->author ? $item->author->name : 'Humas Sekolah',
+                    'views_count'  => $item->views_count ?? 0,
                 ];
             });
 
@@ -188,6 +201,7 @@ class PublicController extends Controller
                 'thumbnail'    => $newsItem->thumbnail,
                 'published_at' => $newsItem->published_at ? $newsItem->published_at->format('d M Y • H:i') : $newsItem->created_at->format('d M Y • H:i'),
                 'author'       => $newsItem->author ? $newsItem->author->name : 'Humas MAN Tanjungpinang',
+                'views_count'  => $newsItem->views_count,
             ],
             'recentNews' => $recentNews,
             'settings'   => $settings,

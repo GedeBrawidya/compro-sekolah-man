@@ -1,7 +1,12 @@
+html {
+    scroll-behavior: smooth;
+}
+
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
 
+@source '../js';
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
@@ -9,7 +14,7 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Plus Jakarta Sans', 'Poppins', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
@@ -63,7 +68,7 @@
 }
 
 :root {
-    --background: #faf9f5;
+    --background: #ffffff;
     --foreground: #212c34;
     --card: #ffffff;
     --card-foreground: #212c34;
@@ -83,43 +88,43 @@
     --input: #e1e7db;
     --ring: #265243;
     --radius: 0.75rem;
-    --sidebar: #ffffff;
-    --sidebar-foreground: #212c34;
-    --sidebar-primary: #265243;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #f0f4ec;
-    --sidebar-accent-foreground: #265243;
-    --sidebar-border: #e1e7db;
-    --sidebar-ring: #265243;
+    --sidebar: #142921;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #9db588;
+    --sidebar-primary-foreground: #142921;
+    --sidebar-accent: #1e3b30;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #1d3d31;
+    --sidebar-ring: #9db588;
 }
 
 .dark {
-    --background: #faf9f5;
-    --foreground: #212c34;
-    --card: #ffffff;
-    --card-foreground: #212c34;
-    --popover: #ffffff;
-    --popover-foreground: #212c34;
-    --primary: #265243;
-    --primary-foreground: #ffffff;
-    --secondary: #e8efe2;
-    --secondary-foreground: #265243;
-    --muted: #f0f4ec;
-    --muted-foreground: #5e8363;
-    --accent: #e8efe2;
-    --accent-foreground: #265243;
-    --destructive: #d93838;
+    --background: #141f1a;
+    --foreground: #f4f6f0;
+    --card: #1c2b24;
+    --card-foreground: #f4f6f0;
+    --popover: #1c2b24;
+    --popover-foreground: #f4f6f0;
+    --primary: #9db588;
+    --primary-foreground: #142921;
+    --secondary: #233e33;
+    --secondary-foreground: #9db588;
+    --muted: #1e352b;
+    --muted-foreground: #9db588;
+    --accent: #233e33;
+    --accent-foreground: #9db588;
+    --destructive: #ef4444;
     --destructive-foreground: #ffffff;
-    --border: #e1e7db;
-    --input: #e1e7db;
-    --ring: #265243;
-    --sidebar: #212c34;
-    --sidebar-foreground: #f4f6f0;
+    --border: #233e33;
+    --input: #233e33;
+    --ring: #9db588;
+    --sidebar: #142921;
+    --sidebar-foreground: #ffffff;
     --sidebar-primary: #9db588;
-    --sidebar-primary-foreground: #212c34;
-    --sidebar-accent: #2c3b45;
+    --sidebar-primary-foreground: #142921;
+    --sidebar-accent: #1e3b30;
     --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #2c3b45;
+    --sidebar-border: #1d3d31;
     --sidebar-ring: #9db588;
 }
 
@@ -131,4 +136,55 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+/* ── TipTap Rich Text Editor Styles ─────────────────────── */
+.ProseMirror {
+    outline: none;
+    color: #142921 !important;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+    color: #6b8e7d !important;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
+
+.ProseMirror h1 { @apply text-3xl font-extrabold mt-6 mb-3; color: #142921 !important; }
+.ProseMirror h2 { @apply text-2xl font-extrabold mt-5 mb-2; color: #142921 !important; }
+.ProseMirror h3 { @apply text-xl font-bold mt-4 mb-2; color: #142921 !important; }
+.ProseMirror p  { @apply leading-relaxed mb-3; color: #142921 !important; }
+
+.ProseMirror strong { @apply font-extrabold; color: #142921 !important; }
+.ProseMirror em { @apply italic; }
+.ProseMirror u { @apply underline; }
+.ProseMirror s { @apply line-through; }
+.ProseMirror code { @apply bg-emerald-100/60 text-[#265243] rounded px-1.5 py-0.5 text-sm font-mono font-bold; }
+
+.ProseMirror ul { @apply list-disc list-inside space-y-1 mb-3 ml-4; }
+.ProseMirror ol { @apply list-decimal list-inside space-y-1 mb-3 ml-4; }
+.ProseMirror li { @apply leading-relaxed; color: #142921 !important; }
+
+.ProseMirror blockquote {
+    @apply border-l-4 border-[#265243] bg-[#f0f4ec] pl-5 py-3 pr-4 rounded-r-xl my-4 italic text-[#265243] font-semibold;
+}
+
+.ProseMirror hr {
+    @apply border-t-2 border-[#b8ceb0] my-6;
+}
+
+.ProseMirror a {
+    @apply text-[#265243] underline underline-offset-2 font-bold hover:text-[#1f4337] transition-colors cursor-pointer;
+}
+
+/* Ensure editor text remains crisp dark green even when dark mode is enabled */
+.dark .ProseMirror h1,
+.dark .ProseMirror h2,
+.dark .ProseMirror h3,
+.dark .ProseMirror p,
+.dark .ProseMirror li,
+.dark .ProseMirror strong {
+    color: #142921 !important;
 }

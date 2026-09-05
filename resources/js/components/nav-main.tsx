@@ -13,11 +13,11 @@ export function NavMain({ items }: { items: NavItem[] }) {
     const { isCurrentUrl } = useCurrentUrl();
 
     return (
-        <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+        <SidebarGroup className="px-3 py-1">
+            <SidebarGroupLabel className="text-[11px] font-bold uppercase tracking-wider text-[#7ea38c] mb-2 px-2">
                 Navigasi Utama
             </SidebarGroupLabel>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-1">
                 {items.map((item) => {
                     const active = isCurrentUrl(item.href);
                     return (
@@ -26,14 +26,20 @@ export function NavMain({ items }: { items: NavItem[] }) {
                                 asChild
                                 isActive={active}
                                 tooltip={{ children: item.title }}
-                                className={`transition-all duration-150 font-medium ${
+                                className={`transition-all duration-200 h-10 rounded-xl px-3 text-sm font-medium ${
                                     active
-                                        ? 'bg-[#265243] text-white shadow-sm hover:bg-[#1f4337] hover:text-white dark:bg-[#9db588] dark:text-[#212c34]'
-                                        : 'text-slate-700 dark:text-slate-200 hover:bg-[#f0f4ec] hover:text-[#265243] dark:hover:bg-[#2c3b45] dark:hover:text-white'
+                                        ? 'bg-[#9db588] text-[#142921] font-bold shadow-md shadow-black/10 hover:bg-[#a8bf93] hover:text-[#142921]'
+                                        : 'text-[#d1dcd4] hover:bg-[#1f3a2f] hover:text-white'
                                 }`}
                             >
-                                <Link href={item.href} prefetch className="flex items-center gap-2.5">
-                                    {item.icon && <item.icon className="size-4 shrink-0" />}
+                                <Link href={item.href} prefetch className="flex items-center gap-3">
+                                    {item.icon && (
+                                        <item.icon
+                                            className={`size-4.5 shrink-0 ${
+                                                active ? 'text-[#142921]' : 'text-[#9db588]'
+                                            }`}
+                                        />
+                                    )}
                                     <span className="truncate group-data-[collapsible=icon]:hidden">{item.title}</span>
                                 </Link>
                             </SidebarMenuButton>

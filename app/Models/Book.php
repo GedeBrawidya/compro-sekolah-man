@@ -13,9 +13,34 @@ class Book extends Model
         'title',
         'author',
         'category',
+        'total_stock',
+        'available_stock',
         'isbn',
         'status',
         'cover_image',
         'description',
     ];
+
+    public function copies()
+    {
+        return $this->hasMany(BookCopy::class);
+    }
+
+    /**
+     * Recalculate and synchronize total_stock and available_stock based on physical copies.
+     */
+    public function syncStock()
+    {
+        $total = $this->copies()->count();
+        $available = $this->copies()->where('status', 'available')->count();
+
+        // If no physical copy records created yet, keep existing stock default
+        if ($total > 0) {
+            $this->update([
+                'total_stock'     => $total,
+                'available_stock' => $available,
+                'status'          => $available > 0 ? 'available' : 'borrowed',
+            ]);
+        }
+    }
 }

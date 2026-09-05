@@ -34,61 +34,61 @@ export default function Profile(
 
     return (
         <>
-            <Head title="Profile settings" />
-
-            <h1 className="sr-only">Profile settings</h1>
+            <Head title="Pengaturan Profil" />
 
             <div className="space-y-6">
-                <Heading
-                    variant="small"
-                    title="Profile"
-                    description="Update your name and email address"
-                />
+                <div className="border-b border-[#b8ceb0] pb-4">
+                    <h2 className="text-lg font-bold text-[#142921]">Informasi Profil</h2>
+                    <p className="text-xs font-semibold text-[#2e5445] mt-1">Perbarui nama dan alamat email akun pengguna Anda.</p>
+                </div>
 
                 <Form
                     {...ProfileController.update.form()}
                     options={{
                         preserveScroll: true,
                     }}
-                    className="space-y-6"
+                    className="space-y-6 max-w-xl"
                 >
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name" className="text-xs font-extrabold text-[#142921]">Nama Lengkap</Label>
 
-                                <Input
+                                <input
                                     id="name"
-                                    className="mt-1 block w-full"
-                                    defaultValue={auth.user.name}
                                     name="name"
+                                    type="text"
+                                    defaultValue={auth.user.name}
                                     required
                                     autoComplete="name"
-                                    placeholder="Full name"
+                                    placeholder="Masukkan nama lengkap"
+                                    style={{ backgroundColor: '#ffffff', borderColor: '#b8ceb0', color: '#142921' }}
+                                    className="w-full px-4 py-2.5 text-xs rounded-xl border font-semibold placeholder:text-[#527365] focus:outline-none focus:ring-2 focus:ring-[#265243] transition-all"
                                 />
 
                                 <InputError
-                                    className="mt-2"
+                                    className="mt-1 text-xs text-rose-600"
                                     message={errors.name}
                                 />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email" className="text-xs font-extrabold text-[#142921]">Alamat Email</Label>
 
-                                <Input
+                                <input
                                     id="email"
-                                    type="email"
-                                    className="mt-1 block w-full"
-                                    defaultValue={auth.user.email}
                                     name="email"
+                                    type="email"
+                                    defaultValue={auth.user.email}
                                     required
                                     autoComplete="username"
-                                    placeholder="Email address"
+                                    placeholder="nama@email.com"
+                                    style={{ backgroundColor: '#ffffff', borderColor: '#b8ceb0', color: '#142921' }}
+                                    className="w-full px-4 py-2.5 text-xs rounded-xl border font-semibold placeholder:text-[#527365] focus:outline-none focus:ring-2 focus:ring-[#265243] transition-all"
                                 />
 
                                 <InputError
-                                    className="mt-2"
+                                    className="mt-1 text-xs text-rose-600"
                                     message={errors.email}
                                 />
                             </div>
@@ -96,44 +96,47 @@ export default function Profile(
                             {/* @chisel-email-verification */}
                             {mustVerifyEmail &&
                                 auth.user.email_verified_at === null && (
-                                    <div>
-                                        <p className="text-muted-foreground -mt-4 text-sm">
-                                            Your email address is unverified.{' '}
+                                    <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs">
+                                        <p className="font-semibold">
+                                            Alamat email Anda belum terverifikasi.{' '}
                                             <Link
                                                 href={send()}
                                                 as="button"
-                                                className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                                className="underline font-bold text-amber-900 hover:text-black transition-colors"
                                             >
-                                                Click here to re-send the
-                                                verification email.
+                                                Klik di sini untuk mengirim ulang email verifikasi.
                                             </Link>
                                         </p>
 
                                         {status ===
                                             'verification-link-sent' && (
-                                            <div className="mt-2 text-sm font-medium text-green-600">
-                                                A new verification link has been
-                                                sent to your email address.
+                                            <div className="mt-2 text-xs font-bold text-emerald-700">
+                                                Link verifikasi baru telah dikirim ke alamat email Anda.
                                             </div>
                                         )}
                                     </div>
                                 )}
                             {/* @end-chisel-email-verification */}
 
-                            <div className="flex items-center gap-4">
-                                <Button
+                            <div className="pt-2">
+                                <button
+                                    type="submit"
                                     disabled={processing}
                                     data-test="update-profile-button"
+                                    style={{ backgroundColor: '#265243', color: '#ffffff' }}
+                                    className="px-6 py-2.5 rounded-xl hover:bg-[#1f4337] text-xs font-bold transition-all shadow-xs disabled:opacity-50"
                                 >
-                                    Save
-                                </Button>
+                                    {processing ? 'Menyimpan...' : 'Simpan Perubahan'}
+                                </button>
                             </div>
                         </>
                     )}
                 </Form>
             </div>
 
-            <DeleteUser />
+            <div className="pt-6 border-t border-[#b8ceb0]">
+                <DeleteUser />
+            </div>
         </>
     );
 }
@@ -141,7 +144,7 @@ export default function Profile(
 Profile.layout = {
     breadcrumbs: [
         {
-            title: 'Profile settings',
+            title: 'Pengaturan Profil',
             href: edit(),
         },
     ],

@@ -20,7 +20,7 @@ class GalleryController extends Controller
             ->when($search, fn ($q) => $q->where('title', 'like', "%{$search}%")->orWhere('category', 'like', "%{$search}%"))
             ->orderBy('order')
             ->latest()
-            ->paginate(12)
+            ->paginate(8)
             ->withQueryString();
 
         // Transform display image

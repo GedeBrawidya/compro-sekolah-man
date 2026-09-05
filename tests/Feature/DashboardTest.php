@@ -18,10 +18,13 @@ class DashboardTest extends TestCase
 
     public function test_authenticated_users_can_visit_the_dashboard()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['role' => 'admin']);
         $this->actingAs($user);
 
         $response = $this->get(route('dashboard'));
-        $response->assertOk();
+        $response->assertRedirect(route('admin.dashboard'));
+
+        $adminResponse = $this->get(route('admin.dashboard'));
+        $adminResponse->assertOk();
     }
 }

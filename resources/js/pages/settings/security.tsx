@@ -28,16 +28,13 @@ export default function Security(props: Props) {
 
     return (
         <>
-            <Head title="Security settings" />
-
-            <h1 className="sr-only">Security settings</h1>
+            <Head title="Pengaturan Keamanan" />
 
             <div className="space-y-6">
-                <Heading
-                    variant="small"
-                    title="Update password"
-                    description="Ensure your account is using a long, random password to stay secure"
-                />
+                <div className="border-b border-[#b8ceb0] pb-4">
+                    <h2 className="text-lg font-bold text-[#142921]">Perbarui Kata Sandi</h2>
+                    <p className="text-xs font-semibold text-[#2e5445] mt-1">Pastikan akun Anda menggunakan kata sandi yang kuat dan aman.</p>
+                </div>
 
                 <Form
                     {...SecurityController.update.form()}
@@ -59,69 +56,76 @@ export default function Security(props: Props) {
                             currentPasswordInput.current?.focus();
                         }
                     }}
-                    className="space-y-6"
+                    className="space-y-6 max-w-xl"
                 >
                     {({ errors, processing }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="current_password">
-                                    Current password
+                                <Label htmlFor="current_password" className="text-xs font-extrabold text-[#142921]">
+                                    Kata Sandi Saat Ini
                                 </Label>
 
                                 <PasswordInput
                                     id="current_password"
                                     ref={currentPasswordInput}
                                     name="current_password"
-                                    className="mt-1 block w-full"
                                     autoComplete="current-password"
-                                    placeholder="Current password"
+                                    placeholder="Masukkan kata sandi saat ini"
+                                    style={{ backgroundColor: '#ffffff', borderColor: '#b8ceb0', color: '#142921' }}
+                                    className="w-full px-4 py-2.5 text-xs rounded-xl border font-semibold placeholder:text-[#527365]"
                                 />
 
-                                <InputError message={errors.current_password} />
+                                <InputError message={errors.current_password} className="text-xs text-rose-600" />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">New password</Label>
+                                <Label htmlFor="password" className="text-xs font-extrabold text-[#142921]">Kata Sandi Baru</Label>
 
                                 <PasswordInput
                                     id="password"
                                     ref={passwordInput}
                                     name="password"
-                                    className="mt-1 block w-full"
                                     autoComplete="new-password"
-                                    placeholder="New password"
+                                    placeholder="Masukkan kata sandi baru"
                                     passwordrules={props.passwordRules}
+                                    style={{ backgroundColor: '#ffffff', borderColor: '#b8ceb0', color: '#142921' }}
+                                    className="w-full px-4 py-2.5 text-xs rounded-xl border font-semibold placeholder:text-[#527365]"
                                 />
 
-                                <InputError message={errors.password} />
+                                <InputError message={errors.password} className="text-xs text-rose-600" />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
-                                    Confirm password
+                                <Label htmlFor="password_confirmation" className="text-xs font-extrabold text-[#142921]">
+                                    Konfirmasi Kata Sandi Baru
                                 </Label>
 
                                 <PasswordInput
                                     id="password_confirmation"
                                     name="password_confirmation"
-                                    className="mt-1 block w-full"
                                     autoComplete="new-password"
-                                    placeholder="Confirm password"
+                                    placeholder="Ulangi kata sandi baru"
                                     passwordrules={props.passwordRules}
+                                    style={{ backgroundColor: '#ffffff', borderColor: '#b8ceb0', color: '#142921' }}
+                                    className="w-full px-4 py-2.5 text-xs rounded-xl border font-semibold placeholder:text-[#527365]"
                                 />
 
                                 <InputError
                                     message={errors.password_confirmation}
+                                    className="text-xs text-rose-600"
                                 />
                             </div>
 
-                            <div className="flex items-center gap-4">
-                                <Button
+                            <div className="pt-2">
+                                <button
+                                    type="submit"
                                     disabled={processing}
                                     data-test="update-password-button"
+                                    style={{ backgroundColor: '#265243', color: '#ffffff' }}
+                                    className="px-6 py-2.5 rounded-xl hover:bg-[#1f4337] text-xs font-bold transition-all shadow-xs disabled:opacity-50"
                                 >
-                                    Save
-                                </Button>
+                                    {processing ? 'Menyimpan...' : 'Simpan Kata Sandi'}
+                                </button>
                             </div>
                         </>
                     )}
@@ -149,7 +153,7 @@ export default function Security(props: Props) {
 Security.layout = {
     breadcrumbs: [
         {
-            title: 'Security settings',
+            title: 'Keamanan & Password',
             href: edit(),
         },
     ],
