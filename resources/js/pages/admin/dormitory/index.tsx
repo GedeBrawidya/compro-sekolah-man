@@ -172,7 +172,7 @@ export default function DormitoryIndex({ posts, settings, filters }: Props) {
 
     return (
         <>
-            <Head title="Informasi Asrama - Admin - MAN TANJUNG PINANG" />
+            <Head title="Informasi Asrama - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Flash Messages */}

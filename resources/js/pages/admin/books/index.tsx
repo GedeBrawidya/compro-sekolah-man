@@ -196,7 +196,7 @@ export default function BooksIndex({ books, stats, filters, bookCategories = [] 
 
     return (
         <>
-            <Head title="Katalog Buku - Admin - MAN TANJUNG PINANG" />
+            <Head title="Katalog Buku - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Flash Messages */}

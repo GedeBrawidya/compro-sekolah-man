@@ -479,14 +479,14 @@ export default function Welcome({
     };
 
     const logoUrl = settings.school_logo_url || null;
-    const schoolName = settings.school_name || 'MAN TANJUNG PINANG';
+    const schoolName = settings.school_name || 'MAN TANJUNGPINANG';
     const schoolTagline = settings.school_tagline || 'Mewujudkan Generasi Cerdas, Berkarakter, dan Berdaya Saing Global';
     const schoolDesc = settings.school_description ||
-        'MAN TANJUNG PINANG merupakan lembaga pendidikan unggulan yang berdedikasi tinggi dalam mencetak lulusan berprestasi akademik, berakhlak mulia, serta menguasai keterampilan sains dan teknologi.';
+        'MAN TANJUNGPINANG merupakan lembaga pendidikan unggulan yang berdedikasi tinggi dalam mencetak lulusan berprestasi akademik, berakhlak mulia, serta menguasai keterampilan sains dan teknologi.';
 
     return (
         <>
-            <Head title="MAN TANJUNG PINANG - Portal Sekolah">
+            <Head title="MAN TANJUNGPINANG - Portal Sekolah">
                 <meta name="description" content={`Portal Resmi ${schoolName} - ${schoolTagline}`} />
                 {logoUrl && <link rel="icon" href={logoUrl} />}
                 {logoUrl && <link rel="shortcut icon" href={logoUrl} />}
@@ -521,7 +521,7 @@ export default function Welcome({
                                         {schoolName}
                                     </h1>
                                     <p className="text-[10px] font-bold text-[#527365]">
-                                        {settings.school_npsn ? `NPSN: ${settings.school_npsn}` : 'Portal Resmi Sekolah'}
+                                        Portal Resmi Sekolah
                                     </p>
                                 </div>
                             </div>
@@ -1358,7 +1358,7 @@ export default function Welcome({
                                         </span>
 
                                         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md">
-                                            {schoolName.toUpperCase().includes('TANJUNG') ? schoolName : `${schoolName} TANJUNG PINANG`}
+                                            {schoolName.toUpperCase().includes('TANJUNG') ? schoolName.replace(/TANJUNG\s+PINANG/gi, 'TANJUNGPINANG') : `${schoolName} TANJUNGPINANG`}
                                         </h2>
                                     </div>
                                 </div>
@@ -2672,10 +2672,35 @@ export default function Welcome({
 
                             {/* Centered Pure Typography Content */}
                             <div className="relative z-20 space-y-4 max-w-3xl mx-auto flex flex-col items-center text-center">
-                                {/* PROMINENT CENTERED TITLE (MAN TANJUNGPINANG) */}
-                                <h3 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-wider uppercase drop-shadow-lg text-center">
-                                    {settings.footer_banner_title || 'MAN TANJUNGPINANG'}
-                                </h3>
+                                {/* PROMINENT CENTERED TITLE (MAN TANJUNGPINANG - MAN TOP, TANJUNGPINANG BOTTOM) */}
+                                {(() => {
+                                    const rawTitle = settings.footer_banner_title || 'MAN TANJUNGPINANG';
+                                    const cleanTitle = rawTitle.replace(/TANJUNG\s+PINANG/gi, 'TANJUNGPINANG');
+                                    if (cleanTitle.toUpperCase().startsWith('MAN ')) {
+                                        const subTitle = cleanTitle.substring(4).trim();
+                                        return (
+                                            <h3 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-none tracking-wider uppercase drop-shadow-lg text-center flex flex-col items-center gap-1">
+                                                <span>MAN</span>
+                                                <span>{subTitle}</span>
+                                            </h3>
+                                        );
+                                    }
+                                    if (cleanTitle.toUpperCase() === 'MAN TANJUNGPINANG') {
+                                        return (
+                                            <h3 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-none tracking-wider uppercase drop-shadow-lg text-center flex flex-col items-center gap-1">
+                                                <span>MAN</span>
+                                                <span>TANJUNGPINANG</span>
+                                            </h3>
+                                        );
+                                    }
+                                    return (
+                                        <h3 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-wider uppercase drop-shadow-lg text-center flex flex-col items-center">
+                                            {cleanTitle.split('\n').map((line, idx) => (
+                                                <span key={idx}>{line}</span>
+                                            ))}
+                                        </h3>
+                                    );
+                                })()}
 
                                 {/* Clean Subtitle Text */}
                                 <p className="text-xs sm:text-base text-emerald-100/90 font-medium leading-relaxed max-w-2xl text-center tracking-wide font-sans">

@@ -72,7 +72,7 @@ export default function NewsIndex({ news, filters }: Props) {
 
     return (
         <>
-            <Head title="Berita Sekolah - Admin - MAN TANJUNG PINANG" />
+            <Head title="Berita Sekolah - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Flash Messages */}

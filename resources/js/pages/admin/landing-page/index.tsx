@@ -440,7 +440,7 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
 
     return (
         <>
-            <Head title="CMS Beranda - Admin - MAN TANJUNG PINANG" />
+            <Head title="CMS Beranda - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-6 space-y-6 w-full">
                 <PageHeader

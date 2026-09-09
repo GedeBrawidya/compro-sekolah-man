@@ -100,7 +100,7 @@ export default function LegalizationIndex({ requests, filters }: Props) {
 
     return (
         <>
-            <Head title="E-Legalisir Alumni - Admin - MAN TANJUNG PINANG" />
+            <Head title="E-Legalisir Alumni - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Flash Messages */}

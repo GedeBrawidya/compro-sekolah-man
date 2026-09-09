@@ -47,7 +47,7 @@
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         <x-inertia::head>
-            <title>{{ config('app.name', 'MAN TANJUNG PINANG - Portal Sekolah') }}</title>
+            <title>{{ config('app.name', 'MAN TANJUNGPINANG - Portal Sekolah') }}</title>
         </x-inertia::head>
     </head>
     <body class="font-sans antialiased">

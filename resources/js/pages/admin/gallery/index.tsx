@@ -169,7 +169,7 @@ export default function GalleryIndex({ galleries, filters, flash }: Props) {
 
     return (
         <>
-            <Head title="Galeri Foto & Video - Admin - MAN TANJUNG PINANG" />
+            <Head title="Galeri Foto & Video - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {flash?.success && (

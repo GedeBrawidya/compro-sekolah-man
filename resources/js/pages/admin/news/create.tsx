@@ -89,7 +89,7 @@ export default function NewsCreate() {
 
     return (
         <>
-            <Head title="Buat Berita Baru - Admin - MAN TANJUNG PINANG" />
+            <Head title="Buat Berita Baru - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Header Banner */}

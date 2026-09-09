@@ -33,7 +33,7 @@ export default function BookCategories({ categories }: Props) {
 
     return (
         <>
-            <Head title="Manajemen Kategori Buku - Admin - MAN TANJUNG PINANG" />
+            <Head title="Manajemen Kategori Buku - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Flash */}

@@ -104,7 +104,7 @@ export default function NewsEdit({ news }: Props) {
 
     return (
         <>
-            <Head title={`Edit: ${news.title} - Admin - MAN TANJUNG PINANG`} />
+            <Head title={`Edit: ${news.title} - Admin - MAN TANJUNGPINANG`} />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Header Banner */}

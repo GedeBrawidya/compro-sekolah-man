@@ -65,7 +65,7 @@ export default function AdminDashboard({
 
     return (
         <>
-            <Head title="Dashboard - Admin - MAN TANJUNG PINANG" />
+            <Head title="Dashboard - Admin - MAN TANJUNGPINANG" />
 
             <div className="flex flex-col gap-6 p-4 sm:p-6 w-full">
                 {/* Header Welcome Banner with Natural Forest & Sage Gradient */}

@@ -100,7 +100,7 @@ export default function ComplaintsIndex({ complaints, filters }: Props) {
 
     return (
         <>
-            <Head title="Pengaduan Masyarakat - Admin - MAN TANJUNG PINANG" />
+            <Head title="Pengaduan Masyarakat - Admin - MAN TANJUNGPINANG" />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {/* Flash Messages */}

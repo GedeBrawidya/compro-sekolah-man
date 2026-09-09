@@ -155,7 +155,7 @@ export default function BookShow({ book, filters, flash }: Props) {
 
     return (
         <>
-            <Head title={`Stok & Peminjaman: ${book.title} - Admin - MAN TANJUNG PINANG`} />
+            <Head title={`Stok & Peminjaman: ${book.title} - Admin - MAN TANJUNGPINANG`} />
 
             <div className="p-4 sm:p-6 w-full space-y-6">
                 {flash?.success && (

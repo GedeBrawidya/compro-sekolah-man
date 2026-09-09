@@ -6,7 +6,7 @@ import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'MAN TANJUNG PINANG - Portal Sekolah';
+const appName = import.meta.env.VITE_APP_NAME || 'MAN TANJUNGPINANG - Portal Sekolah';
 
 void createInertiaApp({
     title: (title) => (title ? title : appName),
