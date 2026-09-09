@@ -230,6 +230,7 @@ export default function Welcome({
     const [dormPage, setDormPage] = useState(1);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const [newsletterEmail, setNewsletterEmail] = useState('');
     const [newsletterSuccess, setNewsletterSuccess] = useState(false);
@@ -599,31 +600,34 @@ export default function Welcome({
                                     </button>
 
                                     {isProfileDropdownOpen && (
-                                        <div className="absolute left-0 top-full pt-2 w-48 z-50">
+                                        <div className="absolute left-0 top-full pt-2 w-52 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                                             <div className="bg-white border border-[#c8dac5] rounded-2xl p-2 shadow-xl space-y-1">
                                                 <button
                                                     onClick={() => { handleTabClick('profile'); setProfileSubTab('profile'); setIsProfileDropdownOpen(false); }}
-                                                    className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                                                        activeTab === 'profile' && profileSubTab === 'profile' ? 'bg-[#265243] text-white' : 'text-[#142921] hover:bg-[#f4f8f3]'
+                                                    className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                        activeTab === 'profile' && profileSubTab === 'profile' ? 'bg-[#265243] text-white shadow-xs' : 'text-[#142921] hover:bg-[#f4f8f3]'
                                                     }`}
                                                 >
-                                                    Profil Sekolah
+                                                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'profile' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                    <span>Profil Sekolah</span>
                                                 </button>
                                                 <button
                                                     onClick={() => { handleTabClick('profile'); setProfileSubTab('vision'); setIsProfileDropdownOpen(false); }}
-                                                    className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                                                        activeTab === 'profile' && profileSubTab === 'vision' ? 'bg-[#265243] text-white' : 'text-[#142921] hover:bg-[#f4f8f3]'
+                                                    className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                        activeTab === 'profile' && profileSubTab === 'vision' ? 'bg-[#265243] text-white shadow-xs' : 'text-[#142921] hover:bg-[#f4f8f3]'
                                                     }`}
                                                 >
-                                                    Visi & Misi
+                                                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'vision' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                    <span>Visi &amp; Misi</span>
                                                 </button>
                                                 <button
                                                     onClick={() => { handleTabClick('profile'); setProfileSubTab('history'); setIsProfileDropdownOpen(false); }}
-                                                    className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                                                        activeTab === 'profile' && profileSubTab === 'history' ? 'bg-[#265243] text-white' : 'text-[#142921] hover:bg-[#f4f8f3]'
+                                                    className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                        activeTab === 'profile' && profileSubTab === 'history' ? 'bg-[#265243] text-white shadow-xs' : 'text-[#142921] hover:bg-[#f4f8f3]'
                                                     }`}
                                                 >
-                                                    Sejarah Singkat
+                                                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'history' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                    <span>Sejarah Singkat</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -693,10 +697,85 @@ export default function Welcome({
                             {isMobileMenuOpen && (
                                 <div className="lg:hidden absolute left-0 right-0 top-full mt-2 bg-white/98 backdrop-blur-xl border border-[#c8dac5] rounded-3xl p-4 shadow-2xl space-y-2 z-50 animate-in fade-in slide-in-from-top-3 duration-300">
                                     <div className="space-y-1">
+                                        {/* Beranda */}
+                                        <button
+                                            onClick={() => handleTabClick('home')}
+                                            className={`w-full text-left px-4 py-2.5 rounded-2xl text-xs font-black transition-all ${
+                                                activeTab === 'home'
+                                                    ? 'bg-[#265243] text-white shadow-xs'
+                                                    : 'text-[#142921] hover:bg-[#f4f8f3]'
+                                            }`}
+                                        >
+                                            Beranda
+                                        </button>
+
+                                        {/* Profil Accordion Dropdown */}
+                                        <div className="space-y-1">
+                                            <button
+                                                onClick={() => setIsMobileProfileOpen((prev) => !prev)}
+                                                className={`w-full text-left px-4 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center justify-between cursor-pointer ${
+                                                    activeTab === 'profile' || activeTab === 'vision'
+                                                        ? 'bg-[#265243] text-white shadow-xs'
+                                                        : 'text-[#142921] hover:bg-[#f4f8f3]'
+                                                }`}
+                                            >
+                                                <span>Profil Sekolah</span>
+                                                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isMobileProfileOpen ? 'rotate-180 text-[#265243]' : activeTab === 'profile' || activeTab === 'vision' ? 'text-white' : 'text-[#265243]'}`} />
+                                            </button>
+
+                                            {isMobileProfileOpen && (
+                                                <div className="pl-4 space-y-1.5 py-1 animate-in fade-in duration-200">
+                                                    <button
+                                                        onClick={() => {
+                                                            handleTabClick('profile');
+                                                            setProfileSubTab('profile');
+                                                            setIsMobileMenuOpen(false);
+                                                        }}
+                                                        className={`w-full text-left px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                            activeTab === 'profile' && profileSubTab === 'profile'
+                                                                ? 'bg-[#265243] text-white shadow-2xs'
+                                                                : 'text-[#142921] hover:bg-[#e2ebd9] bg-[#f4f8f3] border border-[#c8dac5]/50'
+                                                        }`}
+                                                    >
+                                                        <span className={`w-2 h-2 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'profile' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                        <span>Profil Sekolah</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            handleTabClick('profile');
+                                                            setProfileSubTab('vision');
+                                                            setIsMobileMenuOpen(false);
+                                                        }}
+                                                        className={`w-full text-left px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                            activeTab === 'profile' && profileSubTab === 'vision'
+                                                                ? 'bg-[#265243] text-white shadow-2xs'
+                                                                : 'text-[#142921] hover:bg-[#e2ebd9] bg-[#f4f8f3] border border-[#c8dac5]/50'
+                                                        }`}
+                                                    >
+                                                        <span className={`w-2 h-2 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'vision' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                        <span>Visi &amp; Misi</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            handleTabClick('profile');
+                                                            setProfileSubTab('history');
+                                                            setIsMobileMenuOpen(false);
+                                                        }}
+                                                        className={`w-full text-left px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                            activeTab === 'profile' && profileSubTab === 'history'
+                                                                ? 'bg-[#265243] text-white shadow-2xs'
+                                                                : 'text-[#142921] hover:bg-[#e2ebd9] bg-[#f4f8f3] border border-[#c8dac5]/50'
+                                                        }`}
+                                                    >
+                                                        <span className={`w-2 h-2 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'history' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                        <span>Sejarah Singkat</span>
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Menu Items Without Dropdown (NO ChevronRight) */}
                                         {[
-                                            { id: 'home', label: 'Beranda Principal' },
-                                            { id: 'profile', label: 'Profil Sekolah' },
-                                            { id: 'vision', label: 'Visi & Misi' },
                                             { id: 'news', label: 'Berita & Pengumuman' },
                                             { id: 'gallery', label: 'Galeri Dokumentasi' },
                                             { id: 'books', label: 'Perpustakaan Digital' },
@@ -707,14 +786,13 @@ export default function Welcome({
                                             <button
                                                 key={tab.id}
                                                 onClick={() => handleTabClick(tab.id as any)}
-                                                className={`w-full text-left px-4 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center justify-between ${
+                                                className={`w-full text-left px-4 py-2.5 rounded-2xl text-xs font-black transition-all ${
                                                     activeTab === tab.id
                                                         ? 'bg-[#265243] text-white shadow-xs'
                                                         : 'text-[#142921] hover:bg-[#f4f8f3]'
                                                 }`}
                                             >
-                                                <span>{tab.label}</span>
-                                                <ChevronRight className={`w-4 h-4 ${activeTab === tab.id ? 'text-white' : 'text-[#265243]'}`} />
+                                                {tab.label}
                                             </button>
                                         ))}
                                     </div>
@@ -780,16 +858,16 @@ export default function Welcome({
                                                 className="w-full h-full object-cover opacity-50"
                                             />
                                         ) : (
-                                            <div className="w-full h-full bg-gradient-to-br from-[#1a3d31] to-[#265243] opacity-40" />
+                                            <div className="w-full h-full bg-[#142921] opacity-40" />
                                         )}
                                     </div>
                                 ))
                             ) : (
-                                <div className="absolute inset-0 bg-gradient-to-br from-[#1a3d31] to-[#265243] opacity-40 z-0" />
+                                <div className="absolute inset-0 bg-[#142921] opacity-40 z-0" />
                             )}
 
-                            {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 z-10" />
+                            {/* Solid Dark Overlay */}
+                            <div className="absolute inset-0 bg-black/60 z-10" />
 
                             {/* GIANT BACKGROUND WATERMARK TYPOGRAPHY (EXACT MATCH IMAGE 1 - "OXFORD" STYLE) */}
                             <div className={`absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none select-none overflow-hidden z-10 transition-opacity duration-1000 ${showWatermark ? 'opacity-100' : 'opacity-0'}`}>
@@ -1087,11 +1165,11 @@ export default function Welcome({
                                                     className="absolute inset-0 w-full h-full object-cover opacity-100 group-hover:scale-105 transition-transform duration-700"
                                                 />
                                             ) : (
-                                                <div className="absolute inset-0 bg-gradient-to-br from-[#1a3d31] to-[#265243]" />
+                                                <div className="absolute inset-0 bg-[#142921]" />
                                             )}
 
-                                            {/* Subtle Gradient Overlay for Text Legibility */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/20 z-10" />
+                                            {/* Solid Overlay for Text Legibility */}
+                                            <div className="absolute inset-0 bg-black/50 z-10" />
 
                                             {/* Top Row inside Showcase Card: Clean Pill Badges */}
                                             <div className="relative z-20 flex items-center justify-between">
@@ -1201,7 +1279,7 @@ export default function Welcome({
                                                             <ImageIcon className="w-6 h-6" />
                                                         </div>
                                                     )}
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-2.5 flex items-end">
+                                                    <div className="absolute inset-x-0 bottom-0 bg-black/70 p-2 flex items-end">
                                                         <p className="text-[11px] font-bold text-white truncate">{item.title}</p>
                                                     </div>
                                                 </div>
@@ -1341,7 +1419,7 @@ export default function Welcome({
                     {/* TAB: PROFIL SEKOLAH & VISI MISI (HEADER VIDEO BANNER - REF IMAGE 2)        */}
                     {/* ========================================================================= */}
                     {(activeTab === 'profile' || activeTab === 'vision') && (
-                        <div className="relative -mx-6 sm:-mx-12 lg:-mx-20 space-y-8 animate-in fade-in duration-300">
+                        <div className="relative px-3 sm:px-0 sm:-mx-12 lg:-mx-20 space-y-8 animate-in fade-in duration-300">
                             {/* VIDEO PROFIL HEADER */}
                             {/* VIDEO PROFIL HEADER (NO BORDER) */}
                             {(settings.principal_media_type ?? 'video') === 'photo' ? (
@@ -1359,7 +1437,7 @@ export default function Welcome({
                                         <span className="px-4 py-1.5 rounded-full bg-[#265243] text-white text-xs font-black uppercase tracking-wider shadow-md">
                                             PROFIL SEKOLAH
                                         </span>
-                                        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md">
+                                        <h2 className="text-2xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md">
                                             {schoolName}
                                         </h2>
                                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#142921] text-emerald-300 text-xs font-bold border border-emerald-500/30 mt-1 shadow-sm">
@@ -1416,7 +1494,7 @@ export default function Welcome({
                                             PUTAR VIDEO PROFIL SEKOLAH
                                         </span>
 
-                                        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md">
+                                        <h2 className="text-2xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md">
                                             {schoolName.toUpperCase().includes('TANJUNG') ? schoolName.replace(/TANJUNG\s+PINANG/gi, 'TANJUNGPINANG') : `${schoolName} TANJUNGPINANG`}
                                         </h2>
                                     </div>
@@ -1424,7 +1502,7 @@ export default function Welcome({
                             )}
 
                             {/* PINTASAN NAVIGASI PROFIL (SOLID WHITE DEFAULT -> SOLID GREEN ON SELECT - COMPLETELY BORDERLESS) */}
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                            <div className="grid grid-cols-3 gap-2 sm:gap-6">
                                 {[
                                     { id: 'profile', label: 'Profil Sekolah' },
                                     { id: 'vision', label: 'Visi & Misi' },
@@ -1439,9 +1517,9 @@ export default function Welcome({
                                                 if (sub.id === 'vision') setActiveTab('vision');
                                                 else setActiveTab('profile');
                                             }}
-                                            className={`relative p-5 sm:p-6 rounded-3xl text-sm sm:text-base font-extrabold transition-all duration-300 flex items-center justify-center cursor-pointer shadow-md border-0 border-none outline-none ${
+                                            className={`relative p-3 sm:p-6 rounded-2xl sm:rounded-3xl text-xs sm:text-base font-extrabold transition-all duration-300 flex items-center justify-center cursor-pointer shadow-md border-0 border-none outline-none text-center ${
                                                 isActive
-                                                    ? 'bg-[#265243] text-white -translate-y-2 scale-[1.02] shadow-xl'
+                                                    ? 'bg-[#265243] text-white -translate-y-1 sm:-translate-y-2 scale-[1.02] shadow-xl'
                                                     : 'bg-white text-[#142921] hover:bg-slate-50 hover:shadow-xl hover:-translate-y-1'
                                             }`}
                                         >
@@ -1462,10 +1540,7 @@ export default function Welcome({
                                             <div className="lg:col-span-5 relative space-y-4">
                                                 {/* Main Image Container */}
                                                 <div className="relative z-10 mx-auto max-w-md lg:max-w-none">
-                                                    <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-[#142921] via-[#1b382d] to-[#265243] shadow-xl flex items-center justify-center p-8 group">
-                                                        {/* Decorative background glow */}
-                                                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/20 via-transparent to-transparent opacity-60" />
-                                                        
+                                                    <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden bg-[#142921] shadow-xl flex items-center justify-center p-8 group">
                                                         {logoUrl ? (
                                                             <img
                                                                 src={logoUrl}
@@ -1473,7 +1548,7 @@ export default function Welcome({
                                                                 className="relative z-10 max-h-48 sm:max-h-56 object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                                                             />
                                                         ) : (
-                                                            <div className="relative z-10 w-28 h-28 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20 shadow-xl">
+                                                            <div className="relative z-10 w-28 h-28 rounded-full bg-white/10 flex items-center justify-center text-white border border-white/20 shadow-xl">
                                                                 <Building2 className="w-14 h-14 text-emerald-300" />
                                                             </div>
                                                         )}
@@ -1530,12 +1605,8 @@ export default function Welcome({
                                             <div className="w-16 h-1 bg-[#f59e0b] rounded-full" />
                                         </div>
 
-                                        {/* VISI CARD */}
+                                        {/* VISI CARD (PURE SOLID COLOR WITHOUT GRADIENT OR BLUR) */}
                                         <div className="relative bg-[#142921] text-white rounded-3xl p-6 sm:p-8 shadow-xl overflow-hidden border border-emerald-900/50 group">
-                                            {/* Background glowing shapes */}
-                                            <div className="absolute -right-12 -top-12 w-48 h-48 bg-[#f59e0b]/10 rounded-full blur-2xl group-hover:bg-[#f59e0b]/20 transition-all duration-500" />
-                                            <div className="absolute -left-12 -bottom-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl" />
-
                                             <div className="relative z-10 space-y-4">
                                                 <div className="flex items-center gap-3">
                                                     <div>
@@ -1580,7 +1651,7 @@ export default function Welcome({
                                                         >
                                                             {/* Misi Text Content (Centered Layout) */}
                                                             <div className="flex-1 flex items-center">
-                                                                <p className="text-sm sm:text-base text-[#142921] font-extrabold leading-relaxed text-center sm:text-left w-full">
+                                                                <p className="text-sm sm:text-base text-[#142921] font-extrabold leading-relaxed text-left w-full">
                                                                     {item.desc}
                                                                 </p>
                                                             </div>
@@ -1623,7 +1694,7 @@ export default function Welcome({
                                             /* DYNAMIC MILESTONE TIMELINE */
                                             <div className="relative">
                                                 {/* Vertical center line */}
-                                                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#142921] via-[#265243] to-[#9db588] -translate-x-1/2 hidden sm:block" />
+                                                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#265243] -translate-x-1/2 hidden sm:block" />
 
                                                 <div className="space-y-8 sm:space-y-0">
                                                     {milestones.map((milestone, idx) => {
@@ -1858,7 +1929,7 @@ export default function Welcome({
                                                     </div>
                                                 )}
 
-                                                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 text-white">
+                                                <div className="absolute bottom-0 inset-x-0 bg-black/75 p-3 text-white">
                                                     <span className="px-2 py-0.5 rounded bg-[#265243] text-[10px] font-bold uppercase tracking-wider">
                                                         {item.category}
                                                     </span>
@@ -2150,7 +2221,7 @@ export default function Welcome({
                                         alt={settings.dormitory_pengasuh_name || "Pengasuh Asrama MAN"} 
                                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 absolute inset-0"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-5 sm:p-6 text-white">
+                                    <div className="absolute inset-0 bg-black/60 flex flex-col justify-end p-5 sm:p-6 text-white">
                                         <span className="inline-block self-start text-[10px] sm:text-[11px] font-black text-amber-300 uppercase tracking-wider bg-black/50 backdrop-blur-xs py-1 px-3 rounded-full border border-amber-400/20 mb-1.5">
                                             Pengasuh &amp; Pengurus Asrama
                                         </span>
