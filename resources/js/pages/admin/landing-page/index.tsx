@@ -449,8 +449,8 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
                     icon={LayoutTemplate}
                 />
 
-                {/* Tab Navigation - Full Width 7-Item Grid */}
-                <div style={{ backgroundColor: '#e8efe5', borderColor: '#b8ceb0' }} className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-7 gap-2 p-2 rounded-2xl border shadow-sm w-full">
+                {/* Tab Navigation - Full Outer Cell Fill with Vertical Sekat Lines */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-7 w-full bg-white rounded-2xl overflow-hidden shadow-xs border border-[#e2ebe0] divide-y sm:divide-y-0 xl:divide-x divide-[#e2ebe0]">
                     {TABS.map((tab) => {
                         const Icon = tab.icon;
                         const active = activeTab === tab.key;
@@ -463,10 +463,10 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
                                         ? { backgroundColor: '#265243', color: '#ffffff' }
                                         : { backgroundColor: 'transparent', color: '#142921' }
                                 }
-                                className={`flex items-center justify-center gap-2.5 px-3 py-3.5 text-xs sm:text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer w-full text-center ${
+                                className={`flex items-center justify-center gap-2.5 px-3 py-4 text-xs sm:text-sm font-bold transition-all duration-150 cursor-pointer w-full h-full text-center ${
                                     active
-                                        ? 'shadow-md scale-[1.01]'
-                                        : 'hover:bg-[#d4e4d1] hover:text-[#265243]'
+                                        ? ''
+                                        : 'hover:bg-[#f2f7f1] hover:text-[#265243]'
                                 }`}
                             >
                                 <Icon className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
