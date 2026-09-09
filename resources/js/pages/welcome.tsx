@@ -37,7 +37,7 @@ import {
     Users,
     X,
 } from 'lucide-react';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 
 const getExcerpt = (html?: string, maxLength = 130) => {
     if (!html) return '';
@@ -479,10 +479,53 @@ export default function Welcome({
     };
 
     const logoUrl = settings.school_logo_url || null;
-    const schoolName = settings.school_name || 'MAN TANJUNGPINANG';
+    const rawSchoolName = settings.school_name || 'MAN TANJUNGPINANG';
+    const schoolName = rawSchoolName.trim().toUpperCase() === 'MAN' ? 'MAN TANJUNGPINANG' : rawSchoolName;
     const schoolTagline = settings.school_tagline || 'Mewujudkan Generasi Cerdas, Berkarakter, dan Berdaya Saing Global';
     const schoolDesc = settings.school_description ||
         'MAN TANJUNGPINANG merupakan lembaga pendidikan unggulan yang berdedikasi tinggi dalam mencetak lulusan berprestasi akademik, berakhlak mulia, serta menguasai keterampilan sains dan teknologi.';
+
+    const missionItems = useMemo(() => {
+        const rawMission = settings.mission || settings.misi;
+        if (rawMission && rawMission.trim()) {
+            const lines = rawMission
+                .split('\n')
+                .map((l) => l.trim())
+                .filter((l) => l.length > 0);
+
+            if (lines.length > 0) {
+                return lines.map((line, idx) => {
+                    const cleanDesc = line.replace(/^(?:\d+[\.\)]\s*|\-\s*)/, '');
+                    return {
+                        num: String(idx + 1).padStart(2, '0'),
+                        desc: cleanDesc,
+                    };
+                });
+            }
+        }
+        return [
+            {
+                num: '01',
+                desc: 'Meningkatkan Keimanan dan Ketaqwaan terhadap Tuhan Yang Maha Esa.',
+            },
+            {
+                num: '02',
+                desc: 'Meningkatkan Wawasan kebangsaan dan cinta tanah air.',
+            },
+            {
+                num: '03',
+                desc: 'Meningkatkan karakter kemandirian, kerja keras, dan kepemimpinan.',
+            },
+            {
+                num: '04',
+                desc: 'Memperkaya Kurikulum Berwawasan Lingkungan dengan Budaya Karakter Bangsa berbasis Kearifan Lokal.',
+            },
+            {
+                num: '05',
+                desc: 'Mengembangkan kultur sekolah yang disiplin, agamis, dan menerapkan budaya 5S (Senyum, Sapa, Salam, Sopan, Santun).',
+            },
+        ];
+    }, [settings.mission, settings.misi]);
 
     return (
         <>
@@ -502,13 +545,13 @@ export default function Welcome({
                             isMobileMenuOpen
                                 ? 'w-full max-w-full bg-transparent border-none shadow-none px-4 sm:px-8 py-3.5'
                                 : isScrolled
-                                ? 'mt-3 w-[calc(100%-2rem)] max-w-6xl bg-white/90 backdrop-blur-xl rounded-full shadow-2xl border border-[#c8dac5] px-6 py-2.5'
+                                ? 'mt-3 w-[calc(100%-2rem)] max-w-7xl bg-white/95 backdrop-blur-xl rounded-full shadow-2xl border border-[#c8dac5] px-6 py-2.5'
                                 : 'w-full max-w-full bg-white/95 backdrop-blur-md border-b border-[#c8dac5] shadow-xs px-4 sm:px-8 py-3.5'
                         }`}
                     >
                         <div className="max-w-7xl mx-auto w-full flex items-center justify-between relative">
                             {/* Brand Logo & Name */}
-                            <div className="flex items-center gap-3 cursor-pointer shrink-0" onClick={() => handleTabClick('home')}>
+                            <div className="flex items-center gap-3 cursor-pointer shrink-0 mr-4 lg:mr-8" onClick={() => handleTabClick('home')}>
                                 {settings.school_logo_url ? (
                                     <img src={settings.school_logo_url} alt="Logo" className="w-10 h-10 object-contain" />
                                 ) : (
@@ -517,21 +560,21 @@ export default function Welcome({
                                     </div>
                                 )}
                                 <div>
-                                    <h1 className="text-sm sm:text-base font-black text-[#142921] leading-tight tracking-tight">
+                                    <h1 className="text-xs sm:text-sm font-extrabold text-[#142921] leading-tight tracking-tight">
                                         {schoolName}
                                     </h1>
-                                    <p className="text-[10px] font-bold text-[#527365]">
+                                    <p className="text-[9px] sm:text-[10px] font-bold text-[#527365]">
                                         Portal Resmi Sekolah
                                     </p>
                                 </div>
                             </div>
 
                             {/* Nav Links (Desktop) */}
-                            <nav className="hidden lg:flex items-center gap-1">
+                            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
                                 <button
                                     onClick={() => handleTabClick('home')}
                                     style={activeTab === 'home' ? { backgroundColor: '#265243', color: '#ffffff' } : { color: '#142921' }}
-                                    className={`px-4 py-2 text-xs font-extrabold rounded-full transition-all duration-300 ${
+                                    className={`px-3.5 py-2 text-xs font-extrabold rounded-full transition-all duration-300 whitespace-nowrap ${
                                         activeTab === 'home' ? 'shadow-xs scale-[1.02]' : 'hover:bg-[#e2ebd9]'
                                     }`}
                                 >
@@ -547,7 +590,7 @@ export default function Welcome({
                                                 ? { backgroundColor: '#265243', color: '#ffffff' }
                                                 : { color: '#142921' }
                                         }
-                                        className={`px-4 py-2 text-xs font-extrabold rounded-full transition-all duration-300 flex items-center gap-1 cursor-pointer ${
+                                        className={`px-3.5 py-2 text-xs font-extrabold rounded-full transition-all duration-300 flex items-center gap-1 cursor-pointer whitespace-nowrap ${
                                             activeTab === 'profile' || activeTab === 'vision' ? 'shadow-xs scale-[1.02]' : 'hover:bg-[#e2ebd9]'
                                         }`}
                                     >
@@ -603,7 +646,7 @@ export default function Welcome({
                                                 ? { backgroundColor: '#265243', color: '#ffffff' }
                                                 : { color: '#142921' }
                                         }
-                                        className={`px-4 py-2 text-xs font-extrabold rounded-full transition-all duration-300 ${
+                                        className={`px-3.5 py-2 text-xs font-extrabold rounded-full transition-all duration-300 whitespace-nowrap ${
                                             activeTab === tab.id ? 'shadow-xs scale-[1.02]' : 'hover:bg-[#e2ebd9]'
                                         }`}
                                     >
@@ -901,7 +944,7 @@ export default function Welcome({
 
                                                 <div className="space-y-2 relative z-10">
                                                     <h3 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white font-sans tracking-tight leading-tight">
-                                                        Selamat Datang di {settings.school_name ? settings.school_name : 'MAN'}
+                                                        Selamat Datang di {schoolName}
                                                     </h3>
                                                 </div>
 
@@ -925,22 +968,10 @@ export default function Welcome({
                                                         </>
                                                     )}
                                                 </div>
-
-                                                {/* Principal Name & Title (Clean Signature without Line) */}
-                                                <div className="pt-6 relative z-10 flex items-center justify-start">
-                                                    <div>
-                                                        <p className="text-lg sm:text-xl font-bold text-white">
-                                                            {settings.principal_name || 'Ulfah Ismiati, S.Pd, M.M'}
-                                                        </p>
-                                                        <p className="text-xs sm:text-sm font-semibold text-[#10b981]">
-                                                            {settings.principal_title || 'Kepala Sekolah'}
-                                                        </p>
-                                                    </div>
-                                                </div>
                                             </div>
 
-                                            {/* KOLOM KANAN: FOTO RECTANGLE SUPER ROUNDED MENONJOL KELUAR KE ATAS */}
-                                            <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end -mt-32 sm:-mt-40 lg:-mt-52 pt-4 lg:pt-0 z-20">
+                                            {/* KOLOM KANAN: FOTO RECTANGLE SUPER ROUNDED (FLOAT NAME & TITLE TO BOTTOM-LEFT OF PHOTO) */}
+                                            <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end mt-4 sm:-mt-36 lg:-mt-52 pt-4 lg:pt-0 z-20">
                                                 {/* Super Rounded Container with Soft Yellow Tone (#fef08a) */}
                                                 <div className="relative z-10 w-72 h-[380px] sm:w-88 sm:h-[440px] lg:w-[400px] lg:h-[500px] rounded-[6rem] bg-[#fef08a] shadow-2xl overflow-hidden flex items-center justify-center shrink-0">
                                                     {settings.principal_photo_url ? (
@@ -957,16 +988,23 @@ export default function Welcome({
                                                     )}
                                                 </div>
 
-                                                {/* Floating Overlay Card ('Membangun Generasi' - Overlapping bottom-left of photo) */}
-                                                <div className="absolute -bottom-4 sm:-bottom-6 lg:-bottom-8 -left-2 sm:left-2 lg:-left-8 z-30 bg-[#0b2b22] border border-white/10 p-4 sm:p-5 rounded-2xl shadow-2xl max-w-[190px] sm:max-w-[210px] space-y-2 transform hover:scale-105 transition-all">
-                                                    <div className="w-10 h-10 rounded-xl bg-[#059669]/40 border border-[#10b981]/40 flex items-center justify-center text-[#10b981]">
-                                                        <GraduationCap className="w-5 h-5" />
+                                                {/* Floating Overlay Card (Principal Name & Title - Floated at bottom-left of photo) */}
+                                                <div className="absolute -bottom-4 sm:-bottom-6 lg:-bottom-8 -left-2 sm:left-2 lg:-left-8 z-30 bg-[#0b2b22] border border-white/15 p-4 sm:p-5 rounded-2xl shadow-2xl max-w-[220px] sm:max-w-[250px] space-y-1.5 transform hover:scale-105 transition-all">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-8 h-8 rounded-xl bg-[#059669]/40 border border-[#10b981]/40 flex items-center justify-center text-[#10b981] shrink-0">
+                                                            <GraduationCap className="w-4 h-4" />
+                                                        </div>
+                                                        <span className="text-[10px] sm:text-xs font-bold text-[#10b981] uppercase tracking-wider">
+                                                            {settings.principal_title || 'Kepala Sekolah'}
+                                                        </span>
                                                     </div>
-                                                    <h4 className="text-base sm:text-lg font-bold text-white font-sans leading-tight">
-                                                        Membangun Generasi
-                                                    </h4>
-                                                    <p className="text-xs text-slate-300 font-medium leading-snug">
-                                                        Bersama Menuju Pendidikan Berkualitas
+                                                    <div>
+                                                        <h4 className="text-sm sm:text-base font-extrabold text-white font-sans leading-snug">
+                                                            {settings.principal_name || 'Ulfah Ismiati, S.Pd, M.M'}
+                                                        </h4>
+                                                    </div>
+                                                    <p className="text-[10px] sm:text-xs text-slate-300 font-medium leading-snug pt-1 border-t border-white/10">
+                                                        Membangun Generasi Pendidikan Berkualitas
                                                     </p>
                                                 </div>
                                             </div>
@@ -1033,7 +1071,7 @@ export default function Welcome({
                                 </div>
 
                                 {featuredGalleries.length > 0 ? (
-                                    <div className="space-y-6 -mx-6 sm:-mx-12 lg:-mx-20">
+                                    <div className="space-y-6 px-3 sm:px-0 sm:-mx-12 lg:-mx-20">
                                         {/* HERO SHOWCASE CARD WITH GIANT WATERMARK TYPOGRAPHY */}
                                         <div
                                             onClick={() => setSelectedGallery(featuredGalleries[activeGalleryIndex % (featuredGalleries.length || 1)])}
@@ -1113,7 +1151,28 @@ export default function Welcome({
                                             </div>
                                         </div>
 
-                                        {/* Mobile "Lihat Semua Galeri" Button (Rendered directly under large showcase image card) */}
+                                        {/* Slide Progress Indicator Dots / Lines under photo */}
+                                        {featuredGalleries.length > 1 && (
+                                            <div className="flex items-center justify-center gap-2 pt-2 pb-1">
+                                                {featuredGalleries.map((_, idx) => {
+                                                    const isActive = idx === (activeGalleryIndex % featuredGalleries.length);
+                                                    return (
+                                                        <button
+                                                            key={idx}
+                                                            onClick={() => setActiveGalleryIndex(idx)}
+                                                            aria-label={`Go to slide ${idx + 1}`}
+                                                            className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                                                                isActive
+                                                                    ? 'w-8 bg-[#265243] shadow-xs'
+                                                                    : 'w-2 bg-[#c8dac5] hover:bg-[#527365]'
+                                                            }`}
+                                                        />
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+
+                                        {/* Mobile "Lihat Semua Galeri" Button (Rendered directly under slide indicators) */}
                                         <div className="sm:hidden flex justify-center pt-1">
                                             <button
                                                 onClick={() => handleTabClick('gallery')}
@@ -1169,7 +1228,7 @@ export default function Welcome({
                             </section>
 
                             {/* SECTION: BERITA TERBARU (SHOW 6 ITEMS) */}
-                            <section className="space-y-8 -mx-6 sm:-mx-12 lg:-mx-20 mt-6 sm:mt-10 pt-2 sm:pt-4">
+                            <section className="space-y-8 px-3 sm:px-0 sm:-mx-12 lg:-mx-20 mt-6 sm:mt-10 pt-2 sm:pt-4">
                                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                                     <div className="space-y-1">
                                         <p className="text-xs font-bold text-[#527365] uppercase tracking-widest">
@@ -1479,14 +1538,11 @@ export default function Welcome({
 
                                             <div className="relative z-10 space-y-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-2xl bg-[#f59e0b] text-[#142921] flex items-center justify-center shadow-md">
-                                                        <Compass className="w-5 h-5 font-bold" />
-                                                    </div>
                                                     <div>
                                                         <span className="px-2.5 py-0.5 rounded-md bg-white/10 text-[#f59e0b] text-[10px] sm:text-xs font-black tracking-widest uppercase">
                                                             VISI SEKOLAH
                                                         </span>
-                                                        <h4 className="text-lg sm:text-xl font-extrabold text-white">
+                                                        <h4 className="text-lg sm:text-xl font-extrabold text-white mt-1">
                                                             {schoolName}
                                                         </h4>
                                                     </div>
@@ -1494,7 +1550,7 @@ export default function Welcome({
 
                                                 <div className="pt-2">
                                                     <p className="text-base sm:text-xl font-bold italic text-emerald-50 leading-relaxed tracking-wide">
-                                                        "{settings.vision || 'Menjadi sekolah Adhiwiyata Mandiri, Sehat, Unggul dalam Disiplin dan Prestasi, Berwawasan IMTAQ, IPTEK dan Seni, Bersendikan Karakter Budaya Bangsa.'}"
+                                                        "{settings.vision || settings.visi || 'TERWUJUDNYA MADRASAH ALIYAH NEGERI TANJUNGPINANG YANG BERKUALITAS, AGAMIS, UNGGUL DAN BERWAWASAN LINGKUNGAN'}"
                                                     </p>
                                                 </div>
                                             </div>
@@ -1503,79 +1559,38 @@ export default function Welcome({
                                         {/* MISI CARDS GRID */}
                                         <div className="space-y-6 pt-2">
                                             <div className="flex items-center justify-between flex-wrap gap-2">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-2xl bg-[#265243] text-white flex items-center justify-center shadow-md">
-                                                        <Target className="w-5 h-5" />
-                                                    </div>
-                                                    <div>
-                                                        <h4 className="text-lg sm:text-xl font-black text-[#142921]">
-                                                            MISI SEKOLAH
-                                                        </h4>
-                                                        <p className="text-xs text-[#527365] font-medium">5 Pilar Utama Pelaksanaan Pendidikan</p>
-                                                    </div>
+                                                <div>
+                                                    <h4 className="text-lg sm:text-xl font-black text-[#142921]">
+                                                        MISI SEKOLAH
+                                                    </h4>
+                                                    <p className="text-xs text-[#527365] font-medium">{missionItems.length} Pilar Utama Pelaksanaan Pendidikan</p>
                                                 </div>
                                                 <span className="px-3 py-1 rounded-full bg-[#f4f8f3] border border-[#c8dac5] text-[#265243] text-xs font-black">
-                                                    5 Poin Misi Utama
+                                                    {missionItems.length} Poin Misi Utama
                                                 </span>
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                {[
-                                                    {
-                                                        num: '01',
-                                                        title: 'Keimanan & Ketaqwaan',
-                                                        desc: 'Meningkatkan Keimanan dan Ketaqwaan terhadap Tuhan Yang Maha Esa.',
-                                                        icon: Sparkles,
-                                                    },
-                                                    {
-                                                        num: '02',
-                                                        title: 'Wawasan Kebangsaan',
-                                                        desc: 'Meningkatkan Wawasan kebangsaan dan cinta tanah air.',
-                                                        icon: Globe,
-                                                    },
-                                                    {
-                                                        num: '03',
-                                                        title: 'Kemandirian & Kepemimpinan',
-                                                        desc: 'Meningkatkan karakter kemandirian, kerja keras, dan kepemimpinan.',
-                                                        icon: Award,
-                                                    },
-                                                    {
-                                                        num: '04',
-                                                        title: 'Kurikulum Berwawasan Lingkungan',
-                                                        desc: 'Memperkaya Kurikulum Berwawasan Lingkungan dengan Budaya Karakter Bangsa berbasis Kearifan Lokal.',
-                                                        icon: BookOpen,
-                                                    },
-                                                    {
-                                                        num: '05',
-                                                        title: 'Kultur Disiplin & Budaya 5S',
-                                                        desc: 'Mengembangkan kultur sekolah yang disiplin, agamis, dan menerapkan budaya 5S (Senyum, Sapa, Salam, Sopan, Santun).',
-                                                        icon: CheckCircle2,
-                                                    },
-                                                ].map((item, idx) => {
-                                                    const IconComponent = item.icon;
-                                                    const isFullWidth = idx === 4;
+                                                {missionItems.map((item, idx) => {
+                                                    const isFullWidth = idx === missionItems.length - 1 && missionItems.length % 2 !== 0;
                                                     return (
                                                         <div
                                                             key={idx}
-                                                            className={`group relative bg-white border border-[#c8dac5] hover:border-[#265243] rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between ${isFullWidth ? 'md:col-span-2' : ''}`}
+                                                            className={`group relative bg-white border border-[#c8dac5] hover:border-[#265243] rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-md transition-all duration-300 flex items-center justify-between gap-4 min-h-[90px] ${isFullWidth ? 'md:col-span-2' : ''}`}
                                                         >
-                                                            <div className="flex items-start justify-between gap-4 mb-3">
-                                                                <div className="flex items-center gap-3">
-                                                                    <div className="w-9 h-9 rounded-xl bg-[#f4f8f3] text-[#265243] group-hover:bg-[#265243] group-hover:text-white flex items-center justify-center transition-colors shadow-xs">
-                                                                        <IconComponent className="w-5 h-5" />
-                                                                    </div>
-                                                                    <h5 className="font-extrabold text-[#142921] text-base leading-snug">
-                                                                        {item.title}
-                                                                    </h5>
-                                                                </div>
-                                                                <span className="text-2xl font-black text-[#c8dac5] group-hover:text-[#f59e0b] transition-colors font-mono">
+                                                            {/* Misi Text Content (Centered Layout) */}
+                                                            <div className="flex-1 flex items-center">
+                                                                <p className="text-sm sm:text-base text-[#142921] font-extrabold leading-relaxed text-center sm:text-left w-full">
+                                                                    {item.desc}
+                                                                </p>
+                                                            </div>
+
+                                                            {/* Number Badge (Vertically Centered on Right Side) */}
+                                                            <div className="shrink-0 flex items-center justify-center pl-4 border-l border-[#e2ebd9] self-stretch">
+                                                                <span className="text-2xl sm:text-3xl font-black text-[#c8dac5] group-hover:text-[#265243] transition-colors font-mono tracking-tighter">
                                                                     {item.num}
                                                                 </span>
                                                             </div>
-
-                                                            <p className="text-xs sm:text-sm text-[#386150] font-medium leading-relaxed">
-                                                                {item.desc}
-                                                            </p>
                                                         </div>
                                                     );
                                                 })}
