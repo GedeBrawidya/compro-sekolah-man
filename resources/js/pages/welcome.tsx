@@ -1682,7 +1682,6 @@ export default function Welcome({
                                         <span className="px-3.5 py-1 rounded-full bg-[#f59e0b] text-white text-[10px] sm:text-[11px] font-black tracking-widest uppercase shadow-xs">
                                             Portal Publikasi
                                         </span>
-                                        <span className="text-xs text-emerald-200/80 font-semibold">• Informasi & Pengumuman</span>
                                     </div>
                                     <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight font-sans drop-shadow-md">
                                         Daftar Artikel & Pengumuman Sekolah
