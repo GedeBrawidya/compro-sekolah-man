@@ -12,6 +12,7 @@ use App\Models\LandingPageSetting;
 use App\Models\LegalizationRequest;
 use App\Models\News;
 use App\Models\SchoolMilestone;
+use App\Models\WebsiteVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -20,6 +21,9 @@ class PublicController extends Controller
 {
     public function index(Request $request)
     {
+        // Record dynamic website visitor count
+        WebsiteVisit::recordVisit();
+
         // 1. Banners
         $banners = Banner::where('is_active', true)
             ->orderBy('order')
@@ -155,6 +159,8 @@ class PublicController extends Controller
 
     public function showNews(string $slug)
     {
+        WebsiteVisit::recordVisit();
+
         $newsItem = News::with('author:id,name')
             ->where('status', 'published')
             ->where(function ($q) use ($slug) {

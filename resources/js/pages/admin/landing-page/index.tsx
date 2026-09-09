@@ -449,8 +449,8 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
                     icon={LayoutTemplate}
                 />
 
-                {/* Tab Navigation */}
-                <div style={{ backgroundColor: '#e8efe5', borderColor: '#b8ceb0' }} className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl border shadow-xs">
+                {/* Tab Navigation - Full Width 7-Item Grid */}
+                <div style={{ backgroundColor: '#e8efe5', borderColor: '#b8ceb0' }} className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-7 gap-2 p-2 rounded-2xl border shadow-sm w-full">
                     {TABS.map((tab) => {
                         const Icon = tab.icon;
                         const active = activeTab === tab.key;
@@ -461,15 +461,16 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
                                 style={
                                     active
                                         ? { backgroundColor: '#265243', color: '#ffffff' }
-                                        : { backgroundColor: 'transparent', color: '#265243' }
+                                        : { backgroundColor: 'transparent', color: '#142921' }
                                 }
-                                className={`inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+                                className={`flex items-center justify-center gap-2.5 px-3 py-3.5 text-xs sm:text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer w-full text-center ${
                                     active
-                                        ? 'shadow-xs'
-                                        : 'hover:bg-[#d8e4d5]'
+                                        ? 'shadow-md scale-[1.01]'
+                                        : 'hover:bg-[#d4e4d1] hover:text-[#265243]'
                                 }`}
                             >
-                                <Icon className="w-4 h-4" /> {tab.label}
+                                <Icon className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                                <span className="truncate">{tab.label}</span>
                             </button>
                         );
                     })}

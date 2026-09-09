@@ -15,7 +15,7 @@ export function PageHeader({ title, description, icon: Icon, badge, action }: Pa
     const schoolLogoUrl = props.school_logo_url;
 
     return (
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#265243] via-[#316150] to-[#486b59] p-6 sm:p-7 text-white shadow-md mb-6">
+        <div className="relative overflow-hidden rounded-2xl bg-[#265243] p-6 sm:p-7 text-white shadow-md border border-[#316150] mb-6">
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-start sm:items-center gap-4">
                     <div className="p-2.5 rounded-2xl bg-white/15 text-white backdrop-blur-md border border-white/20 shadow-sm shrink-0 flex items-center justify-center w-12 h-12">

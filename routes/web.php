@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Modul Perpustakaan Digital (Pustakawan / Admin)
         Route::middleware(['role:pustakawan,admin'])->group(function () {
+            Route::get('books/categories', fn () => redirect()->route('book-categories.index'));
             Route::resource('books', BookController::class)->except(['create', 'edit']);
             Route::post('books/{book}/copies', [BookController::class, 'storeCopy'])->name('books.copies.store');
             Route::put('books/{book}/copies/{copy}', [BookController::class, 'updateCopy'])->name('books.copies.update');
