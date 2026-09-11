@@ -629,6 +629,15 @@ export default function Welcome({
                                                     <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'history' ? 'bg-white' : 'bg-[#265243]'}`}></span>
                                                     <span>Sejarah Singkat</span>
                                                 </button>
+                                                <button
+                                                    onClick={() => { handleTabClick('profile'); setProfileSubTab('facilities'); setIsProfileDropdownOpen(false); }}
+                                                    className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                        activeTab === 'profile' && profileSubTab === 'facilities' ? 'bg-[#265243] text-white shadow-xs' : 'text-[#142921] hover:bg-[#f4f8f3]'
+                                                    }`}
+                                                >
+                                                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'facilities' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                    <span>Sarana & Prasarana</span>
+                                                </button>
                                             </div>
                                         </div>
                                     )}
@@ -769,6 +778,21 @@ export default function Welcome({
                                                     >
                                                         <span className={`w-2 h-2 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'history' ? 'bg-white' : 'bg-[#265243]'}`}></span>
                                                         <span>Sejarah Singkat</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            handleTabClick('profile');
+                                                            setProfileSubTab('facilities');
+                                                            setIsMobileMenuOpen(false);
+                                                        }}
+                                                        className={`w-full text-left px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2.5 ${
+                                                            activeTab === 'profile' && profileSubTab === 'facilities'
+                                                                ? 'bg-[#265243] text-white shadow-2xs'
+                                                                : 'text-[#142921] hover:bg-[#e2ebd9] bg-[#f4f8f3] border border-[#c8dac5]/50'
+                                                        }`}
+                                                    >
+                                                        <span className={`w-2 h-2 rounded-full shrink-0 ${activeTab === 'profile' && profileSubTab === 'facilities' ? 'bg-white' : 'bg-[#265243]'}`}></span>
+                                                        <span>Sarana & Prasarana</span>
                                                     </button>
                                                 </div>
                                             )}
@@ -1444,7 +1468,7 @@ export default function Welcome({
                                             <span>PROFIL SEKOLAH</span>
                                             <span>•</span>
                                             <span className="text-white font-extrabold">
-                                                {profileSubTab === 'vision' ? 'Visi & Misi' : profileSubTab === 'profile' ? 'Profil Sekolah' : 'Sejarah Singkat'}
+                                                {profileSubTab === 'vision' ? 'Visi & Misi' : profileSubTab === 'profile' ? 'Profil Sekolah' : profileSubTab === 'facilities' ? 'Sarana & Prasarana' : 'Sejarah Singkat'}
                                             </span>
                                         </div>
                                     </div>
@@ -1502,11 +1526,12 @@ export default function Welcome({
                             )}
 
                             {/* PINTASAN NAVIGASI PROFIL (SOLID WHITE DEFAULT -> SOLID GREEN ON SELECT - COMPLETELY BORDERLESS) */}
-                            <div className="grid grid-cols-3 gap-2 sm:gap-6">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-6">
                                 {[
                                     { id: 'profile', label: 'Profil Sekolah' },
                                     { id: 'vision', label: 'Visi & Misi' },
                                     { id: 'history', label: 'Sejarah Singkat' },
+                                    { id: 'facilities', label: 'Sarana & Prasarana' },
                                 ].map((sub) => {
                                     const isActive = profileSubTab === sub.id;
                                     return (
