@@ -175,6 +175,27 @@ interface MilestoneItem {
     order: number;
 }
 
+interface FacilityItem {
+    id: number;
+    title: string;
+    description: string | null;
+    image: string | null;
+    order: number;
+    is_active: boolean;
+}
+
+const DEFAULT_FACILITIES: FacilityItem[] = [
+    { id: 1, title: 'Ruang Kelas Nyaman', description: 'Dilengkapi dengan proyektor, AC/Kipas, dan sirkulasi udara yang baik untuk mendukung fokus belajar siswa dalam suasana kondusif dan berbasis digital.', image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1000&auto=format&fit=crop', order: 1, is_active: true },
+    { id: 2, title: 'Perpustakaan Digital', description: 'Koleksi buku lengkap dengan akses e-library, komputer pencarian katalog, dan ruang baca ber-AC yang tenang dan representatif.', image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1000&auto=format&fit=crop', order: 2, is_active: true },
+    { id: 3, title: 'Laboratorium Sains', description: 'Fasilitas praktikum Fisika, Kimia, dan Biologi berstandar nasional dengan alat peraga dan mikroskop modern untuk eksperimen ilmiah.', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1000&auto=format&fit=crop', order: 3, is_active: true },
+    { id: 4, title: 'Laboratorium Komputer', description: 'Dilengkapi puluhan PC spesifikasi tinggi, jaringan LAN terintegrasi, dan akses internet fiber optic berkecepatan tinggi untuk CBT dan coding.', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop', order: 4, is_active: true },
+    { id: 5, title: 'Masjid Utama Sekolah', description: 'Pusat kegiatan ibadah, salat berjamaah, tahfiz Al-Qur\'an, dan pembinaan karakter keagamaan siswa dengan area yang luas dan bersih.', image: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?q=80&w=1000&auto=format&fit=crop', order: 5, is_active: true },
+    { id: 6, title: 'Lapangan Olahraga', description: 'Area multi-fungsi yang luas untuk basket, futsal, bola voli, badminton, dan pelaksanaan upacara bendera serta kegiatan ekstrakurikuler.', image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1000&auto=format&fit=crop', order: 6, is_active: true },
+    { id: 7, title: 'UKS & Klinik Sekolah', description: 'Fasilitas kesehatan pertolongan pertama pada kecelakaan (P3K) lengkap dengan tempat tidur istirahat dan didampingi tenaga medis terlatih.', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1000&auto=format&fit=crop', order: 7, is_active: true },
+    { id: 8, title: 'Kantin Sehat & Bersih', description: 'Menyediakan beragam makanan dan minuman higienis, terjangkau, dan bergizi dengan standar kebersihan lingkungan yang terus dipantau.', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop', order: 8, is_active: true },
+    { id: 9, title: 'Keamanan 24 Jam & CCTV', description: 'Sistem keamanan terpadu oleh petugas satpam profesional serta pemantauan kamera CCTV di seluruh sudut area vital sekolah.', image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=1000&auto=format&fit=crop', order: 9, is_active: true },
+];
+
 interface Props {
     banners: BannerItem[];
     settings: Record<string, string>;
@@ -184,6 +205,7 @@ interface Props {
     bookCategories: string[];
     dormitory: DormitoryItem[];
     milestones: MilestoneItem[];
+    facilities?: FacilityItem[];
     stats: {
         total_news: number;
         total_books: number;
@@ -205,6 +227,7 @@ export default function Welcome({
     bookCategories = [],
     dormitory = [],
     milestones = [],
+    facilities = [],
     stats = { total_news: 0, total_books: 0, total_galleries: 0, total_dormitory: 0 },
 }: Props) {
     const { auth, flash } = usePage<{
@@ -217,6 +240,7 @@ export default function Welcome({
     const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
     const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
     const [selectedGallery, setSelectedGallery] = useState<GalleryItem | null>(null);
+    const [selectedFacility, setSelectedFacility] = useState<FacilityItem | null>(null);
     const [bookSearch, setBookSearch] = useState('');
     const [bookCategory, setBookCategory] = useState<string>('all');
     const [bookAvailability, setBookAvailability] = useState<string>('all');
@@ -1756,6 +1780,124 @@ export default function Welcome({
                                                             </div>
                                                         );
                                                     })}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* SUB-TAB 4: SARANA & PRASARANA */}
+                                {profileSubTab === 'facilities' && (
+                                    <div className="space-y-8 animate-in fade-in duration-300">
+                                        <div className="text-center space-y-2 pb-3 border-b border-[#e2ebd9]">
+                                            <h3 className="text-2xl sm:text-3xl font-black text-[#142921] tracking-tight">
+                                                Sarana &amp; Prasarana
+                                            </h3>
+                                            <div className="w-16 h-1 bg-[#f59e0b] rounded-full mx-auto" />
+                                        </div>
+
+                                        <div className="max-w-3xl mx-auto text-center text-[#2e5445] space-y-4 leading-relaxed font-medium mb-8">
+                                            <p>
+                                                Untuk mendukung proses belajar mengajar yang optimal, {schoolName} menyediakan berbagai fasilitas unggulan yang modern, lengkap, dan terintegrasi. Lingkungan sekolah dirancang untuk memfasilitasi pengembangan potensi siswa di bidang akademik maupun non-akademik.
+                                            </p>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            {((facilities && facilities.length > 0) ? facilities : DEFAULT_FACILITIES).map((fac) => (
+                                                <div
+                                                    key={fac.id}
+                                                    onClick={() => setSelectedFacility(fac)}
+                                                    className="group relative h-72 sm:h-80 rounded-2xl overflow-hidden shadow-lg border border-[#2d5645]/40 bg-[#142921] cursor-pointer transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl hover:border-[#f59e0b]/60 flex flex-col justify-end"
+                                                >
+                                                    {/* Image background */}
+                                                    {fac.image ? (
+                                                        <img
+                                                            src={fac.image}
+                                                            alt={fac.title}
+                                                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                                                        />
+                                                    ) : (
+                                                        <div className="absolute inset-0 w-full h-full bg-[#1b382d] flex items-center justify-center">
+                                                            <Building2 className="w-16 h-16 text-[#3a6956]" />
+                                                        </div>
+                                                    )}
+
+                                                    {/* Gradient opacity overlay */}
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#091510] via-[#091510]/70 to-transparent z-10" />
+
+                                                    {/* Content - Bottom Centered */}
+                                                    <div className="relative z-20 p-6 text-center w-full space-y-2">
+                                                        <span className="inline-block px-3 py-1 rounded-full bg-[#265243]/80 border border-[#427a66]/60 backdrop-blur-md text-[#f59e0b] text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                                                            Fasilitas Sekolah
+                                                        </span>
+                                                        <h4 className="text-xl font-black text-white group-hover:text-[#f59e0b] transition-colors leading-tight drop-shadow-md">
+                                                            {fac.title}
+                                                        </h4>
+                                                        <div className="pt-1 flex items-center justify-center text-xs font-semibold text-emerald-300/90 group-hover:text-white transition-colors gap-1.5">
+                                                            <span>Klik untuk detail</span>
+                                                            <span className="text-base group-hover:translate-x-1 transition-transform">→</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Facility Detail Modal */}
+                                        {selectedFacility && (
+                                            <div
+                                                className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+                                                onClick={() => setSelectedFacility(null)}
+                                            >
+                                                <div
+                                                    className="bg-[#142921] border border-emerald-800/80 rounded-3xl max-w-2xl w-full text-white shadow-2xl overflow-hidden relative animate-in zoom-in-95 duration-200"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    {/* Close button */}
+                                                    <button
+                                                        onClick={() => setSelectedFacility(null)}
+                                                        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition-all cursor-pointer"
+                                                    >
+                                                        <X className="w-5 h-5" />
+                                                    </button>
+
+                                                    {/* Image header */}
+                                                    <div className="h-64 sm:h-80 w-full relative bg-[#0b1712]">
+                                                        {selectedFacility.image ? (
+                                                            <img
+                                                                src={selectedFacility.image}
+                                                                alt={selectedFacility.title}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        ) : (
+                                                            <div className="w-full h-full flex items-center justify-center bg-[#18342a]">
+                                                                <Building2 className="w-20 h-20 text-[#3a6956]" />
+                                                            </div>
+                                                        )}
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-[#142921] via-transparent to-black/40" />
+                                                    </div>
+
+                                                    {/* Modal Body */}
+                                                    <div className="p-6 sm:p-8 space-y-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="px-3 py-1 rounded-full bg-[#f59e0b] text-white text-xs font-black uppercase tracking-wider shadow-sm">
+                                                                Fasilitas Sekolah
+                                                            </span>
+                                                        </div>
+                                                        <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                                                            {selectedFacility.title}
+                                                        </h3>
+                                                        <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed font-normal">
+                                                            {selectedFacility.description || 'Fasilitas unggulan sekolah yang dirancang untuk kenyamanan dan keunggulan belajar mengajar.'}
+                                                        </p>
+                                                        <div className="pt-4 border-t border-emerald-800/60 flex justify-end">
+                                                            <button
+                                                                onClick={() => setSelectedFacility(null)}
+                                                                className="px-6 py-2.5 rounded-xl bg-[#f59e0b] text-white text-xs font-bold hover:bg-[#d98206] shadow-md transition-all cursor-pointer"
+                                                            >
+                                                                Tutup Detail
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         )}

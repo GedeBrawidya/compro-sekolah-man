@@ -43,14 +43,24 @@ interface MilestoneItem {
     order: number;
 }
 
+interface FacilityItem {
+    id: number;
+    title: string;
+    description: string | null;
+    image: string | null;
+    order: number;
+    is_active: boolean;
+}
+
 interface Props {
     banners: BannerItem[];
     settings: Record<string, string | null>;
     milestones: MilestoneItem[];
+    facilities: FacilityItem[];
     flash: { success?: string; error?: string };
 }
 
-type TabKey = 'banner' | 'sekolah' | 'media' | 'kepala' | 'visi' | 'sejarah' | 'footer';
+type TabKey = 'banner' | 'sekolah' | 'media' | 'kepala' | 'visi' | 'sejarah' | 'sarpras' | 'footer';
 
 const TABS: { key: TabKey; label: string; icon: React.ElementType }[] = [
     { key: 'banner', label: 'Banner Slider', icon: LayoutTemplate },
@@ -59,6 +69,7 @@ const TABS: { key: TabKey; label: string; icon: React.ElementType }[] = [
     { key: 'kepala', label: 'Kepala Sekolah', icon: GraduationCap },
     { key: 'visi', label: 'Visi & Misi', icon: Target },
     { key: 'sejarah', label: 'Sejarah Singkat', icon: History },
+    { key: 'sarpras', label: 'Sarana & Prasarana', icon: Building2 },
     { key: 'footer', label: 'Footer', icon: MapPin },
 ];
 
@@ -217,8 +228,122 @@ function BannerModal({
     );
 }
 
+/* ─── Facility Form Modal ─────────────────────────────────────────────── */
+function FacilityModal({
+    editing,
+    onClose,
+}: { editing: FacilityItem | null; onClose: () => void }) {
+    const [title, setTitle] = useState(editing?.title ?? '');
+    const [description, setDescription] = useState(editing?.description ?? '');
+    const [isActive, setIsActive] = useState(editing?.is_active ?? true);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(editing?.image ?? null);
+    const [processing, setProcessing] = useState(false);
+    const fileRef = useRef<HTMLInputElement>(null);
+
+    const handleFile = (f: File | null) => {
+        if (!f) return;
+        if (f.size > MAX_FILE_SIZE_BYTES) {
+            alert(`Ukuran foto fasilitas (${(f.size / (1024 * 1024)).toFixed(1)}MB) melebihi batas maksimal 3MB. Silakan pilih foto dengan ukuran lebih kecil.`);
+            if (fileRef.current) fileRef.current.value = '';
+            return;
+        }
+        setImageFile(f);
+        setImagePreview(URL.createObjectURL(f));
+    };
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        setProcessing(true);
+
+        const payload: Record<string, any> = { title, description, is_active: isActive ? 1 : 0 };
+        if (imageFile) {
+            payload.image = imageFile;
+        }
+
+        if (editing) {
+            router.post(`/admin/landing-page/facilities/${editing.id}`, { _method: 'PUT', ...payload }, {
+                onFinish: () => { setProcessing(false); onClose(); },
+            });
+        } else {
+            router.post('/admin/landing-page/facilities', payload, {
+                onFinish: () => { setProcessing(false); onClose(); },
+            });
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div style={{ backgroundColor: '#ffffff', borderColor: '#c8dac5' }} className="w-full max-w-lg rounded-2xl shadow-2xl border overflow-hidden">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-[#b8ceb0]/40">
+                    <h3 className="text-base font-bold text-[#142921]">
+                        {editing ? 'Edit Fasilitas' : 'Tambah Fasilitas Baru'}
+                    </h3>
+                    <button onClick={onClose} className="text-[#527365] hover:text-[#142921] transition-colors cursor-pointer">
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                    {/* Image Upload */}
+                    <div>
+                        <label className="block text-xs font-semibold text-[#142921] mb-1.5">Foto Fasilitas</label>
+                        {imagePreview ? (
+                            <div className="relative mb-2">
+                                <img src={imagePreview} alt="preview" className="w-full h-44 object-cover rounded-xl border border-[#b8ceb0]" />
+                                <button
+                                    type="button"
+                                    onClick={() => { setImagePreview(null); setImageFile(null); if (fileRef.current) fileRef.current.value = ''; }}
+                                    className="absolute top-2 right-2 p-1.5 rounded-lg bg-white/90 text-rose-600 hover:bg-white shadow-xs text-xs font-bold flex items-center gap-1 cursor-pointer"
+                                >✕</button>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={() => fileRef.current?.click()}
+                                style={{ backgroundColor: '#eef4eb', borderColor: '#b8ceb0' }}
+                                className="w-full h-36 rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-[#265243] hover:bg-[#dce8d7] transition-all"
+                            >
+                                <ImageIcon className="w-8 h-8 text-[#265243]" />
+                                <p className="text-xs text-[#2e5445] text-center font-medium">Klik untuk upload foto fasilitas<br /><span className="text-[10px] text-[#527365]">(Maksimal 3MB, rekomendasi landscape)</span></p>
+                            </div>
+                        )}
+                        <input ref={fileRef} type="file" className="hidden" accept="image/*" onChange={(e) => handleFile(e.target.files?.[0] || null)} />
+                    </div>
+
+                    <FieldInput label="Nama / Judul Fasilitas" value={title} onChange={setTitle} placeholder="Contoh: Perpustakaan Digital" required />
+                    <FieldTextarea label="Deskripsi Fasilitas" value={description} onChange={setDescription} placeholder="Deskripsi lengkap mengenai fasilitas ini..." rows={3} />
+
+                    <label className="flex items-center gap-2.5 cursor-pointer select-none pt-1">
+                        <div
+                            onClick={() => setIsActive(!isActive)}
+                            className={`w-10 h-6 rounded-full transition-colors flex items-center px-0.5 ${isActive ? 'bg-[#265243]' : 'bg-[#b8ceb0]'}`}
+                        >
+                            <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${isActive ? 'translate-x-4' : 'translate-x-0'}`} />
+                        </div>
+                        <span className="text-xs text-[#142921] font-semibold">Fasilitas aktif (tampil di beranda)</span>
+                    </label>
+
+                    <div className="flex items-center justify-end gap-3 pt-2 border-t border-[#b8ceb0]/40">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            style={{ backgroundColor: '#eef4eb', borderColor: '#b8ceb0', color: '#265243' }}
+                            className="px-4 py-2 text-xs font-semibold rounded-xl border hover:bg-[#dce8d7] transition-all cursor-pointer"
+                        >
+                            Batal
+                        </button>
+                        <button type="submit" disabled={processing || !title} className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-[#265243] text-white text-xs font-bold hover:bg-[#1f4337] disabled:opacity-50 transition-all shadow-xs cursor-pointer">
+                            <Save className="w-4 h-4" /> {editing ? 'Simpan Perubahan' : 'Tambah Fasilitas'}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+
 /* ─── Main Page ──────────────────────────────────────────────────────── */
-export default function LandingPageIndex({ banners, settings, milestones = [], flash }: Props) {
+export default function LandingPageIndex({ banners, settings, milestones = [], facilities = [], flash }: Props) {
     const page = usePage();
     const flashSuccess = flash?.success || (page.props as any).flash?.success;
     const flashError = flash?.error || (page.props as any).flash?.error;
@@ -256,6 +381,7 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
 
     const [activeTab, setActiveTab] = useState<TabKey>('banner');
     const [bannerModal, setBannerModal] = useState<{ open: boolean; editing: BannerItem | null }>({ open: false, editing: null });
+    const [facilityModal, setFacilityModal] = useState<{ open: boolean; editing: FacilityItem | null }>({ open: false, editing: null });
     const [saving, setSaving] = useState(false);
 
     const [confirmModal, setConfirmModal] = useState<{
@@ -432,6 +558,20 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
             confirmText: 'Ya, Hapus',
             onConfirm: () => {
                 router.delete(`/admin/landing-page/banners/${banner.id}`, {
+                    onFinish: () => setConfirmModal((prev) => ({ ...prev, isOpen: false })),
+                });
+            },
+        });
+    };
+
+    const deleteFacility = (facility: FacilityItem) => {
+        setConfirmModal({
+            isOpen: true,
+            title: 'Hapus Fasilitas',
+            description: `Apakah Anda yakin ingin menghapus fasilitas "${facility.title}"?`,
+            confirmText: 'Ya, Hapus',
+            onConfirm: () => {
+                router.delete(`/admin/landing-page/facilities/${facility.id}`, {
                     onFinish: () => setConfirmModal((prev) => ({ ...prev, isOpen: false })),
                 });
             },
@@ -1066,6 +1206,86 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
                             </button>
                         </div>
                     </form>
+                )}
+
+                {/* ────────── SARANA & PRASARANA TAB ────────── */}
+                {activeTab === 'sarpras' && (
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <p className="text-xs font-semibold text-[#2e5445]">Kelola fasilitas sarana &amp; prasarana yang tampil di profil sekolah pada beranda.</p>
+                            <button
+                                onClick={() => setFacilityModal({ open: true, editing: null })}
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#265243] text-white text-xs font-bold hover:bg-[#1f4337] shadow-xs transition-all cursor-pointer"
+                            >
+                                <Plus className="w-4 h-4" /> Tambah Fasilitas
+                            </button>
+                        </div>
+
+                        {facilities.length === 0 ? (
+                            <div
+                                style={{ backgroundColor: '#e8efe5', borderColor: '#b8ceb0' }}
+                                className="p-16 rounded-2xl border-2 border-dashed text-center shadow-xs"
+                            >
+                                <Building2 className="w-10 h-10 text-[#265243]/40 mx-auto mb-3" />
+                                <p className="text-[#2e5445] text-xs font-semibold">Belum ada fasilitas dinamis. Klik &quot;Tambah Fasilitas&quot; untuk menambahkan fasilitas pertama.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                {facilities.map((f) => (
+                                    <div
+                                        key={f.id}
+                                        style={{ backgroundColor: '#e8efe5', borderColor: '#b8ceb0' }}
+                                        className={`rounded-2xl border shadow-xs overflow-hidden flex flex-col justify-between transition-all hover:shadow-md ${
+                                            f.is_active ? '' : 'opacity-60'
+                                        }`}
+                                    >
+                                        <div className="relative h-44 w-full bg-[#142921]">
+                                            {f.image ? (
+                                                <img src={f.image} alt={f.title} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center">
+                                                    <Building2 className="w-10 h-10 text-emerald-600/50" />
+                                                </div>
+                                            )}
+                                            <span className={`absolute top-3 right-3 px-2.5 py-0.5 rounded-md text-[10px] font-bold shadow-xs ${f.is_active ? 'bg-[#265243] text-white' : 'bg-slate-700 text-white'}`}>
+                                                {f.is_active ? 'Aktif' : 'Nonaktif'}
+                                            </span>
+                                        </div>
+
+                                        <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                                            <div>
+                                                <h4 className="font-bold text-[#142921] text-base">{f.title}</h4>
+                                                {f.description && (
+                                                    <p className="text-xs text-[#2e5445] font-medium mt-1 line-clamp-3 leading-relaxed">
+                                                        {f.description}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#b8ceb0]/40">
+                                                <button
+                                                    onClick={() => setFacilityModal({ open: true, editing: f })}
+                                                    style={{ backgroundColor: '#eef4eb', borderColor: '#b8ceb0', color: '#265243' }}
+                                                    className="px-3 py-1.5 rounded-xl border hover:bg-[#dce8d7] text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+                                                >
+                                                    <Edit3 className="w-3.5 h-3.5" /> Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => deleteFacility(f)}
+                                                    className="px-3 py-1.5 rounded-xl border border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+                                                >
+                                                    <Trash2 className="w-3.5 h-3.5" /> Hapus
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {facilityModal.open && (
+                            <FacilityModal editing={facilityModal.editing} onClose={() => setFacilityModal({ open: false, editing: null })} />
+                        )}
+                    </div>
                 )}
             </div>
 

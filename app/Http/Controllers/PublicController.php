@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\Complaint;
 use App\Models\DormitoryPost;
+use App\Models\Facility;
 use App\Models\Gallery;
 use App\Models\LandingPageSetting;
 use App\Models\LegalizationRequest;
@@ -140,6 +141,21 @@ class PublicController extends Controller
             ];
         });
 
+        // 9. Facilities (Sarana & Prasarana)
+        $facilities = Facility::where('is_active', true)
+            ->orderBy('order')
+            ->get()
+            ->map(function ($f) {
+                return [
+                    'id'          => $f->id,
+                    'title'       => $f->title,
+                    'description' => $f->description,
+                    'image'       => $f->image ? Storage::url($f->image) : null,
+                    'order'       => $f->order,
+                    'is_active'   => $f->is_active,
+                ];
+            });
+
         return Inertia::render('welcome', [
             'banners'         => $banners,
             'settings'        => $settings,
@@ -149,6 +165,7 @@ class PublicController extends Controller
             'bookCategories'  => $bookCategories,
             'dormitory'       => $dormitory,
             'milestones'      => $milestones,
+            'facilities'      => $facilities,
             'stats'           => $stats,
             'flash'           => [
                 'success' => session('success'),

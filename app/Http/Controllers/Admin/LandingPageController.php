@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Facility;
 use App\Models\LandingPageSetting;
 use App\Models\SchoolMilestone;
 use Illuminate\Http\Request;
@@ -38,10 +39,22 @@ class LandingPageController extends Controller
 
         $milestones = SchoolMilestone::orderBy('order')->orderBy('year')->get()->toArray();
 
+        $facilities = Facility::orderBy('order')->get()->map(function ($f) {
+            return [
+                'id'          => $f->id,
+                'title'       => $f->title,
+                'description' => $f->description,
+                'image'       => $f->image ? Storage::url($f->image) : null,
+                'order'       => $f->order,
+                'is_active'   => $f->is_active,
+            ];
+        });
+
         return Inertia::render('admin/landing-page/index', [
             'banners'    => $banners,
             'settings'   => $settings,
             'milestones' => $milestones,
+            'facilities' => $facilities,
             'flash'      => [
                 'success' => session('success'),
                 'error'   => session('error'),
