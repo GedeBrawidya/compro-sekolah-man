@@ -144,6 +144,7 @@ class LandingPageController extends Controller
             'school_phone'       => 'nullable|string|max:50',
             'school_email'       => 'nullable|email|max:255',
             'school_website'     => 'nullable|string|max:255',
+            'legalization_link'  => 'nullable|string|max:500',
             'school_description' => 'nullable|string',
             'school_logo'        => 'nullable|image|max:2048',
             'school_npsn'        => 'nullable|string|max:20',

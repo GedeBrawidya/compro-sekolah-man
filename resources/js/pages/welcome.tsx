@@ -278,6 +278,11 @@ export default function Welcome({
             window.open('/?tab=books', '_blank');
             return;
         }
+        if (tabId === 'legalization') {
+            const defaultLink = 'https://docs.google.com/forms/d/e/1FAIpQLSeQFirrXnNpCuZEPGK4SOIWuBrs4c3sEPJLEoZB9l0LRWbTqw/formResponse';
+            window.open(settings.legalization_link || defaultLink, '_blank');
+            return;
+        }
         setActiveTab(tabId);
         setIsMobileMenuOpen(false);
 
@@ -2565,145 +2570,8 @@ export default function Welcome({
                     )}
 
                     {/* ========================================================================= */}
-                    {/* TAB 6: E-LEGALISIR ALUMNI (LEGALIZATION)                                  */}
+                    {/* TAB 6: E-LEGALISIR ALUMNI (LEGALIZATION) - REMOVED, NOW OPENS EXTERNAL URL */}
                     {/* ========================================================================= */}
-                    {activeTab === 'legalization' && (
-                        <div className="max-w-3xl mx-auto space-y-6">
-                            <div style={{ backgroundColor: '#ffffff', borderColor: '#c8dac5' }} className="p-6 sm:p-8 rounded-3xl border shadow-md space-y-6">
-                                <div className="flex items-center gap-3 border-l-4 border-[#265243] pl-3">
-                                    <div>
-                                        <h3 className="text-xl font-black text-[#142921]">
-                                            Form Permohonan E-Legalisir Alumni
-                                        </h3>
-                                        <p className="text-xs font-semibold text-[#527365] mt-1">
-                                            Layanan legalisasi ijazah dan transkrip nilai secara online untuk alumni sekolah.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <form onSubmit={handleLegalizationSubmit} className="space-y-4">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#265243] mb-1">
-                                                Nama Lengkap Alumni <span className="text-rose-600">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                required
-                                                placeholder="Nama lengkap sesuai ijazah..."
-                                                value={legalizationForm.data.alumni_name}
-                                                onChange={(e) => legalizationForm.setData('alumni_name', e.target.value)}
-                                                style={{ backgroundColor: '#ffffff', borderColor: '#265243', color: '#142921' }}
-                                                className="w-full px-4 py-3 text-xs font-bold rounded-xl border-2 shadow-xs focus:ring-2 focus:ring-[#265243]/20 focus:outline-none"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#265243] mb-1">
-                                                Email Aktif <span className="text-rose-600">*</span>
-                                            </label>
-                                            <input
-                                                type="email"
-                                                required
-                                                placeholder="email@domain.com"
-                                                value={legalizationForm.data.email}
-                                                onChange={(e) => legalizationForm.setData('email', e.target.value)}
-                                                style={{ backgroundColor: '#ffffff', borderColor: '#265243', color: '#142921' }}
-                                                className="w-full px-4 py-3 text-xs font-bold rounded-xl border-2 shadow-xs focus:ring-2 focus:ring-[#265243]/20 focus:outline-none"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#265243] mb-1">
-                                                No. WhatsApp / HP <span className="text-rose-600">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                required
-                                                placeholder="0812xxxxxxxx"
-                                                value={legalizationForm.data.phone}
-                                                onChange={(e) => legalizationForm.setData('phone', e.target.value)}
-                                                style={{ backgroundColor: '#ffffff', borderColor: '#265243', color: '#142921' }}
-                                                className="w-full px-4 py-3 text-xs font-bold rounded-xl border-2 shadow-xs focus:ring-2 focus:ring-[#265243]/20 focus:outline-none"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#265243] mb-1">
-                                                Tahun Kelulusan <span className="text-rose-600">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                required
-                                                placeholder="Contoh: 2023"
-                                                value={legalizationForm.data.graduation_year}
-                                                onChange={(e) => legalizationForm.setData('graduation_year', e.target.value)}
-                                                style={{ backgroundColor: '#ffffff', borderColor: '#265243', color: '#142921' }}
-                                                className="w-full px-4 py-3 text-xs font-bold rounded-xl border-2 shadow-xs focus:ring-2 focus:ring-[#265243]/20 focus:outline-none"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#265243] mb-1">
-                                                Jenis Dokumen <span className="text-rose-600">*</span>
-                                            </label>
-                                            <select
-                                                value={legalizationForm.data.document_type}
-                                                onChange={(e) => legalizationForm.setData('document_type', e.target.value)}
-                                                style={{ backgroundColor: '#ffffff', borderColor: '#265243', color: '#142921' }}
-                                                className="w-full px-4 py-3 text-xs font-bold rounded-xl border-2 shadow-xs focus:ring-2 focus:ring-[#265243]/20 focus:outline-none"
-                                            >
-                                                <option value="Ijazah & Transkrip Nilai">Ijazah & Transkrip Nilai</option>
-                                                <option value="Ijazah SMA">Ijazah SMA Sah</option>
-                                                <option value="Transkrip Nilai">Transkrip Nilai Sah</option>
-                                                <option value="Sertifikat Akreditasi">Sertifikat Akreditasi</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#265243] mb-1">
-                                                Jumlah Rangkap <span className="text-rose-600">*</span>
-                                            </label>
-                                            <input
-                                                type="number"
-                                                min={1}
-                                                max={20}
-                                                required
-                                                value={legalizationForm.data.copies}
-                                                onChange={(e) => legalizationForm.setData('copies', parseInt(e.target.value) || 1)}
-                                                style={{ backgroundColor: '#ffffff', borderColor: '#265243', color: '#142921' }}
-                                                className="w-full px-4 py-3 text-xs font-bold rounded-xl border-2 shadow-xs focus:ring-2 focus:ring-[#265243]/20 focus:outline-none"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-xs font-extrabold uppercase tracking-wider text-[#265243] mb-1">
-                                            Catatan / Kepentingan Legalisir
-                                        </label>
-                                        <textarea
-                                            rows={3}
-                                            placeholder="Tuliskan catatan permohonan atau universitas/perusahaan tujuan..."
-                                            value={legalizationForm.data.notes}
-                                            onChange={(e) => legalizationForm.setData('notes', e.target.value)}
-                                            style={{ backgroundColor: '#ffffff', borderColor: '#265243', color: '#142921' }}
-                                            className="w-full px-4 py-3 text-xs font-semibold rounded-xl border-2 shadow-xs focus:ring-2 focus:ring-[#265243]/20 focus:outline-none"
-                                        />
-                                    </div>
-
-                                    <button
-                                        type="submit"
-                                        disabled={legalizationForm.processing}
-                                        style={{ backgroundColor: '#265243', color: '#ffffff' }}
-                                        className="w-full py-3.5 rounded-xl font-extrabold text-xs shadow-md hover:bg-[#1a3d31] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-                                    >
-                                        <FileCheck className="w-4 h-4 text-white" /> Kirim Permohonan Legalisir
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    )}
 
                     {/* ========================================================================= */}
                     {/* TAB 7: PENGADUAN MASYARAKAT (COMPLAINTS)                                  */}

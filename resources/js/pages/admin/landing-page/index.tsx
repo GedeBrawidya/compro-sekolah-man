@@ -458,6 +458,7 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
     const [schoolPhone, setSchoolPhone] = useState(settings.school_phone ?? '');
     const [schoolEmail, setSchoolEmail] = useState(settings.school_email ?? '');
     const [schoolWebsite, setSchoolWebsite] = useState(settings.school_website ?? '');
+    const [legalizationLink, setLegalizationLink] = useState(settings.legalization_link ?? '');
     const [schoolDesc, setSchoolDesc] = useState(settings.school_description ?? '');
 
     const [totalStudents, setTotalStudents] = useState(settings.total_students ?? '');
@@ -516,6 +517,7 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
             school_phone: schoolPhone,
             school_email: schoolEmail,
             school_website: schoolWebsite,
+            legalization_link: legalizationLink,
             school_description: schoolDesc,
             total_students: totalStudents,
             total_teachers: totalTeachers,
@@ -739,6 +741,7 @@ export default function LandingPageIndex({ banners, settings, milestones = [], f
                                     <FieldInput label="Telepon" value={schoolPhone} onChange={setSchoolPhone} placeholder="(0274) 123456" type="tel" />
                                     <FieldInput label="Email" value={schoolEmail} onChange={setSchoolEmail} placeholder="info@mancontoh.sch.id" type="email" />
                                 </div>
+                                <FieldInput label="Link E-Legalisir" value={legalizationLink} onChange={setLegalizationLink} placeholder="https://docs.google.com/forms/..." />
                                 <div className="pt-2 border-t border-[#b8ceb0]/40 space-y-3">
                                     <h4 className="text-xs font-bold text-[#265243] uppercase tracking-wider">Data Statistik (Banner Strip Beranda)</h4>
                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
