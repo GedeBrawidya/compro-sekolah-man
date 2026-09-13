@@ -56,8 +56,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('landing-page/milestones/{milestone}', [MilestoneController::class, 'destroy'])->name('landing-page.milestones.destroy');
             Route::post('landing-page/milestones/reorder', [MilestoneController::class, 'reorder'])->name('landing-page.milestones.reorder');
             // Facilities (Sarana & Prasarana Modul Standalone)
-            Route::resource('facilities', FacilityController::class)->except(['create', 'edit', 'show']);
+            // PENTING: reorder harus didaftarkan SEBELUM resource agar tidak di-intercept oleh {facility}
             Route::post('facilities/reorder', [FacilityController::class, 'reorder'])->name('facilities.reorder');
+            Route::resource('facilities', FacilityController::class)->except(['create', 'edit', 'show']);
             Route::post('landing-page/facilities', [FacilityController::class, 'store'])->name('landing-page.facilities.store');
             Route::match(['post', 'put'], 'landing-page/facilities/{facility}', [FacilityController::class, 'update'])->name('landing-page.facilities.update');
             Route::delete('landing-page/facilities/{facility}', [FacilityController::class, 'destroy'])->name('landing-page.facilities.destroy');
