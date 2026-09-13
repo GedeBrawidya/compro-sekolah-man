@@ -3,58 +3,31 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Complaint;
+use App\Models\LandingPageSetting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ComplaintController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->query('search');
-        $status = $request->query('status');
-
-        $complaints = Complaint::when($search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('subject', 'like', "%{$search}%")
-                    ->orWhere('message', 'like', "%{$search}%");
-            })
-            ->when($status, function ($query, $status) {
-                $query->where('status', $status);
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+        $defaultLegalisirLink = 'https://docs.google.com/forms/d/e/1FAIpQLSeQFirrXnNpCuZEPGK4SOIWuBrs4c3sEPJLEoZB9l0LRWbTqw/formResponse';
+        $legalisirLink = LandingPageSetting::get('legalization_link', $defaultLegalisirLink);
+        $complaintLink = LandingPageSetting::get('complaint_link', $legalisirLink);
 
         return Inertia::render('admin/complaints/index', [
-            'complaints' => $complaints,
-            'filters' => [
-                'search' => $search,
-                'status' => $status,
-            ],
+            'complaint_link' => $complaintLink,
         ]);
     }
 
-    public function updateStatus(Request $request, Complaint $complaint)
+    public function updateLink(Request $request)
     {
         $request->validate([
-            'status' => 'required|in:pending,processed,resolved',
-            'response' => 'nullable|string',
+            'complaint_link' => 'nullable|string|max:500',
         ]);
 
-        $complaint->update([
-            'status' => $request->status,
-            'response' => $request->response,
-        ]);
+        LandingPageSetting::set('complaint_link', $request->complaint_link);
 
-        return redirect()->back()->with('success', 'Status pengaduan berhasil diperbarui!');
-    }
-
-    public function destroy(Complaint $complaint)
-    {
-        $complaint->delete();
-
-        return redirect()->back()->with('success', 'Pengaduan berhasil dihapus!');
+        return redirect()->back()->with('success', 'Link Form Pengaduan berhasil diperbarui!');
     }
 }

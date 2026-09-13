@@ -37,9 +37,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::resource('complaints', ComplaintController::class)->only(['index', 'destroy']);
             Route::put('complaints/{complaint}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
+            Route::post('complaints/link', [ComplaintController::class, 'updateLink'])->name('complaints.update-link');
 
             Route::resource('legalization', LegalizationController::class)->only(['index', 'destroy']);
             Route::put('legalization/{legalization}/status', [LegalizationController::class, 'updateStatus'])->name('legalization.update-status');
+            Route::post('legalization/link', [LegalizationController::class, 'updateLink'])->name('legalization.update-link');
 
             // Landing Page CMS
             Route::get('landing-page', [LandingPageController::class, 'index'])->name('landing-page.index');
@@ -53,7 +55,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::match(['post', 'put'], 'landing-page/milestones/{milestone}', [MilestoneController::class, 'update'])->name('landing-page.milestones.update');
             Route::delete('landing-page/milestones/{milestone}', [MilestoneController::class, 'destroy'])->name('landing-page.milestones.destroy');
             Route::post('landing-page/milestones/reorder', [MilestoneController::class, 'reorder'])->name('landing-page.milestones.reorder');
-            // Facilities (Sarana & Prasarana)
+            // Facilities (Sarana & Prasarana Modul Standalone)
+            Route::resource('facilities', FacilityController::class)->except(['create', 'edit', 'show']);
+            Route::post('facilities/reorder', [FacilityController::class, 'reorder'])->name('facilities.reorder');
             Route::post('landing-page/facilities', [FacilityController::class, 'store'])->name('landing-page.facilities.store');
             Route::match(['post', 'put'], 'landing-page/facilities/{facility}', [FacilityController::class, 'update'])->name('landing-page.facilities.update');
             Route::delete('landing-page/facilities/{facility}', [FacilityController::class, 'destroy'])->name('landing-page.facilities.destroy');

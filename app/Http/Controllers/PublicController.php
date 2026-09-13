@@ -90,6 +90,11 @@ class PublicController extends Controller
             ->latest()
             ->get()
             ->map(function ($b) {
+                $totalCopies = $b->copies_count > 0 ? $b->copies_count : max(1, (int) $b->total_stock);
+                $availableCopies = $b->copies_count > 0 
+                    ? $b->available_copies_count 
+                    : ($b->status === 'available' ? max(1, (int) $b->available_stock) : 0);
+
                 return [
                     'id'               => $b->id,
                     'title'            => $b->title,
@@ -99,8 +104,8 @@ class PublicController extends Controller
                     'cover_image'      => $b->cover_image,
                     'description'      => $b->description,
                     'status'           => $b->status,
-                    'available_copies' => $b->available_copies_count,
-                    'total_copies'     => $b->copies_count,
+                    'available_copies' => $availableCopies,
+                    'total_copies'     => $totalCopies,
                 ];
             });
 

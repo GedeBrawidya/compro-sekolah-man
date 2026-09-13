@@ -1,6 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
 import {
     BookMarked,
+    Building2,
     FileCheck,
     Globe,
     Home,
@@ -51,6 +52,11 @@ export function AppSidebar() {
                     title: 'CMS Beranda',
                     href: '/admin/landing-page',
                     icon: LayoutTemplate,
+                },
+                {
+                    title: 'Sarana & Prasarana',
+                    href: '/admin/facilities',
+                    icon: Building2,
                 },
                 {
                     title: 'Berita Sekolah',

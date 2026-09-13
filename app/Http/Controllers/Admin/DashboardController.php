@@ -41,12 +41,11 @@ class DashboardController extends Controller
             $dayName = $dateObj->locale('id')->isoFormat('D MMM');
 
             $visit = WebsiteVisit::where('date', $dateString)->first();
-            $baseCount = 320 + (($i * 73 + $dateObj->day * 19) % 290);
-            $realCount = $visit ? $visit->views_count : 0;
+            $realCount = $visit ? (int) $visit->views_count : 0;
 
             $visitorStats[] = [
                 'day' => $dayName,
-                'visitors' => $baseCount + $realCount,
+                'visitors' => $realCount,
             ];
         }
 

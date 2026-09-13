@@ -283,6 +283,11 @@ export default function Welcome({
             window.open(settings.legalization_link || defaultLink, '_blank');
             return;
         }
+        if (tabId === 'complaints') {
+            const defaultLink = 'https://docs.google.com/forms/d/e/1FAIpQLSeQFirrXnNpCuZEPGK4SOIWuBrs4c3sEPJLEoZB9l0LRWbTqw/formResponse';
+            window.open(settings.complaint_link || settings.legalization_link || defaultLink, '_blank');
+            return;
+        }
         setActiveTab(tabId);
         setIsMobileMenuOpen(false);
 
@@ -568,15 +573,15 @@ export default function Welcome({
 
             <div className="min-h-screen flex flex-col justify-between bg-[#f8faf7] text-[#142921] font-sans antialiased selection:bg-[#265243] selection:text-white">
 
-                {/* ── 1. DYNAMIC NAVBAR (ULTRA-SMOOTH MORPHING) ── */}
-                <div className="sticky top-0 z-50 w-full flex justify-center pointer-events-none transition-all duration-500 ease-in-out">
+                {/* ── 1. DYNAMIC NAVBAR (ULTRA-SMOOTH MORPHING WITH SAFE TOP SPACING) ── */}
+                <div className="sticky top-0 z-50 w-full flex justify-center pointer-events-none transition-all duration-300 ease-in-out px-3 sm:px-6 pt-2 sm:pt-3">
                     <header
-                        className={`pointer-events-auto transition-all duration-500 ease-in-out flex items-center justify-between ${
+                        className={`pointer-events-auto transition-all duration-300 ease-in-out flex items-center justify-between w-full max-w-7xl border backdrop-blur-xl ${
                             isMobileMenuOpen
-                                ? 'w-full max-w-full bg-transparent border-none shadow-none px-4 sm:px-8 py-3.5'
+                                ? 'bg-white/98 border-[#c8dac5] rounded-2xl px-4 sm:px-8 py-3 shadow-xl'
                                 : isScrolled
-                                ? 'mt-3 w-[calc(100%-2rem)] max-w-7xl bg-white/95 backdrop-blur-xl rounded-full shadow-2xl border border-[#c8dac5] px-6 py-2.5'
-                                : 'w-full max-w-full bg-white/95 backdrop-blur-md border-b border-[#c8dac5] shadow-xs px-4 sm:px-8 py-3.5'
+                                ? 'bg-white/95 border-[#c8dac5] rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 sm:py-3 shadow-xl'
+                                : 'bg-white/95 border-[#c8dac5] rounded-2xl sm:rounded-full px-4 sm:px-8 py-3 sm:py-3.5 shadow-md'
                         }`}
                     >
                         <div className="max-w-7xl mx-auto w-full flex items-center justify-between relative">
@@ -2182,7 +2187,7 @@ export default function Welcome({
                                         )}
                                         {bookAvailability !== 'all' && (
                                             <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-[#eef5eb] text-[#265243] font-bold text-[11px]">
-                                                Status: {bookAvailability === 'available' ? 'Tersedia' : 'Dipinjam'}
+                                                Status: {bookAvailability === 'available' ? 'Tersedia' : 'Tidak Tersedia'}
                                                 <button onClick={() => setBookAvailability('all')} className="hover:text-rose-600"><X className="w-3 h-3" /></button>
                                             </span>
                                         )}
@@ -2229,7 +2234,7 @@ export default function Welcome({
                                                     {[
                                                         { id: 'all', label: 'Semua Buku', count: books.length },
                                                         { id: 'available', label: 'Tersedia', count: books.filter(b => (b.available_copies ?? 0) > 0).length },
-                                                        { id: 'borrowed', label: 'Dipinjam', count: books.filter(b => (b.available_copies ?? 0) === 0).length },
+                                                        { id: 'borrowed', label: 'Tidak Tersedia', count: books.filter(b => (b.available_copies ?? 0) === 0).length },
                                                     ].map((opt) => (
                                                         <button
                                                             key={opt.id}
@@ -2365,7 +2370,7 @@ export default function Welcome({
                                                         <span className={`px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider ${
                                                             book.available_copies > 0 ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-rose-100 text-rose-800 border border-rose-200'
                                                         }`}>
-                                                            {book.available_copies > 0 ? 'Tersedia' : 'Dipinjam'}
+                                                            {book.available_copies > 0 ? 'Tersedia' : 'Tidak Tersedia'}
                                                         </span>
                                                     </div>
                                                 </div>

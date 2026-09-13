@@ -3,57 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LegalizationRequest;
+use App\Models\LandingPageSetting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class LegalizationController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->query('search');
-        $status = $request->query('status');
-
-        $requests = LegalizationRequest::when($search, function ($query, $search) {
-                $query->where('alumni_name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('document_type', 'like', "%{$search}%");
-            })
-            ->when($status, function ($query, $status) {
-                $query->where('status', $status);
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+        $defaultLink = 'https://docs.google.com/forms/d/e/1FAIpQLSeQFirrXnNpCuZEPGK4SOIWuBrs4c3sEPJLEoZB9l0LRWbTqw/formResponse';
+        $legalizationLink = LandingPageSetting::get('legalization_link', $defaultLink);
 
         return Inertia::render('admin/legalization/index', [
-            'requests' => $requests,
-            'filters' => [
-                'search' => $search,
-                'status' => $status,
-            ],
+            'legalization_link' => $legalizationLink,
         ]);
     }
 
-    public function updateStatus(Request $request, LegalizationRequest $legalization)
+    public function updateLink(Request $request)
     {
         $request->validate([
-            'status' => 'required|in:pending,processing,approved,rejected',
-            'notes' => 'nullable|string',
+            'legalization_link' => 'nullable|string|max:500',
         ]);
 
-        $legalization->update([
-            'status' => $request->status,
-            'notes' => $request->notes,
-        ]);
+        LandingPageSetting::set('legalization_link', $request->legalization_link);
 
-        return redirect()->back()->with('success', 'Status permohonan legalisir berhasil diperbarui!');
-    }
-
-    public function destroy(LegalizationRequest $legalization)
-    {
-        $legalization->delete();
-
-        return redirect()->back()->with('success', 'Permohonan legalisir berhasil dihapus!');
+        return redirect()->back()->with('success', 'Link E-Legalisir berhasil diperbarui!');
     }
 }

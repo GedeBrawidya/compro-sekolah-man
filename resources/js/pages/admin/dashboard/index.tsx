@@ -70,15 +70,10 @@ export default function AdminDashboard({
     const activeRole = roleLabels[userRole] || roleLabels.admin;
 
     // Visitor Stats calculations for SVG Chart
-    const defaultStats = [
-        { day: '31 Agu', visitors: 290 },
-        { day: '1 Sep', visitors: 380 },
-        { day: '2 Sep', visitors: 520 },
-        { day: '3 Sep', visitors: 410 },
-        { day: '4 Sep', visitors: 480 },
-        { day: '5 Sep', visitors: 610 },
-        { day: '6 Sep', visitors: 540 },
-    ];
+    const defaultStats = Array.from({ length: 7 }, (_, i) => ({
+        day: `H-${6 - i}`,
+        visitors: 0,
+    }));
     const vStats = visitorStats.length > 0 ? visitorStats : defaultStats;
     const totalVisitors = vStats.reduce((sum, item) => sum + item.visitors, 0);
 
@@ -334,9 +329,9 @@ export default function AdminDashboard({
                         </div>
 
                         <div className="flex items-center justify-between text-xs font-medium text-[#527365] pt-2 border-t border-[#e2ebd9]">
-                            <span>Rata-rata: <strong className="text-[#142921] font-bold">{Math.round(totalVisitors / vStats.length)} Kunjungan / Hari</strong></span>
+                            <span>Rata-rata: <strong className="text-[#142921] font-bold">{Math.round(totalVisitors / (vStats.length || 1))} Kunjungan / Hari</strong></span>
                             <span className="text-[#265243] font-bold flex items-center gap-1">
-                                <TrendingUp className="w-3.5 h-3.5 text-[#f59e0b]" /> Traffic Meningkat
+                                <TrendingUp className="w-3.5 h-3.5 text-[#f59e0b]" /> Data Real-time
                             </span>
                         </div>
                     </div>

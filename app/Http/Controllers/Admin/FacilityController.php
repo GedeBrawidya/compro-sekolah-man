@@ -6,9 +6,31 @@ use App\Http\Controllers\Controller;
 use App\Models\Facility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class FacilityController extends Controller
 {
+    public function index()
+    {
+        $facilities = Facility::orderBy('order')->get()->map(function ($f) {
+            return [
+                'id'          => $f->id,
+                'title'       => $f->title,
+                'description' => $f->description,
+                'image'       => $f->image ? Storage::url($f->image) : null,
+                'order'       => $f->order,
+                'is_active'   => (bool) $f->is_active,
+            ];
+        });
+
+        return Inertia::render('admin/facilities/index', [
+            'facilities' => $facilities,
+            'flash'      => [
+                'success' => session('success'),
+                'error'   => session('error'),
+            ],
+        ]);
+    }
     public function store(Request $request)
     {
         $data = $request->validate([

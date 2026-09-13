@@ -39,22 +39,10 @@ class LandingPageController extends Controller
 
         $milestones = SchoolMilestone::orderBy('order')->orderBy('year')->get()->toArray();
 
-        $facilities = Facility::orderBy('order')->get()->map(function ($f) {
-            return [
-                'id'          => $f->id,
-                'title'       => $f->title,
-                'description' => $f->description,
-                'image'       => $f->image ? Storage::url($f->image) : null,
-                'order'       => $f->order,
-                'is_active'   => $f->is_active,
-            ];
-        });
-
         return Inertia::render('admin/landing-page/index', [
             'banners'    => $banners,
             'settings'   => $settings,
             'milestones' => $milestones,
-            'facilities' => $facilities,
             'flash'      => [
                 'success' => session('success'),
                 'error'   => session('error'),
@@ -145,6 +133,7 @@ class LandingPageController extends Controller
             'school_email'       => 'nullable|email|max:255',
             'school_website'     => 'nullable|string|max:255',
             'legalization_link'  => 'nullable|string|max:500',
+            'complaint_link'     => 'nullable|string|max:500',
             'school_description' => 'nullable|string',
             'school_logo'        => 'nullable|image|max:2048',
             'school_npsn'        => 'nullable|string|max:20',
