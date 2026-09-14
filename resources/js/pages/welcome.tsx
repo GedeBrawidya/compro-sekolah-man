@@ -574,14 +574,18 @@ export default function Welcome({
             <div className="min-h-screen flex flex-col justify-between bg-[#f8faf7] text-[#142921] font-sans antialiased selection:bg-[#265243] selection:text-white">
 
                 {/* ── 1. DYNAMIC NAVBAR (ULTRA-SMOOTH MORPHING WITH SAFE TOP SPACING) ── */}
-                <div className="sticky top-0 z-50 w-full flex justify-center pointer-events-none transition-all duration-300 ease-in-out px-3 sm:px-6 pt-2 sm:pt-3">
+                <div
+                    className={`sticky top-0 z-50 w-full flex justify-center pointer-events-none transition-all duration-400 ease-in-out ${
+                        isScrolled ? 'px-3 sm:px-6 pt-2 sm:pt-3' : 'px-0 pt-0'
+                    }`}
+                >
                     <header
-                        className={`pointer-events-auto transition-all duration-300 ease-in-out flex items-center justify-between w-full max-w-7xl border backdrop-blur-xl ${
+                        className={`pointer-events-auto transition-all duration-400 ease-in-out flex items-center justify-between w-full border backdrop-blur-xl ${
                             isMobileMenuOpen
-                                ? 'bg-white/98 border-[#c8dac5] rounded-2xl px-4 sm:px-8 py-3 shadow-xl'
+                                ? 'max-w-7xl bg-white/98 border-[#c8dac5] rounded-2xl px-4 sm:px-8 py-3 shadow-xl'
                                 : isScrolled
-                                ? 'bg-white/95 border-[#c8dac5] rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 sm:py-3 shadow-xl'
-                                : 'bg-white/95 border-[#c8dac5] rounded-2xl sm:rounded-full px-4 sm:px-8 py-3 sm:py-3.5 shadow-md'
+                                ? 'max-w-7xl bg-white/95 border-[#c8dac5] rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 sm:py-3 shadow-xl'
+                                : 'max-w-none bg-white border-b border-[#e2ebd9] rounded-none px-4 sm:px-8 py-3 sm:py-3.5 shadow-none'
                         }`}
                     >
                         <div className="max-w-7xl mx-auto w-full flex items-center justify-between relative">
