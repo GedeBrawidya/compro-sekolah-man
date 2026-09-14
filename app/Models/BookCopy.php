@@ -21,7 +21,7 @@ class BookCopy extends Model
 
     protected $casts = [
         'borrowed_at' => 'date',
-        'due_date'    => 'date',
+        'due_date' => 'date',
     ];
 
     public function book()

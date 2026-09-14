@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DormitoryPost;
+use App\Models\LandingPageSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-
-use App\Models\LandingPageSetting;
 
 class DormitoryController extends Controller
 {
@@ -26,7 +25,7 @@ class DormitoryController extends Controller
             ->withQueryString();
 
         $settings = LandingPageSetting::getAllAsArray();
-        if (!empty($settings['dormitory_pengasuh_photo'])) {
+        if (! empty($settings['dormitory_pengasuh_photo'])) {
             $settings['dormitory_pengasuh_photo_url'] = Storage::url($settings['dormitory_pengasuh_photo']);
         }
 
@@ -40,14 +39,14 @@ class DormitoryController extends Controller
     public function updateSettings(Request $request)
     {
         $request->validate([
-            'dormitory_pengasuh_name'  => 'nullable|string|max:255',
+            'dormitory_pengasuh_name' => 'nullable|string|max:255',
             'dormitory_pengasuh_title' => 'nullable|string|max:255',
-            'dormitory_title'          => 'nullable|string|max:255',
-            'dormitory_description'    => 'nullable|string',
-            'dormitory_wa_putra'       => 'nullable|string|max:500',
-            'dormitory_wa_putri'       => 'nullable|string|max:500',
-            'dormitory_instagram'      => 'nullable|string|max:500',
-            'dormitory_tiktok'         => 'nullable|string|max:500',
+            'dormitory_title' => 'nullable|string|max:255',
+            'dormitory_description' => 'nullable|string',
+            'dormitory_wa_putra' => 'nullable|string|max:500',
+            'dormitory_wa_putri' => 'nullable|string|max:500',
+            'dormitory_instagram' => 'nullable|string|max:500',
+            'dormitory_tiktok' => 'nullable|string|max:500',
             'dormitory_pengasuh_photo' => 'nullable|image|max:3072',
         ]);
 
@@ -107,7 +106,7 @@ class DormitoryController extends Controller
         ]);
 
         if ($request->hasFile('media')) {
-            if ($dormitory->media && !str_starts_with($dormitory->media, 'http')) {
+            if ($dormitory->media && ! str_starts_with($dormitory->media, 'http')) {
                 $oldPath = str_replace('/storage/', '', $dormitory->media);
                 Storage::disk('public')->delete($oldPath);
             }
@@ -125,7 +124,7 @@ class DormitoryController extends Controller
 
     public function destroy(DormitoryPost $dormitory)
     {
-        if ($dormitory->media && !str_starts_with($dormitory->media, 'http')) {
+        if ($dormitory->media && ! str_starts_with($dormitory->media, 'http')) {
             $oldPath = str_replace('/storage/', '', $dormitory->media);
             Storage::disk('public')->delete($oldPath);
         }

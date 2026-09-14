@@ -44,7 +44,13 @@ type ToolbarButtonProps = {
     children: React.ReactNode;
 };
 
-function ToolbarButton({ onClick, active, disabled, title, children }: ToolbarButtonProps) {
+function ToolbarButton({
+    onClick,
+    active,
+    disabled,
+    title,
+    children,
+}: ToolbarButtonProps) {
     return (
         <button
             type="button"
@@ -56,11 +62,9 @@ function ToolbarButton({ onClick, active, disabled, title, children }: ToolbarBu
                     ? { backgroundColor: '#265243', color: '#ffffff' }
                     : { color: '#265243' }
             }
-            className={`p-1.5 rounded-lg text-xs font-bold transition-all ${
-                active
-                    ? 'shadow-xs'
-                    : 'hover:bg-[#dce8d7]'
-            } ${disabled ? 'opacity-30 cursor-not-allowed' : ''}`}
+            className={`rounded-lg p-1.5 text-xs font-bold transition-all ${
+                active ? 'shadow-xs' : 'hover:bg-[#dce8d7]'
+            } ${disabled ? 'cursor-not-allowed opacity-30' : ''}`}
         >
             {children}
         </button>
@@ -68,10 +72,15 @@ function ToolbarButton({ onClick, active, disabled, title, children }: ToolbarBu
 }
 
 function ToolbarDivider() {
-    return <div className="w-px h-5 bg-[#b8ceb0] mx-1" />;
+    return <div className="mx-1 h-5 w-px bg-[#b8ceb0]" />;
 }
 
-export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis...', minHeight = '400px' }: Props) {
+export function RichTextEditor({
+    value,
+    onChange,
+    placeholder = 'Mulai menulis...',
+    minHeight = '400px',
+}: Props) {
     const editor = useEditor({
         extensions: [
             StarterKit.configure({
@@ -91,7 +100,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
             TextStyle,
             Link.configure({
                 openOnClick: false,
-                HTMLAttributes: { class: 'text-[#265243] underline font-semibold' },
+                HTMLAttributes: {
+                    class: 'text-[#265243] underline font-semibold',
+                },
             }),
             Placeholder.configure({ placeholder }),
         ],
@@ -121,29 +132,40 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
             editor.chain().focus().extendMarkRange('link').unsetLink().run();
             return;
         }
-        editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+        editor
+            .chain()
+            .focus()
+            .extendMarkRange('link')
+            .setLink({ href: url })
+            .run();
     }, [editor]);
 
     if (!editor) return null;
 
     return (
-        <div style={{ backgroundColor: '#ffffff', borderColor: '#b8ceb0' }} className="rounded-2xl border-2 overflow-hidden shadow-sm">
+        <div
+            style={{ backgroundColor: '#ffffff', borderColor: '#b8ceb0' }}
+            className="overflow-hidden rounded-2xl border-2 shadow-sm"
+        >
             {/* Toolbar */}
-            <div style={{ backgroundColor: '#f4f8f3', borderColor: '#b8ceb0' }} className="flex flex-wrap items-center gap-0.5 px-3.5 py-2.5 border-b-2">
+            <div
+                style={{ backgroundColor: '#f4f8f3', borderColor: '#b8ceb0' }}
+                className="flex flex-wrap items-center gap-0.5 border-b-2 px-3.5 py-2.5"
+            >
                 {/* Undo / Redo */}
                 <ToolbarButton
                     title="Undo"
                     onClick={() => editor.chain().focus().undo().run()}
                     disabled={!editor.can().undo()}
                 >
-                    <Undo2 className="w-4 h-4" />
+                    <Undo2 className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Redo"
                     onClick={() => editor.chain().focus().redo().run()}
                     disabled={!editor.can().redo()}
                 >
-                    <Redo2 className="w-4 h-4" />
+                    <Redo2 className="h-4 w-4" />
                 </ToolbarButton>
 
                 <ToolbarDivider />
@@ -151,24 +173,30 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
                 {/* Headings */}
                 <ToolbarButton
                     title="Heading 1"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleHeading({ level: 1 }).run()
+                    }
                     active={editor.isActive('heading', { level: 1 })}
                 >
-                    <Heading1 className="w-4 h-4" />
+                    <Heading1 className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Heading 2"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleHeading({ level: 2 }).run()
+                    }
                     active={editor.isActive('heading', { level: 2 })}
                 >
-                    <Heading2 className="w-4 h-4" />
+                    <Heading2 className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Heading 3"
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleHeading({ level: 3 }).run()
+                    }
                     active={editor.isActive('heading', { level: 3 })}
                 >
-                    <Heading3 className="w-4 h-4" />
+                    <Heading3 className="h-4 w-4" />
                 </ToolbarButton>
 
                 <ToolbarDivider />
@@ -179,35 +207,37 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     active={editor.isActive('bold')}
                 >
-                    <Bold className="w-4 h-4" />
+                    <Bold className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Italic"
                     onClick={() => editor.chain().focus().toggleItalic().run()}
                     active={editor.isActive('italic')}
                 >
-                    <Italic className="w-4 h-4" />
+                    <Italic className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Underline"
-                    onClick={() => editor.chain().focus().toggleUnderline().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleUnderline().run()
+                    }
                     active={editor.isActive('underline')}
                 >
-                    <UnderlineIcon className="w-4 h-4" />
+                    <UnderlineIcon className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Strikethrough"
                     onClick={() => editor.chain().focus().toggleStrike().run()}
                     active={editor.isActive('strike')}
                 >
-                    <Strikethrough className="w-4 h-4" />
+                    <Strikethrough className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Kode Inline"
                     onClick={() => editor.chain().focus().toggleCode().run()}
                     active={editor.isActive('code')}
                 >
-                    <Code2 className="w-4 h-4" />
+                    <Code2 className="h-4 w-4" />
                 </ToolbarButton>
 
                 <ToolbarDivider />
@@ -215,17 +245,21 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
                 {/* Lists */}
                 <ToolbarButton
                     title="Bullet List"
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleBulletList().run()
+                    }
                     active={editor.isActive('bulletList')}
                 >
-                    <List className="w-4 h-4" />
+                    <List className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Ordered List"
-                    onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleOrderedList().run()
+                    }
                     active={editor.isActive('orderedList')}
                 >
-                    <ListOrdered className="w-4 h-4" />
+                    <ListOrdered className="h-4 w-4" />
                 </ToolbarButton>
 
                 <ToolbarDivider />
@@ -233,31 +267,39 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
                 {/* Text Align */}
                 <ToolbarButton
                     title="Rata Kiri"
-                    onClick={() => editor.chain().focus().setTextAlign('left').run()}
+                    onClick={() =>
+                        editor.chain().focus().setTextAlign('left').run()
+                    }
                     active={editor.isActive({ textAlign: 'left' })}
                 >
-                    <AlignLeft className="w-4 h-4" />
+                    <AlignLeft className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Rata Tengah"
-                    onClick={() => editor.chain().focus().setTextAlign('center').run()}
+                    onClick={() =>
+                        editor.chain().focus().setTextAlign('center').run()
+                    }
                     active={editor.isActive({ textAlign: 'center' })}
                 >
-                    <AlignCenter className="w-4 h-4" />
+                    <AlignCenter className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Rata Kanan"
-                    onClick={() => editor.chain().focus().setTextAlign('right').run()}
+                    onClick={() =>
+                        editor.chain().focus().setTextAlign('right').run()
+                    }
                     active={editor.isActive({ textAlign: 'right' })}
                 >
-                    <AlignRight className="w-4 h-4" />
+                    <AlignRight className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Rata Kiri-Kanan"
-                    onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+                    onClick={() =>
+                        editor.chain().focus().setTextAlign('justify').run()
+                    }
                     active={editor.isActive({ textAlign: 'justify' })}
                 >
-                    <AlignJustify className="w-4 h-4" />
+                    <AlignJustify className="h-4 w-4" />
                 </ToolbarButton>
 
                 <ToolbarDivider />
@@ -265,23 +307,27 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
                 {/* Extras */}
                 <ToolbarButton
                     title="Blockquote"
-                    onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleBlockquote().run()
+                    }
                     active={editor.isActive('blockquote')}
                 >
-                    <Quote className="w-4 h-4" />
+                    <Quote className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Garis Horizontal"
-                    onClick={() => editor.chain().focus().setHorizontalRule().run()}
+                    onClick={() =>
+                        editor.chain().focus().setHorizontalRule().run()
+                    }
                 >
-                    <Minus className="w-4 h-4" />
+                    <Minus className="h-4 w-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Tambah Link"
                     onClick={setLink}
                     active={editor.isActive('link')}
                 >
-                    <LinkIcon className="w-4 h-4" />
+                    <LinkIcon className="h-4 w-4" />
                 </ToolbarButton>
             </div>
 
@@ -295,9 +341,12 @@ export function RichTextEditor({ value, onChange, placeholder = 'Mulai menulis..
             </div>
 
             {/* Word count */}
-            <div className="px-6 py-2.5 border-t-2 border-[#b8ceb0] flex items-center justify-end bg-[#f4f8f3]">
-                <span className="text-xs text-[#142921] font-bold">
-                    {editor.storage.characterCount?.words?.() ?? editor.getText().trim().split(/\s+/).filter(Boolean).length} kata
+            <div className="flex items-center justify-end border-t-2 border-[#b8ceb0] bg-[#f4f8f3] px-6 py-2.5">
+                <span className="text-xs font-bold text-[#142921]">
+                    {editor.storage.characterCount?.words?.() ??
+                        editor.getText().trim().split(/\s+/).filter(Boolean)
+                            .length}{' '}
+                    kata
                 </span>
             </div>
         </div>

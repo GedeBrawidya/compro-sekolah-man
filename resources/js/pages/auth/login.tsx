@@ -7,14 +7,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-/* @chisel-registration */
 import { register } from '@/routes';
-/* @end-chisel-registration */
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-/* @chisel-passkeys */
 import PasskeyVerify from '@/components/passkey-verify';
-/* @end-chisel-passkeys */
 
 type Props = {
     status?: string;
@@ -26,14 +22,22 @@ export default function Login({ status, canResetPassword }: Props) {
         <>
             <Head title="Masuk - Portal Admin" />
 
-            {/* @chisel-passkeys */}
             <PasskeyVerify />
-            {/* @end-chisel-passkeys */}
 
             {status && (
-                <div className="mb-5 flex items-center gap-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 text-sm font-medium text-emerald-300">
-                    <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <div className="mb-5 flex items-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-300">
+                    <svg
+                        className="h-4 w-4 shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                     </svg>
                     {status}
                 </div>
@@ -48,12 +52,25 @@ export default function Login({ status, canResetPassword }: Props) {
                     <>
                         {/* Email field */}
                         <div className="grid gap-2">
-                            <Label htmlFor="email" className="text-xs font-extrabold text-[#142921] uppercase tracking-wider">
+                            <Label
+                                htmlFor="email"
+                                className="text-xs font-extrabold tracking-wider text-[#142921] uppercase"
+                            >
                                 Email Address
                             </Label>
                             <div className="relative">
-                                <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#527365]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                <svg
+                                    className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#527365]"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={1.5}
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                    />
                                 </svg>
                                 <Input
                                     id="email"
@@ -64,7 +81,7 @@ export default function Login({ status, canResetPassword }: Props) {
                                     tabIndex={1}
                                     autoComplete="email"
                                     placeholder="email@sekolah.com"
-                                    className="pl-10 rounded-2xl border-[#c8dac5] focus:ring-[#265243] focus:border-[#265243] bg-[#f8faf7] text-[#142921] font-semibold text-sm h-11"
+                                    className="h-11 rounded-2xl border-[#c8dac5] bg-[#f8faf7] pl-10 text-sm font-semibold text-[#142921] focus:border-[#265243] focus:ring-[#265243]"
                                 />
                             </div>
                             <InputError message={errors.email} />
@@ -73,13 +90,16 @@ export default function Login({ status, canResetPassword }: Props) {
                         {/* Password field */}
                         <div className="grid gap-2">
                             <div className="flex items-center justify-between">
-                                <Label htmlFor="password" className="text-xs font-extrabold text-[#142921] uppercase tracking-wider">
+                                <Label
+                                    htmlFor="password"
+                                    className="text-xs font-extrabold tracking-wider text-[#142921] uppercase"
+                                >
                                     Kata Sandi
                                 </Label>
                                 {canResetPassword && (
                                     <TextLink
                                         href={request()}
-                                        className="text-xs font-bold text-[#265243] hover:text-[#142921] transition-colors"
+                                        className="text-xs font-bold text-[#265243] transition-colors hover:text-[#142921]"
                                         tabIndex={5}
                                     >
                                         Lupa password?
@@ -87,8 +107,18 @@ export default function Login({ status, canResetPassword }: Props) {
                                 )}
                             </div>
                             <div className="relative">
-                                <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#527365] z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                <svg
+                                    className="absolute top-1/2 left-3.5 z-10 h-4 w-4 -translate-y-1/2 text-[#527365]"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={1.5}
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                                    />
                                 </svg>
                                 <PasswordInput
                                     id="password"
@@ -97,7 +127,7 @@ export default function Login({ status, canResetPassword }: Props) {
                                     tabIndex={2}
                                     autoComplete="current-password"
                                     placeholder="Masukkan kata sandi"
-                                    className="pl-10 rounded-2xl border-[#c8dac5] focus:ring-[#265243] focus:border-[#265243] bg-[#f8faf7] text-[#142921] font-semibold text-sm h-11"
+                                    className="h-11 rounded-2xl border-[#c8dac5] bg-[#f8faf7] pl-10 text-sm font-semibold text-[#142921] focus:border-[#265243] focus:ring-[#265243]"
                                 />
                             </div>
                             <InputError message={errors.password} />
@@ -109,9 +139,12 @@ export default function Login({ status, canResetPassword }: Props) {
                                 id="remember"
                                 name="remember"
                                 tabIndex={3}
-                                className="border-[#c8dac5] data-[state=checked]:bg-[#265243] data-[state=checked]:border-[#265243]"
+                                className="border-[#c8dac5] data-[state=checked]:border-[#265243] data-[state=checked]:bg-[#265243]"
                             />
-                            <Label htmlFor="remember" className="text-sm font-medium text-[#527365] cursor-pointer">
+                            <Label
+                                htmlFor="remember"
+                                className="cursor-pointer text-sm font-medium text-[#527365]"
+                            >
                                 Ingat saya
                             </Label>
                         </div>
@@ -119,7 +152,7 @@ export default function Login({ status, canResetPassword }: Props) {
                         {/* Submit */}
                         <Button
                             type="submit"
-                            className="w-full h-11 rounded-2xl bg-[#265243] hover:bg-[#142921] text-white font-black text-sm transition-all shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.99] mt-1"
+                            className="mt-1 h-11 w-full rounded-2xl bg-[#265243] text-sm font-black text-white shadow-md transition-all hover:scale-[1.01] hover:bg-[#142921] hover:shadow-lg active:scale-[0.99]"
                             tabIndex={4}
                             disabled={processing}
                             data-test="login-button"
@@ -128,21 +161,16 @@ export default function Login({ status, canResetPassword }: Props) {
                             {processing ? 'Memproses...' : 'Masuk ke Portal'}
                         </Button>
 
-                        {/* Divider */}
-                        <div className="relative flex items-center gap-3 my-1">
-                            <div className="flex-1 h-px bg-[#e2ebd9]" />
-                            <span className="text-[11px] text-[#527365] font-bold">atau</span>
-                            <div className="flex-1 h-px bg-[#e2ebd9]" />
-                        </div>
-
-                        {/* @chisel-registration */}
-                        <div className="text-center text-sm text-[#527365] font-medium">
+                        <div className="text-center text-sm font-medium text-[#527365] pt-1">
                             Belum punya akun?{' '}
-                            <TextLink href={register()} tabIndex={5} className="font-extrabold text-[#265243] hover:text-[#142921]">
+                            <TextLink
+                                href={register()}
+                                tabIndex={5}
+                                className="font-extrabold text-[#265243] hover:text-[#142921]"
+                            >
                                 Daftar sekarang
                             </TextLink>
                         </div>
-                        {/* @end-chisel-registration */}
                     </>
                 )}
             </Form>

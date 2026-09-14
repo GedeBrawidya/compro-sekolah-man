@@ -17,7 +17,7 @@ class WebsiteVisit extends Model
     public static function recordVisit(): void
     {
         $today = now()->toDateString();
-        
+
         $visit = static::firstOrCreate(
             ['date' => $today],
             ['views_count' => 0]

@@ -27,7 +27,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password', 'role'])]
+#[Fillable(['name', 'email', 'password', 'role', 'google_id', 'avatar'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements PasskeyUser
 {
@@ -38,8 +38,11 @@ class User extends Authenticatable implements PasskeyUser
      * Role Constants
      */
     public const ROLE_SUPER_ADMIN = 'super_admin';
+
     public const ROLE_ADMIN = 'admin';
+
     public const ROLE_PENGURUS_ASRAMA = 'pengurus_asrama';
+
     public const ROLE_PUSTAKAWAN = 'pustakawan';
 
     /**
@@ -72,6 +75,7 @@ class User extends Authenticatable implements PasskeyUser
         }
 
         $roles = is_array($roles) ? $roles : [$roles];
+
         return in_array($this->role, $roles, true);
     }
 
@@ -85,10 +89,7 @@ class User extends Authenticatable implements PasskeyUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            /* @chisel-2fa */
             'two_factor_confirmed_at' => 'datetime',
-            /* @end-chisel-2fa */
         ];
     }
 }
-

@@ -12,7 +12,11 @@ use App\Http\Controllers\Admin\LegalizationController;
 use App\Http\Controllers\Admin\MilestoneController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\PublicController;
+
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/news/{slug}', [PublicController::class, 'showNews'])->name('public.news.show');

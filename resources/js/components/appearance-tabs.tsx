@@ -34,7 +34,9 @@ export default function AppearanceToggleTab({
                         type="button"
                         onClick={() => updateAppearance(value)}
                         style={{
-                            backgroundColor: isActive ? '#265243' : 'transparent',
+                            backgroundColor: isActive
+                                ? '#265243'
+                                : 'transparent',
                             color: isActive ? '#ffffff' : '#142921',
                         }}
                         className={cn(

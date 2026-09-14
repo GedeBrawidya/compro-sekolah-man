@@ -34,34 +34,48 @@ interface Props {
 }
 
 export default function UsersIndex({ users, filters, roles }: Props) {
-    const { flash, auth } = usePage<{ flash: { success?: string; error?: string }; auth: { user: UserItem } }>().props;
+    const { flash, auth } = usePage<{
+        flash: { success?: string; error?: string };
+        auth: { user: UserItem };
+    }>().props;
     const [search, setSearch] = useState(filters.search || '');
     const [roleFilter, setRoleFilter] = useState(filters.role || '');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingItem, setEditingItem] = useState<UserItem | null>(null);
 
-    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm<{
-        name: string;
-        email: string;
-        password: string;
-        role: 'super_admin' | 'admin' | 'pengurus_asrama' | 'pustakawan';
-    }>({
-        name: '',
-        email: '',
-        password: '',
-        role: 'admin',
-    });
+    const { data, setData, post, put, processing, errors, reset, clearErrors } =
+        useForm<{
+            name: string;
+            email: string;
+            password: string;
+            role: 'super_admin' | 'admin' | 'pengurus_asrama' | 'pustakawan';
+        }>({
+            name: '',
+            email: '',
+            password: '',
+            role: 'admin',
+        });
 
     const roleBadgeStyle: Record<string, { label: string; style: string }> = {
-        super_admin: { label: 'Super Admin', style: 'bg-purple-600 text-white' },
+        super_admin: {
+            label: 'Super Admin',
+            style: 'bg-purple-600 text-white',
+        },
         admin: { label: 'Humas / Admin', style: 'bg-blue-600 text-white' },
-        pengurus_asrama: { label: 'Pengurus Asrama', style: 'bg-amber-500 text-white' },
+        pengurus_asrama: {
+            label: 'Pengurus Asrama',
+            style: 'bg-amber-500 text-white',
+        },
         pustakawan: { label: 'Pustakawan', style: 'bg-[#265243] text-white' },
     };
 
     const handleSearch = (e: FormEvent) => {
         e.preventDefault();
-        router.get('/admin/users', { search, role: roleFilter }, { preserveState: true });
+        router.get(
+            '/admin/users',
+            { search, role: roleFilter },
+            { preserveState: true },
+        );
     };
 
     const openCreateModal = () => {
@@ -139,17 +153,17 @@ export default function UsersIndex({ users, filters, roles }: Props) {
         <>
             <Head title="Manajemen User - Admin - MAN TANJUNGPINANG" />
 
-            <div className="p-4 sm:p-6 w-full space-y-6">
+            <div className="w-full space-y-6 p-4 sm:p-6">
                 {/* Flash Messages */}
                 {flash?.success && (
-                    <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm flex items-center gap-2">
-                        <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+                    <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
                         <span>{flash.success}</span>
                     </div>
                 )}
                 {flash?.error && (
-                    <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-sm flex items-center gap-2">
-                        <X className="w-5 h-5 flex-shrink-0" />
+                    <div className="flex items-center gap-2 rounded-xl border border-rose-500/20 bg-rose-500/10 p-4 text-sm text-rose-600 dark:text-rose-400">
+                        <X className="h-5 w-5 flex-shrink-0" />
                         <span>{flash.error}</span>
                     </div>
                 )}
@@ -162,109 +176,170 @@ export default function UsersIndex({ users, filters, roles }: Props) {
                     action={
                         <button
                             onClick={openCreateModal}
-                            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#265243] hover:bg-[#1f4337] text-white font-semibold text-sm transition-all shadow-sm"
+                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#265243] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1f4337]"
                         >
-                            <Plus className="w-4 h-4" /> Tambah User Admin
+                            <Plus className="h-4 w-4" /> Tambah User Admin
                         </button>
                     }
                 />
 
                 {/* Filters */}
-                <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                    <div className="relative flex-1 max-w-md">
-                        <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#265243]" />
+                <form
+                    onSubmit={handleSearch}
+                    className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
+                >
+                    <div className="relative max-w-md flex-1">
+                        <Search className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#265243]" />
                         <input
                             type="text"
                             placeholder="Cari nama atau email user..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            style={{ backgroundColor: '#e4ebe2', color: '#1a3d31' }}
-                            className="w-full pl-10 pr-4 py-2.5 text-xs rounded-full border-none shadow-xs font-semibold placeholder:text-[#527365] focus:outline-none focus:ring-2 focus:ring-[#265243] focus:bg-white transition-all"
+                            style={{
+                                backgroundColor: '#e4ebe2',
+                                color: '#1a3d31',
+                            }}
+                            className="w-full rounded-full border-none py-2.5 pr-4 pl-10 text-xs font-semibold shadow-xs transition-all placeholder:text-[#527365] focus:bg-white focus:ring-2 focus:ring-[#265243] focus:outline-none"
                         />
                     </div>
                     <select
                         value={roleFilter}
                         onChange={(e) => {
                             setRoleFilter(e.target.value);
-                            router.get('/admin/users', { search, role: e.target.value }, { preserveState: true });
+                            router.get(
+                                '/admin/users',
+                                { search, role: e.target.value },
+                                { preserveState: true },
+                            );
                         }}
                         style={{ backgroundColor: '#e4ebe2', color: '#1a3d31' }}
-                        className="px-4 py-2.5 text-xs rounded-full border-none shadow-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#265243] focus:bg-white transition-all"
+                        className="rounded-full border-none px-4 py-2.5 text-xs font-semibold shadow-xs transition-all focus:bg-white focus:ring-2 focus:ring-[#265243] focus:outline-none"
                     >
                         <option value="">Semua Peran / Role</option>
                         {roles.map((r) => (
-                            <option key={r.value} value={r.value}>{r.label}</option>
+                            <option key={r.value} value={r.value}>
+                                {r.label}
+                            </option>
                         ))}
                     </select>
                     <button
                         type="submit"
                         style={{ backgroundColor: '#265243', color: '#ffffff' }}
-                        className="px-5 py-2.5 rounded-full hover:bg-[#1f4337] text-xs font-bold transition-all shadow-xs"
+                        className="rounded-full px-5 py-2.5 text-xs font-bold shadow-xs transition-all hover:bg-[#1f4337]"
                     >
                         Filter
                     </button>
                 </form>
 
                 {/* Table Data */}
-                <div style={{ backgroundColor: '#e8efe5' }} className="rounded-2xl border-none overflow-hidden shadow-sm">
+                <div
+                    style={{ backgroundColor: '#e8efe5' }}
+                    className="overflow-hidden rounded-2xl border-none shadow-sm"
+                >
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm">
-                            <thead style={{ backgroundColor: '#265243', color: '#ffffff' }} className="text-xs font-extrabold uppercase tracking-wider">
+                            <thead
+                                style={{
+                                    backgroundColor: '#265243',
+                                    color: '#ffffff',
+                                }}
+                                className="text-xs font-extrabold tracking-wider uppercase"
+                            >
                                 <tr>
-                                    <th className="px-6 py-4 text-white">Nama User</th>
-                                    <th className="px-6 py-4 text-white">Email</th>
-                                    <th className="px-6 py-4 text-white">Peran (Role)</th>
-                                    <th className="px-6 py-4 text-white">Tanggal Registrasi</th>
-                                    <th className="px-6 py-4 text-right text-white">Aksi</th>
+                                    <th className="px-6 py-4 text-white">
+                                        Nama User
+                                    </th>
+                                    <th className="px-6 py-4 text-white">
+                                        Email
+                                    </th>
+                                    <th className="px-6 py-4 text-white">
+                                        Peran (Role)
+                                    </th>
+                                    <th className="px-6 py-4 text-white">
+                                        Tanggal Registrasi
+                                    </th>
+                                    <th className="px-6 py-4 text-right text-white">
+                                        Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-[#265243]/10">
                                 {users.data.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-[#4a6b5d] font-semibold">
+                                        <td
+                                            colSpan={5}
+                                            className="px-6 py-12 text-center font-semibold text-[#4a6b5d]"
+                                        >
                                             Tidak ada user admin ditemukan.
                                         </td>
                                     </tr>
                                 ) : (
                                     users.data.map((user, idx) => {
-                                        const roleMeta = roleBadgeStyle[user.role] || roleBadgeStyle.admin;
+                                        const roleMeta =
+                                            roleBadgeStyle[user.role] ||
+                                            roleBadgeStyle.admin;
                                         return (
                                             <tr
                                                 key={user.id}
-                                                style={{ backgroundColor: idx % 2 === 0 ? '#e8efe5' : '#e0e9dd' }}
-                                                className="hover:bg-[#d6e4d4] transition-colors"
+                                                style={{
+                                                    backgroundColor:
+                                                        idx % 2 === 0
+                                                            ? '#e8efe5'
+                                                            : '#e0e9dd',
+                                                }}
+                                                className="transition-colors hover:bg-[#d6e4d4]"
                                             >
                                                 <td className="px-6 py-4 font-bold text-[#142921]">
                                                     {user.name}
-                                                    {user.id === auth.user.id && (
-                                                        <span className="ml-2 text-[10px] bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold px-2 py-0.5 rounded-full">Anda</span>
+                                                    {user.id ===
+                                                        auth.user.id && (
+                                                        <span className="ml-2 rounded-full border border-emerald-300 bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-900">
+                                                            Anda
+                                                        </span>
                                                     )}
                                                 </td>
-                                                <td className="px-6 py-4 text-xs font-semibold text-[#2e5445]">{user.email}</td>
+                                                <td className="px-6 py-4 text-xs font-semibold text-[#2e5445]">
+                                                    {user.email}
+                                                </td>
                                                 <td className="px-6 py-4">
-                                                    <span className={`px-3 py-1.5 rounded-md text-xs font-bold shadow-sm ${roleMeta.style}`}>
+                                                    <span
+                                                        className={`rounded-md px-3 py-1.5 text-xs font-bold shadow-sm ${roleMeta.style}`}
+                                                    >
                                                         {roleMeta.label}
                                                     </span>
                                                 </td>
                                                 <td className="px-6 py-4 text-xs font-semibold text-[#2e5445]">
-                                                    {new Date(user.created_at).toLocaleDateString('id-ID')}
+                                                    {new Date(
+                                                        user.created_at,
+                                                    ).toLocaleDateString(
+                                                        'id-ID',
+                                                    )}
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex items-center justify-end gap-2">
                                                         <button
-                                                            onClick={() => openEditModal(user)}
-                                                            className="p-1.5 rounded-lg text-[#265243] hover:text-[#142921] hover:bg-[#dce8d7] transition-colors"
+                                                            onClick={() =>
+                                                                openEditModal(
+                                                                    user,
+                                                                )
+                                                            }
+                                                            className="rounded-lg p-1.5 text-[#265243] transition-colors hover:bg-[#dce8d7] hover:text-[#142921]"
                                                             title="Edit User"
                                                         >
-                                                            <Edit3 className="w-4 h-4" />
+                                                            <Edit3 className="h-4 w-4" />
                                                         </button>
-                                                        {user.id !== auth.user.id && (
+                                                        {user.id !==
+                                                            auth.user.id && (
                                                             <button
-                                                                onClick={() => handleDelete(user)}
-                                                                className="p-1.5 rounded-lg text-[#265243] hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                                                                onClick={() =>
+                                                                    handleDelete(
+                                                                        user,
+                                                                    )
+                                                                }
+                                                                className="rounded-lg p-1.5 text-[#265243] transition-colors hover:bg-rose-50 hover:text-rose-600"
                                                                 title="Hapus User"
                                                             >
-                                                                <Trash2 className="w-4 h-4" />
+                                                                <Trash2 className="h-4 w-4" />
                                                             </button>
                                                         )}
                                                     </div>
@@ -282,96 +357,159 @@ export default function UsersIndex({ users, filters, roles }: Props) {
                         from={(users as any).from}
                         to={(users as any).to}
                         total={(users as any).total}
-                        className="px-6 py-4 border-t border-[#c8d6c0]"
+                        className="border-t border-[#c8d6c0] px-6 py-4"
                     />
                 </div>
 
                 {/* Modal Create / Edit */}
                 {isModalOpen && (
-                    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-                        <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-                            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
+                        <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
+                            <div className="flex items-center justify-between border-b border-slate-100 p-6">
                                 <h3 className="text-lg font-bold text-[#142921]">
-                                    {editingItem ? 'Edit User Admin' : 'Tambah Admin User Baru'}
+                                    {editingItem
+                                        ? 'Edit User Admin'
+                                        : 'Tambah Admin User Baru'}
                                 </h3>
-                                <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600">
-                                    <X className="w-5 h-5" />
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="text-slate-400 hover:text-slate-600"
+                                >
+                                    <X className="h-5 w-5" />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                            <form
+                                onSubmit={handleSubmit}
+                                className="space-y-4 p-6"
+                            >
                                 <div>
-                                    <label className="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap *</label>
+                                    <label className="mb-1 block text-xs font-semibold text-slate-700">
+                                        Nama Lengkap *
+                                    </label>
                                     <input
                                         type="text"
                                         required
                                         value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        style={{ backgroundColor: '#f7faf5', borderColor: '#b8ceb0', color: '#142921' }}
-                                        className="w-full px-4 py-2.5 text-xs font-semibold rounded-xl border focus:ring-2 focus:ring-[#265243] focus:outline-none placeholder:text-[#527365]"
+                                        onChange={(e) =>
+                                            setData('name', e.target.value)
+                                        }
+                                        style={{
+                                            backgroundColor: '#f7faf5',
+                                            borderColor: '#b8ceb0',
+                                            color: '#142921',
+                                        }}
+                                        className="w-full rounded-xl border px-4 py-2.5 text-xs font-semibold placeholder:text-[#527365] focus:ring-2 focus:ring-[#265243] focus:outline-none"
                                         placeholder="Nama admin"
                                     />
-                                    {errors.name && <p className="text-xs text-rose-500 mt-1">{errors.name}</p>}
+                                    {errors.name && (
+                                        <p className="mt-1 text-xs text-rose-500">
+                                            {errors.name}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-semibold text-slate-700 mb-1">Alamat Email *</label>
+                                    <label className="mb-1 block text-xs font-semibold text-slate-700">
+                                        Alamat Email *
+                                    </label>
                                     <input
                                         type="email"
                                         required
                                         value={data.email}
-                                        onChange={(e) => setData('email', e.target.value)}
-                                        style={{ backgroundColor: '#f7faf5', borderColor: '#b8ceb0', color: '#142921' }}
-                                        className="w-full px-4 py-2.5 text-xs font-semibold rounded-xl border focus:ring-2 focus:ring-[#265243] focus:outline-none placeholder:text-[#527365]"
+                                        onChange={(e) =>
+                                            setData('email', e.target.value)
+                                        }
+                                        style={{
+                                            backgroundColor: '#f7faf5',
+                                            borderColor: '#b8ceb0',
+                                            color: '#142921',
+                                        }}
+                                        className="w-full rounded-xl border px-4 py-2.5 text-xs font-semibold placeholder:text-[#527365] focus:ring-2 focus:ring-[#265243] focus:outline-none"
                                         placeholder="email@sekolah.sch.id"
                                     />
-                                    {errors.email && <p className="text-xs text-rose-500 mt-1">{errors.email}</p>}
+                                    {errors.email && (
+                                        <p className="mt-1 text-xs text-rose-500">
+                                            {errors.email}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-semibold text-slate-700 mb-1">Peran Akses (Role) *</label>
+                                    <label className="mb-1 block text-xs font-semibold text-slate-700">
+                                        Peran Akses (Role) *
+                                    </label>
                                     <select
                                         value={data.role}
-                                        onChange={(e) => setData('role', e.target.value as any)}
-                                        style={{ backgroundColor: '#f7faf5', borderColor: '#b8ceb0', color: '#142921' }}
-                                        className="w-full px-4 py-2.5 text-xs font-semibold rounded-xl border focus:ring-2 focus:ring-[#265243] focus:outline-none"
+                                        onChange={(e) =>
+                                            setData(
+                                                'role',
+                                                e.target.value as any,
+                                            )
+                                        }
+                                        style={{
+                                            backgroundColor: '#f7faf5',
+                                            borderColor: '#b8ceb0',
+                                            color: '#142921',
+                                        }}
+                                        className="w-full rounded-xl border px-4 py-2.5 text-xs font-semibold focus:ring-2 focus:ring-[#265243] focus:outline-none"
                                     >
                                         {roles.map((r) => (
-                                            <option key={r.value} value={r.value}>{r.label}</option>
+                                            <option
+                                                key={r.value}
+                                                value={r.value}
+                                            >
+                                                {r.label}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                                        Password {editingItem ? '(Kosongkan jika tidak diubah)' : '*'}
+                                    <label className="mb-1 block text-xs font-semibold text-slate-700">
+                                        Password{' '}
+                                        {editingItem
+                                            ? '(Kosongkan jika tidak diubah)'
+                                            : '*'}
                                     </label>
                                     <input
                                         type="password"
                                         required={!editingItem}
                                         value={data.password}
-                                        onChange={(e) => setData('password', e.target.value)}
-                                        style={{ backgroundColor: '#f7faf5', borderColor: '#b8ceb0', color: '#142921' }}
-                                        className="w-full px-4 py-2.5 text-xs font-semibold rounded-xl border focus:ring-2 focus:ring-[#265243] focus:outline-none placeholder:text-[#527365]"
+                                        onChange={(e) =>
+                                            setData('password', e.target.value)
+                                        }
+                                        style={{
+                                            backgroundColor: '#f7faf5',
+                                            borderColor: '#b8ceb0',
+                                            color: '#142921',
+                                        }}
+                                        className="w-full rounded-xl border px-4 py-2.5 text-xs font-semibold placeholder:text-[#527365] focus:ring-2 focus:ring-[#265243] focus:outline-none"
                                         placeholder="Minimal 8 karakter"
                                     />
-                                    {errors.password && <p className="text-xs text-rose-500 mt-1">{errors.password}</p>}
+                                    {errors.password && (
+                                        <p className="mt-1 text-xs text-rose-500">
+                                            {errors.password}
+                                        </p>
+                                    )}
                                 </div>
 
-                                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                                <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50"
+                                        className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50"
                                     >
                                         Batal
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={processing}
-                                        className="px-5 py-2 text-xs font-semibold rounded-xl bg-[#265243] text-white hover:bg-[#1f4337] disabled:opacity-50"
+                                        className="rounded-xl bg-[#265243] px-5 py-2 text-xs font-semibold text-white hover:bg-[#1f4337] disabled:opacity-50"
                                     >
-                                        {editingItem ? 'Simpan Perubahan' : 'Tambah User'}
+                                        {editingItem
+                                            ? 'Simpan Perubahan'
+                                            : 'Tambah User'}
                                     </button>
                                 </div>
                             </form>
@@ -381,30 +519,37 @@ export default function UsersIndex({ users, filters, roles }: Props) {
 
                 {/* Custom Confirm Modal */}
                 {confirmModal.isOpen && (
-                    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-                        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in duration-150">
-                            <div className="p-6 text-center space-y-4">
-                                <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center">
-                                    <Trash2 className="w-6 h-6" />
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
+                        <div className="animate-in fade-in zoom-in w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl duration-150">
+                            <div className="space-y-4 p-6 text-center">
+                                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
+                                    <Trash2 className="h-6 w-6" />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-extrabold text-[#142921]">{confirmModal.title}</h3>
-                                    <p className="text-xs text-[#2e5445] font-semibold mt-1 leading-relaxed">
+                                    <h3 className="text-lg font-extrabold text-[#142921]">
+                                        {confirmModal.title}
+                                    </h3>
+                                    <p className="mt-1 text-xs leading-relaxed font-semibold text-[#2e5445]">
                                         {confirmModal.description}
                                     </p>
                                 </div>
-                                <div className="flex items-center justify-center gap-3 pt-3 border-t border-slate-100">
+                                <div className="flex items-center justify-center gap-3 border-t border-slate-100 pt-3">
                                     <button
                                         type="button"
-                                        onClick={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
-                                        className="px-5 py-2.5 text-xs font-bold rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all"
+                                        onClick={() =>
+                                            setConfirmModal((prev) => ({
+                                                ...prev,
+                                                isOpen: false,
+                                            }))
+                                        }
+                                        className="rounded-xl border border-slate-200 px-5 py-2.5 text-xs font-bold text-slate-600 transition-all hover:bg-slate-50"
                                     >
                                         Batal
                                     </button>
                                     <button
                                         type="button"
                                         onClick={confirmModal.onConfirm}
-                                        className="px-5 py-2.5 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition-all"
+                                        className="rounded-xl bg-rose-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-rose-700"
                                     >
                                         {confirmModal.confirmText}
                                     </button>

@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
                 ['slug' => $n[1]],
                 [
                     'title' => $n[0],
-                    'content' => $n[2] . ' Kegiatan ini berlangsung dengan lancar dan mendapatkan antusiasme yang sangat tinggi dari seluruh civitas akademika.',
+                    'content' => $n[2].' Kegiatan ini berlangsung dengan lancar dan mendapatkan antusiasme yang sangat tinggi dari seluruh civitas akademika.',
                     'status' => 'published',
                     'published_at' => now()->subDays($i * 2),
                     'author_id' => $humas->id,
@@ -109,7 +109,7 @@ class DatabaseSeeder extends Seeder
                 ['slug' => $d[1]],
                 [
                     'title' => $d[0],
-                    'content' => $d[2] . ' Pengurus asrama berkomitmen mendampingi santri secara intensif 24 jam.',
+                    'content' => $d[2].' Pengurus asrama berkomitmen mendampingi santri secara intensif 24 jam.',
                     'author_id' => $pengurusAsrama->id,
                     'created_at' => now()->subDays($i * 3),
                 ]

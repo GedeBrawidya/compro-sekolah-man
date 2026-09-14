@@ -15,9 +15,9 @@ class BookCategoryController extends Controller
 
         return Inertia::render('admin/books/categories', [
             'categories' => $categories,
-            'flash'      => [
+            'flash' => [
                 'success' => session('success'),
-                'error'   => session('error'),
+                'error' => session('error'),
             ],
         ]);
     }
@@ -32,7 +32,7 @@ class BookCategoryController extends Controller
 
         BookCategory::create(['name' => trim($request->name)]);
 
-        return back()->with('success', 'Kategori "' . $request->name . '" berhasil ditambahkan!');
+        return back()->with('success', 'Kategori "'.$request->name.'" berhasil ditambahkan!');
     }
 
     public function destroy(BookCategory $bookCategory)

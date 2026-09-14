@@ -61,10 +61,22 @@ export default function AdminDashboard({
     const schoolLogoUrl = pageProps.school_logo_url;
 
     const roleLabels: Record<string, { label: string; color: string }> = {
-        super_admin: { label: 'Super Admin', color: 'bg-[#9db588]/20 text-[#265243] border-[#9db588]/40' },
-        admin: { label: 'Humas / Admin', color: 'bg-blue-500/10 text-blue-700 border-blue-200' },
-        pengurus_asrama: { label: 'Pengurus Asrama', color: 'bg-amber-500/10 text-amber-700 border-amber-200' },
-        pustakawan: { label: 'Pustakawan', color: 'bg-emerald-500/10 text-emerald-700 border-emerald-200' },
+        super_admin: {
+            label: 'Super Admin',
+            color: 'bg-[#9db588]/20 text-[#265243] border-[#9db588]/40',
+        },
+        admin: {
+            label: 'Humas / Admin',
+            color: 'bg-blue-500/10 text-blue-700 border-blue-200',
+        },
+        pengurus_asrama: {
+            label: 'Pengurus Asrama',
+            color: 'bg-amber-500/10 text-amber-700 border-amber-200',
+        },
+        pustakawan: {
+            label: 'Pustakawan',
+            color: 'bg-emerald-500/10 text-emerald-700 border-emerald-200',
+        },
     };
 
     const activeRole = roleLabels[userRole] || roleLabels.admin;
@@ -92,7 +104,8 @@ export default function AdminDashboard({
 
     const points = vStats.map((item, idx) => {
         const x = paddingX + (idx / (vStats.length - 1)) * drawWidth;
-        const normalizedY = (item.visitors - minVisitors) / (maxVisitors - minVisitors || 1);
+        const normalizedY =
+            (item.visitors - minVisitors) / (maxVisitors - minVisitors || 1);
         const y = svgHeight - paddingBottom - normalizedY * drawHeight;
         return { x, y, visitors: item.visitors, day: item.day };
     });
@@ -124,42 +137,46 @@ export default function AdminDashboard({
         <>
             <Head title="Dashboard - Admin - MAN TANJUNGPINANG" />
 
-            <div className="flex flex-col gap-6 p-4 sm:p-6 w-full">
-                
+            <div className="flex w-full flex-col gap-6 p-4 sm:p-6">
                 {/* ── 1. TOP OPERATIONAL HEADER BANNER (DARK GREEN CARD) ── */}
-                <div className="relative overflow-hidden rounded-3xl bg-[#265243] text-white p-6 sm:p-8 shadow-md border border-[#316150]">
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                        <div className="space-y-3 max-w-2xl">
+                <div className="relative overflow-hidden rounded-3xl border border-[#316150] bg-[#265243] p-6 text-white shadow-md sm:p-8">
+                    <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
+                        <div className="max-w-2xl space-y-3">
                             <div className="flex items-center gap-2">
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-black tracking-wide border border-white/15 backdrop-blur-md">
-                                    <LayoutTemplate className="w-3.5 h-3.5 text-[#f59e0b]" /> Dasbor Operasional
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-black tracking-wide text-white backdrop-blur-md">
+                                    <LayoutTemplate className="h-3.5 w-3.5 text-[#f59e0b]" />{' '}
+                                    Dasbor Operasional
                                 </span>
-                                <span className="px-2.5 py-0.5 rounded-full bg-[#f59e0b] text-[#142921] text-[11px] font-black uppercase tracking-wider">
+                                <span className="rounded-full bg-[#f59e0b] px-2.5 py-0.5 text-[11px] font-black tracking-wider text-[#142921] uppercase">
                                     {activeRole.label}
                                 </span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-snug">
+                            <h1 className="text-3xl leading-snug font-black tracking-tight sm:text-4xl">
                                 Ringkasan Operasional
                             </h1>
-                            <p className="text-xs sm:text-sm text-emerald-100/90 font-medium leading-relaxed">
-                                Posisi data publikasi berita, koleksi perpustakaan, profil asrama, legalisir alumni, dan pengaduan saat ini.
+                            <p className="text-xs leading-relaxed font-medium text-emerald-100/90 sm:text-sm">
+                                Posisi data publikasi berita, koleksi
+                                perpustakaan, profil asrama, legalisir alumni,
+                                dan pengaduan saat ini.
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+                        <div className="flex shrink-0 flex-wrap items-center gap-3">
                             <Link
                                 href="/admin/landing-page"
-                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-xs font-black border border-white/20 transition-all shadow-xs"
+                                className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5 text-xs font-black text-white shadow-xs transition-all hover:bg-white/20"
                             >
-                                CMS Beranda <ArrowRight className="w-3.5 h-3.5 text-[#f59e0b]" />
+                                CMS Beranda{' '}
+                                <ArrowRight className="h-3.5 w-3.5 text-[#f59e0b]" />
                             </Link>
                             {userRole === 'super_admin' && (
                                 <Link
                                     href="/admin/users"
-                                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white text-[#265243] hover:bg-[#f4f8f3] text-xs font-black transition-all shadow-md"
+                                    className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-2.5 text-xs font-black text-[#265243] shadow-md transition-all hover:bg-[#f4f8f3]"
                                 >
-                                    Kelola User <Users className="w-3.5 h-3.5 text-[#265243]" />
+                                    Kelola User{' '}
+                                    <Users className="h-3.5 w-3.5 text-[#265243]" />
                                 </Link>
                             )}
                         </div>
@@ -167,120 +184,217 @@ export default function AdminDashboard({
                 </div>
 
                 {/* ── 2. TOP METRIC KPI CARDS ROW ── */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white border border-[#c8dac5] hover:border-[#265243] p-5 rounded-2xl shadow-xs transition-all flex items-start justify-between">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-[#527365]">Berita &amp; Artikel</span>
-                                <span className="px-2 py-0.5 rounded-md bg-[#f4f8f3] text-[#265243] text-[10px] font-black border border-[#c8dac5]">
+                                <span className="text-xs font-bold text-[#527365]">
+                                    Berita &amp; Artikel
+                                </span>
+                                <span className="rounded-md border border-[#c8dac5] bg-[#f4f8f3] px-2 py-0.5 text-[10px] font-black text-[#265243]">
                                     Publik
                                 </span>
                             </div>
-                            <h3 className="text-3xl font-black text-[#142921]">{stats.total_news}</h3>
-                            <p className="text-[11px] text-[#527365] font-medium pt-1">Total publikasi aktif</p>
+                            <h3 className="text-3xl font-black text-[#142921]">
+                                {stats.total_news}
+                            </h3>
+                            <p className="pt-1 text-[11px] font-medium text-[#527365]">
+                                Total publikasi aktif
+                            </p>
                         </div>
-                        <div className="w-10 h-10 rounded-2xl bg-[#f4f8f3] text-[#265243] flex items-center justify-center shrink-0 border border-[#c8dac5]">
-                            <Newspaper className="w-5 h-5" />
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-[#c8dac5] bg-[#f4f8f3] text-[#265243]">
+                            <Newspaper className="h-5 w-5" />
                         </div>
                     </div>
 
-                    <div className="bg-white border border-[#c8dac5] hover:border-[#265243] p-5 rounded-2xl shadow-xs transition-all flex items-start justify-between">
+                    <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-[#527365]">Koleksi Buku</span>
-                                <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 text-[10px] font-black border border-amber-200">
+                                <span className="text-xs font-bold text-[#527365]">
+                                    Koleksi Buku
+                                </span>
+                                <span className="rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-black text-amber-700">
                                     {stats.available_books} Tersedia
                                 </span>
                             </div>
-                            <h3 className="text-3xl font-black text-[#142921]">{stats.total_books}</h3>
-                            <p className="text-[11px] text-[#527365] font-medium pt-1">Buku di perpustakaan</p>
+                            <h3 className="text-3xl font-black text-[#142921]">
+                                {stats.total_books}
+                            </h3>
+                            <p className="pt-1 text-[11px] font-medium text-[#527365]">
+                                Buku di perpustakaan
+                            </p>
                         </div>
-                        <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
-                            <BookMarked className="w-5 h-5" />
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-amber-200 bg-amber-50 text-amber-700">
+                            <BookMarked className="h-5 w-5" />
                         </div>
                     </div>
 
-                    <div className="bg-white border border-[#c8dac5] hover:border-[#265243] p-5 rounded-2xl shadow-xs transition-all flex items-start justify-between">
+                    <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-[#527365]">E-Legalisir Alumni</span>
-                                <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 text-[10px] font-black border border-emerald-200">
+                                <span className="text-xs font-bold text-[#527365]">
+                                    E-Legalisir Alumni
+                                </span>
+                                <span className="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-black text-emerald-800">
                                     {stats.pending_legalizations} Pending
                                 </span>
                             </div>
-                            <h3 className="text-3xl font-black text-[#142921]">{stats.pending_legalizations}</h3>
-                            <p className="text-[11px] text-[#527365] font-medium pt-1">Perlu verifikasi dokumen</p>
+                            <h3 className="text-3xl font-black text-[#142921]">
+                                {stats.pending_legalizations}
+                            </h3>
+                            <p className="pt-1 text-[11px] font-medium text-[#527365]">
+                                Perlu verifikasi dokumen
+                            </p>
                         </div>
-                        <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-200">
-                            <FileCheck className="w-5 h-5" />
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-800">
+                            <FileCheck className="h-5 w-5" />
                         </div>
                     </div>
 
-                    <div className="bg-white border border-[#c8dac5] hover:border-[#265243] p-5 rounded-2xl shadow-xs transition-all flex items-start justify-between">
+                    <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-[#527365]">Pengaduan Masuk</span>
-                                <span className="px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 text-[10px] font-black border border-rose-200">
+                                <span className="text-xs font-bold text-[#527365]">
+                                    Pengaduan Masuk
+                                </span>
+                                <span className="rounded-md border border-rose-200 bg-rose-50 px-2 py-0.5 text-[10px] font-black text-rose-700">
                                     Respon
                                 </span>
                             </div>
-                            <h3 className="text-3xl font-black text-[#142921]">{stats.pending_complaints}</h3>
-                            <p className="text-[11px] text-[#527365] font-medium pt-1">Menunggu tindak lanjut</p>
+                            <h3 className="text-3xl font-black text-[#142921]">
+                                {stats.pending_complaints}
+                            </h3>
+                            <p className="pt-1 text-[11px] font-medium text-[#527365]">
+                                Menunggu tindak lanjut
+                            </p>
                         </div>
-                        <div className="w-10 h-10 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-200">
-                            <MessageSquare className="w-5 h-5" />
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-rose-200 bg-rose-50 text-rose-600">
+                            <MessageSquare className="h-5 w-5" />
                         </div>
                     </div>
                 </div>
 
                 {/* ── 3. MIDDLE SECTION (LEFT NEW FEATURE: DAILY VISITORS CHART & RIGHT DARK CARDS) ── */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                     {/* Left Column: NEW FEATURE - Tren Pengunjung Website Per Hari (Chart) (8 Cols) */}
-                    <div className="lg:col-span-8 bg-white border border-[#c8dac5] rounded-3xl p-6 sm:p-8 space-y-6 shadow-xs flex flex-col justify-between">
-                        <div className="flex items-start justify-between flex-wrap gap-4">
+                    <div className="flex flex-col justify-between space-y-6 rounded-3xl border border-[#c8dac5] bg-white p-6 shadow-xs sm:p-8 lg:col-span-8">
+                        <div className="flex flex-wrap items-start justify-between gap-4">
                             <div>
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="px-2.5 py-0.5 rounded-md bg-[#265243] text-white text-[10px] font-black uppercase tracking-wider">
+                                <div className="mb-1 flex items-center gap-2">
+                                    <span className="rounded-md bg-[#265243] px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white uppercase">
                                         Statistik Pengunjung
                                     </span>
-                                    <span className="text-xs text-[#527365] font-bold">7 Hari Terakhir</span>
+                                    <span className="text-xs font-bold text-[#527365]">
+                                        7 Hari Terakhir
+                                    </span>
                                 </div>
-                                <h3 className="text-xl font-black text-[#142921]">Tren Volume Pengunjung Website</h3>
+                                <h3 className="text-xl font-black text-[#142921]">
+                                    Tren Volume Pengunjung Website
+                                </h3>
                             </div>
-                            <div className="text-right bg-[#265243] border border-[#316150] px-4.5 py-2.5 rounded-2xl text-white shadow-xs">
-                                <span className="text-2xl font-black text-white block leading-tight">
+                            <div className="rounded-2xl border border-[#316150] bg-[#265243] px-4.5 py-2.5 text-right text-white shadow-xs">
+                                <span className="block text-2xl leading-tight font-black text-white">
                                     {totalVisitors.toLocaleString('id-ID')}
                                 </span>
-                                <span className="text-[10px] text-emerald-100/90 font-extrabold uppercase tracking-wider">Total Kunjungan</span>
+                                <span className="text-[10px] font-extrabold tracking-wider text-emerald-100/90 uppercase">
+                                    Total Kunjungan
+                                </span>
                             </div>
                         </div>
 
                         {/* SVG Smooth Curved Area Chart */}
                         <div className="relative pt-2 pb-1">
-                            <div className="w-full relative">
-                                <svg viewBox="0 0 600 170" className="w-full h-auto overflow-visible">
+                            <div className="relative w-full">
+                                <svg
+                                    viewBox="0 0 600 170"
+                                    className="h-auto w-full overflow-visible"
+                                >
                                     <defs>
-                                        <linearGradient id="visitorGradient" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stopColor="#265243" stopOpacity="0.35" />
-                                            <stop offset="60%" stopColor="#265243" stopOpacity="0.08" />
-                                            <stop offset="100%" stopColor="#265243" stopOpacity="0.0" />
+                                        <linearGradient
+                                            id="visitorGradient"
+                                            x1="0"
+                                            y1="0"
+                                            x2="0"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0%"
+                                                stopColor="#265243"
+                                                stopOpacity="0.35"
+                                            />
+                                            <stop
+                                                offset="60%"
+                                                stopColor="#265243"
+                                                stopOpacity="0.08"
+                                            />
+                                            <stop
+                                                offset="100%"
+                                                stopColor="#265243"
+                                                stopOpacity="0.0"
+                                            />
                                         </linearGradient>
-                                        <filter id="chartGlow" x="-20%" y="-20%" width="140%" height="140%">
-                                            <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#265243" floodOpacity="0.25" />
+                                        <filter
+                                            id="chartGlow"
+                                            x="-20%"
+                                            y="-20%"
+                                            width="140%"
+                                            height="140%"
+                                        >
+                                            <feDropShadow
+                                                dx="0"
+                                                dy="4"
+                                                stdDeviation="3"
+                                                floodColor="#265243"
+                                                floodOpacity="0.25"
+                                            />
                                         </filter>
                                     </defs>
 
                                     {/* Horizontal Grid Lines - 100% Full Width */}
-                                    <line x1="0" y1={paddingTop} x2={svgWidth} y2={paddingTop} stroke="#e2ebd9" strokeDasharray="4 4" strokeWidth="1" />
-                                    <line x1="0" y1={paddingTop + drawHeight / 2} x2={svgWidth} y2={paddingTop + drawHeight / 2} stroke="#e2ebd9" strokeDasharray="4 4" strokeWidth="1" />
-                                    <line x1="0" y1={svgHeight - paddingBottom} x2={svgWidth} y2={svgHeight - paddingBottom} stroke="#e2ebd9" strokeDasharray="4 4" strokeWidth="1" />
+                                    <line
+                                        x1="0"
+                                        y1={paddingTop}
+                                        x2={svgWidth}
+                                        y2={paddingTop}
+                                        stroke="#e2ebd9"
+                                        strokeDasharray="4 4"
+                                        strokeWidth="1"
+                                    />
+                                    <line
+                                        x1="0"
+                                        y1={paddingTop + drawHeight / 2}
+                                        x2={svgWidth}
+                                        y2={paddingTop + drawHeight / 2}
+                                        stroke="#e2ebd9"
+                                        strokeDasharray="4 4"
+                                        strokeWidth="1"
+                                    />
+                                    <line
+                                        x1="0"
+                                        y1={svgHeight - paddingBottom}
+                                        x2={svgWidth}
+                                        y2={svgHeight - paddingBottom}
+                                        stroke="#e2ebd9"
+                                        strokeDasharray="4 4"
+                                        strokeWidth="1"
+                                    />
 
                                     {/* Filled Smooth Area */}
-                                    <path d={areaPath} fill="url(#visitorGradient)" />
+                                    <path
+                                        d={areaPath}
+                                        fill="url(#visitorGradient)"
+                                    />
 
                                     {/* Smooth Curved Line */}
-                                    <path d={linePath} fill="none" stroke="#265243" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#chartGlow)" />
+                                    <path
+                                        d={linePath}
+                                        fill="none"
+                                        stroke="#265243"
+                                        strokeWidth="3.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        filter="url(#chartGlow)"
+                                    />
 
                                     {/* Interactive Dots, Guidelines & Floating Badges */}
                                     {points.map((p, idx) => {
@@ -288,23 +402,74 @@ export default function AdminDashboard({
                                             idx === 0
                                                 ? Math.max(4, p.x - 12)
                                                 : idx === vStats.length - 1
-                                                ? Math.min(svgWidth - 52, p.x - 36)
-                                                : p.x - 24;
+                                                  ? Math.min(
+                                                        svgWidth - 52,
+                                                        p.x - 36,
+                                                    )
+                                                  : p.x - 24;
 
                                         return (
-                                            <g key={idx} className="group cursor-pointer">
+                                            <g
+                                                key={idx}
+                                                className="group cursor-pointer"
+                                            >
                                                 {/* Dashed vertical guideline to x-axis */}
-                                                <line x1={p.x} y1={p.y} x2={p.x} y2={svgHeight - paddingBottom} stroke="#265243" strokeWidth="1" strokeDasharray="2 2" strokeOpacity="0.4" />
+                                                <line
+                                                    x1={p.x}
+                                                    y1={p.y}
+                                                    x2={p.x}
+                                                    y2={
+                                                        svgHeight -
+                                                        paddingBottom
+                                                    }
+                                                    stroke="#265243"
+                                                    strokeWidth="1"
+                                                    strokeDasharray="2 2"
+                                                    strokeOpacity="0.4"
+                                                />
 
                                                 {/* Circle Point */}
-                                                <circle cx={p.x} cy={p.y} r="5.5" fill="#ffffff" stroke="#265243" strokeWidth="3" className="transition-all duration-200 group-hover:r-7.5 group-hover:stroke-[#f59e0b]" />
-                                                <circle cx={p.x} cy={p.y} r="2" fill="#265243" className="transition-all duration-200 group-hover:fill-[#142921]" />
+                                                <circle
+                                                    cx={p.x}
+                                                    cy={p.y}
+                                                    r="5.5"
+                                                    fill="#ffffff"
+                                                    stroke="#265243"
+                                                    strokeWidth="3"
+                                                    className="group-hover:r-7.5 transition-all duration-200 group-hover:stroke-[#f59e0b]"
+                                                />
+                                                <circle
+                                                    cx={p.x}
+                                                    cy={p.y}
+                                                    r="2"
+                                                    fill="#265243"
+                                                    className="transition-all duration-200 group-hover:fill-[#142921]"
+                                                />
 
                                                 {/* Value Badge Box with Down Pointer */}
                                                 <g className="transition-all duration-200 group-hover:-translate-y-1">
-                                                    <rect x={badgeX} y={p.y - 30} width="48" height="20" rx="6" fill="#142921" stroke="#316150" strokeWidth="1" />
-                                                    <polygon points={`${p.x - 4},${p.y - 10} ${p.x + 4},${p.y - 10} ${p.x},${p.y - 6}`} fill="#142921" />
-                                                    <text x={badgeX + 24} y={p.y - 16} textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="800">
+                                                    <rect
+                                                        x={badgeX}
+                                                        y={p.y - 30}
+                                                        width="48"
+                                                        height="20"
+                                                        rx="6"
+                                                        fill="#142921"
+                                                        stroke="#316150"
+                                                        strokeWidth="1"
+                                                    />
+                                                    <polygon
+                                                        points={`${p.x - 4},${p.y - 10} ${p.x + 4},${p.y - 10} ${p.x},${p.y - 6}`}
+                                                        fill="#142921"
+                                                    />
+                                                    <text
+                                                        x={badgeX + 24}
+                                                        y={p.y - 16}
+                                                        textAnchor="middle"
+                                                        fill="#ffffff"
+                                                        fontSize="10"
+                                                        fontWeight="800"
+                                                    >
                                                         {p.visitors}
                                                     </text>
                                                 </g>
@@ -315,12 +480,14 @@ export default function AdminDashboard({
                             </div>
 
                             {/* X-Axis Day Labels aligned with point percentages */}
-                            <div className="relative w-full h-8 pt-3 border-t border-[#e2ebd9]">
+                            <div className="relative h-8 w-full border-t border-[#e2ebd9] pt-3">
                                 {vStats.map((item, idx) => (
                                     <span
                                         key={idx}
                                         className="absolute -translate-x-1/2 text-center text-xs font-bold text-[#527365]"
-                                        style={{ left: `${(points[idx].x / svgWidth) * 100}%` }}
+                                        style={{
+                                            left: `${(points[idx].x / svgWidth) * 100}%`,
+                                        }}
                                     >
                                         {item.day}
                                     </span>
@@ -328,35 +495,47 @@ export default function AdminDashboard({
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-between text-xs font-medium text-[#527365] pt-2 border-t border-[#e2ebd9]">
-                            <span>Rata-rata: <strong className="text-[#142921] font-bold">{Math.round(totalVisitors / (vStats.length || 1))} Kunjungan / Hari</strong></span>
-                            <span className="text-[#265243] font-bold flex items-center gap-1">
-                                <TrendingUp className="w-3.5 h-3.5 text-[#f59e0b]" /> Data Real-time
+                        <div className="flex items-center justify-between border-t border-[#e2ebd9] pt-2 text-xs font-medium text-[#527365]">
+                            <span>
+                                Rata-rata:{' '}
+                                <strong className="font-bold text-[#142921]">
+                                    {Math.round(
+                                        totalVisitors / (vStats.length || 1),
+                                    )}{' '}
+                                    Kunjungan / Hari
+                                </strong>
+                            </span>
+                            <span className="flex items-center gap-1 font-bold text-[#265243]">
+                                <TrendingUp className="h-3.5 w-3.5 text-[#f59e0b]" />{' '}
+                                Data Real-time
                             </span>
                         </div>
                     </div>
 
                     {/* Right Column: Stacked Dark Green Feature Cards (4 Cols) */}
-                    <div className="lg:col-span-4 space-y-4 flex flex-col justify-between">
-                        
+                    <div className="flex flex-col justify-between space-y-4 lg:col-span-4">
                         {/* Dark Card 1: Admin & Pengguna */}
-                        <div className="bg-[#265243] text-white rounded-3xl p-6 shadow-md border border-[#316150] space-y-4 flex-1 flex flex-col justify-between">
+                        <div className="flex flex-1 flex-col justify-between space-y-4 rounded-3xl border border-[#316150] bg-[#265243] p-6 text-white shadow-md">
                             <div className="flex items-start justify-between gap-3">
                                 <div>
-                                    <span className="text-xs font-bold text-emerald-200/90 uppercase tracking-wider block">
+                                    <span className="block text-xs font-bold tracking-wider text-emerald-200/90 uppercase">
                                         Pengguna &amp; Admin
                                     </span>
-                                    <h4 className="text-3xl font-black text-white mt-1">{stats.total_users}</h4>
-                                    <p className="text-xs text-emerald-100/80 font-medium mt-0.5">Akun terdaftar dalam sistem</p>
+                                    <h4 className="mt-1 text-3xl font-black text-white">
+                                        {stats.total_users}
+                                    </h4>
+                                    <p className="mt-0.5 text-xs font-medium text-emerald-100/80">
+                                        Akun terdaftar dalam sistem
+                                    </p>
                                 </div>
-                                <div className="w-12 h-12 rounded-2xl bg-white/10 text-[#f59e0b] border border-white/20 flex items-center justify-center shrink-0">
-                                    <Users className="w-6 h-6" />
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-[#f59e0b]">
+                                    <Users className="h-6 w-6" />
                                 </div>
                             </div>
                             {userRole === 'super_admin' && (
                                 <Link
                                     href="/admin/users"
-                                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#f59e0b] hover:text-white transition-colors pt-2 border-t border-white/10"
+                                    className="inline-flex items-center gap-1.5 border-t border-white/10 pt-2 text-xs font-bold text-[#f59e0b] transition-colors hover:text-white"
                                 >
                                     Kelola Pengguna Sistem &rarr;
                                 </Link>
@@ -364,22 +543,26 @@ export default function AdminDashboard({
                         </div>
 
                         {/* Dark Card 2: Layanan Alumni */}
-                        <div className="bg-[#142921] text-white rounded-3xl p-6 shadow-md border border-emerald-900/40 space-y-4 flex-1 flex flex-col justify-between">
+                        <div className="flex flex-1 flex-col justify-between space-y-4 rounded-3xl border border-emerald-900/40 bg-[#142921] p-6 text-white shadow-md">
                             <div className="flex items-start justify-between gap-3">
                                 <div>
-                                    <span className="text-xs font-bold text-emerald-200/90 uppercase tracking-wider block">
+                                    <span className="block text-xs font-bold tracking-wider text-emerald-200/90 uppercase">
                                         Layanan E-Legalisir
                                     </span>
-                                    <h4 className="text-3xl font-black text-[#f59e0b] mt-1">{stats.pending_legalizations}</h4>
-                                    <p className="text-xs text-emerald-100/80 font-medium mt-0.5">Permohonan perlu diproses</p>
+                                    <h4 className="mt-1 text-3xl font-black text-[#f59e0b]">
+                                        {stats.pending_legalizations}
+                                    </h4>
+                                    <p className="mt-0.5 text-xs font-medium text-emerald-100/80">
+                                        Permohonan perlu diproses
+                                    </p>
                                 </div>
-                                <div className="w-12 h-12 rounded-2xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
-                                    <FileCheck className="w-6 h-6" />
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white">
+                                    <FileCheck className="h-6 w-6" />
                                 </div>
                             </div>
                             <Link
                                 href="/admin/legalization"
-                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9db588] hover:text-white transition-colors pt-2 border-t border-white/10"
+                                className="inline-flex items-center gap-1.5 border-t border-white/10 pt-2 text-xs font-bold text-[#9db588] transition-colors hover:text-white"
                             >
                                 Proses Legalisir Alumni &rarr;
                             </Link>
@@ -388,14 +571,19 @@ export default function AdminDashboard({
                 </div>
 
                 {/* ── 4. FULL-WIDTH ROW: SEBARAN DATA & AKTIVITAS PORTAL ── */}
-                <div className="w-full bg-white border border-[#c8dac5] rounded-3xl overflow-hidden shadow-xs">
+                <div className="w-full overflow-hidden rounded-3xl border border-[#c8dac5] bg-white shadow-xs">
                     {/* Header Bar Soft Sage */}
-                    <div className="bg-[#f4f8f3] p-5 sm:p-6 border-b border-[#c8dac5] flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#c8dac5] bg-[#f4f8f3] p-5 sm:p-6">
                         <div>
-                            <h3 className="text-xl font-black text-[#142921]">Sebaran Data &amp; Aktivitas Portal</h3>
-                            <p className="text-xs text-[#527365] font-medium mt-0.5">Ringkasan statistik operasional seluruh modul sekolah</p>
+                            <h3 className="text-xl font-black text-[#142921]">
+                                Sebaran Data &amp; Aktivitas Portal
+                            </h3>
+                            <p className="mt-0.5 text-xs font-medium text-[#527365]">
+                                Ringkasan statistik operasional seluruh modul
+                                sekolah
+                            </p>
                         </div>
-                        <span className="px-3.5 py-1 rounded-full bg-white border border-[#c8dac5] text-[#265243] text-xs font-bold shadow-xs">
+                        <span className="rounded-full border border-[#c8dac5] bg-white px-3.5 py-1 text-xs font-bold text-[#265243] shadow-xs">
                             Update Real-time
                         </span>
                     </div>
@@ -403,59 +591,99 @@ export default function AdminDashboard({
                     {/* Clean Body Content */}
                     <div className="p-6 sm:p-8">
                         {/* Metrics - Clean Row Divided by Thin Lines */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#e2ebd9]">
-                            <div className="py-2 sm:py-0 sm:px-6 first:pl-0 text-center sm:text-left">
-                                <span className="text-xs font-extrabold text-[#527365] uppercase tracking-wider block">Pustaka Tersedia</span>
-                                <span className="text-2xl font-black text-[#265243] mt-1 block">{stats.available_books} <span className="text-xs font-bold text-[#527365]">Buku</span></span>
+                        <div className="grid grid-cols-1 divide-y divide-[#e2ebd9] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+                            <div className="py-2 text-center first:pl-0 sm:px-6 sm:py-0 sm:text-left">
+                                <span className="block text-xs font-extrabold tracking-wider text-[#527365] uppercase">
+                                    Pustaka Tersedia
+                                </span>
+                                <span className="mt-1 block text-2xl font-black text-[#265243]">
+                                    {stats.available_books}{' '}
+                                    <span className="text-xs font-bold text-[#527365]">
+                                        Buku
+                                    </span>
+                                </span>
                             </div>
-                            <div className="py-2 sm:py-0 sm:px-6 text-center sm:text-left">
-                                <span className="text-xs font-extrabold text-amber-700 uppercase tracking-wider block">Legalisir Pending</span>
-                                <span className="text-2xl font-black text-amber-800 mt-1 block">{stats.pending_legalizations} <span className="text-xs font-bold text-amber-700">Dokumen</span></span>
+                            <div className="py-2 text-center sm:px-6 sm:py-0 sm:text-left">
+                                <span className="block text-xs font-extrabold tracking-wider text-amber-700 uppercase">
+                                    Legalisir Pending
+                                </span>
+                                <span className="mt-1 block text-2xl font-black text-amber-800">
+                                    {stats.pending_legalizations}{' '}
+                                    <span className="text-xs font-bold text-amber-700">
+                                        Dokumen
+                                    </span>
+                                </span>
                             </div>
-                            <div className="py-2 sm:py-0 sm:px-6 text-center sm:text-left">
-                                <span className="text-xs font-extrabold text-rose-700 uppercase tracking-wider block">Pengaduan Pending</span>
-                                <span className="text-2xl font-black text-rose-800 mt-1 block">{stats.pending_complaints} <span className="text-xs font-bold text-rose-700">Pesan</span></span>
+                            <div className="py-2 text-center sm:px-6 sm:py-0 sm:text-left">
+                                <span className="block text-xs font-extrabold tracking-wider text-rose-700 uppercase">
+                                    Pengaduan Pending
+                                </span>
+                                <span className="mt-1 block text-2xl font-black text-rose-800">
+                                    {stats.pending_complaints}{' '}
+                                    <span className="text-xs font-bold text-rose-700">
+                                        Pesan
+                                    </span>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* ── 5. BOTTOM SECTION: RECENT TABLES (COMPLAINTS & LEGALIZATIONS) ── */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     {/* Complaints Widget */}
-                    <div className="bg-white border border-[#c8dac5] rounded-3xl p-6 shadow-xs space-y-4">
+                    <div className="space-y-4 rounded-3xl border border-[#c8dac5] bg-white p-6 shadow-xs">
                         <div className="flex items-center justify-between gap-2">
                             <div>
-                                <h3 className="text-base font-black text-[#142921] flex items-center gap-2">
-                                    <MessageSquare className="w-4.5 h-4.5 text-[#265243]" /> Pengaduan Masuk Terbaru
+                                <h3 className="flex items-center gap-2 text-base font-black text-[#142921]">
+                                    <MessageSquare className="h-4.5 w-4.5 text-[#265243]" />{' '}
+                                    Pengaduan Masuk Terbaru
                                 </h3>
-                                <p className="text-xs text-[#527365] font-medium">Kotak suara &amp; masukan dari masyarakat</p>
+                                <p className="text-xs font-medium text-[#527365]">
+                                    Kotak suara &amp; masukan dari masyarakat
+                                </p>
                             </div>
-                            <Link href="/admin/complaints" className="text-xs font-bold text-[#265243] hover:underline shrink-0">
+                            <Link
+                                href="/admin/complaints"
+                                className="shrink-0 text-xs font-bold text-[#265243] hover:underline"
+                            >
                                 Lihat Semua &rarr;
                             </Link>
                         </div>
                         {recentComplaints.length === 0 ? (
-                            <div className="p-8 text-center text-xs text-[#527365] font-medium bg-[#f8faf7] rounded-2xl border border-[#e2ebd9]">
+                            <div className="rounded-2xl border border-[#e2ebd9] bg-[#f8faf7] p-8 text-center text-xs font-medium text-[#527365]">
                                 Belum ada pengaduan masyarakat.
                             </div>
                         ) : (
                             <div className="divide-y divide-[#e2ebd9]">
                                 {recentComplaints.map((item) => (
-                                    <div key={item.id} className="py-3 flex items-center justify-between gap-3">
+                                    <div
+                                        key={item.id}
+                                        className="flex items-center justify-between gap-3 py-3"
+                                    >
                                         <div className="min-w-0 flex-1">
-                                            <p className="text-xs sm:text-sm font-extrabold text-[#142921] truncate">{item.subject || 'Tanpa Subjek'}</p>
-                                            <p className="text-[11px] text-[#527365] font-medium truncate">{item.name} • {item.email}</p>
+                                            <p className="truncate text-xs font-extrabold text-[#142921] sm:text-sm">
+                                                {item.subject || 'Tanpa Subjek'}
+                                            </p>
+                                            <p className="truncate text-[11px] font-medium text-[#527365]">
+                                                {item.name} • {item.email}
+                                            </p>
                                         </div>
-                                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase shrink-0 ${
-                                            item.status === 'pending'
-                                                ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                                        <span
+                                            className={`shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase ${
+                                                item.status === 'pending'
+                                                    ? 'border border-amber-300 bg-amber-100 text-amber-800'
+                                                    : item.status ===
+                                                        'processed'
+                                                      ? 'border border-blue-300 bg-blue-100 text-blue-800'
+                                                      : 'border border-emerald-300 bg-emerald-100 text-emerald-800'
+                                            }`}
+                                        >
+                                            {item.status === 'pending'
+                                                ? 'Pending'
                                                 : item.status === 'processed'
-                                                ? 'bg-blue-100 text-blue-800 border border-blue-300'
-                                                : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                                        }`}>
-                                            {item.status === 'pending' ? 'Pending' : item.status === 'processed' ? 'Diproses' : 'Selesai'}
+                                                  ? 'Diproses'
+                                                  : 'Selesai'}
                                         </span>
                                     </div>
                                 ))}
@@ -464,39 +692,56 @@ export default function AdminDashboard({
                     </div>
 
                     {/* Legalization Widget */}
-                    <div className="bg-white border border-[#c8dac5] rounded-3xl p-6 shadow-xs space-y-4">
+                    <div className="space-y-4 rounded-3xl border border-[#c8dac5] bg-white p-6 shadow-xs">
                         <div className="flex items-center justify-between gap-2">
                             <div>
-                                <h3 className="text-base font-black text-[#142921] flex items-center gap-2">
-                                    <FileCheck className="w-4.5 h-4.5 text-[#265243]" /> Permohonan Legalisir Terbaru
+                                <h3 className="flex items-center gap-2 text-base font-black text-[#142921]">
+                                    <FileCheck className="h-4.5 w-4.5 text-[#265243]" />{' '}
+                                    Permohonan Legalisir Terbaru
                                 </h3>
-                                <p className="text-xs text-[#527365] font-medium">Permohonan verifikasi ijazah/transkrip alumni</p>
+                                <p className="text-xs font-medium text-[#527365]">
+                                    Permohonan verifikasi ijazah/transkrip
+                                    alumni
+                                </p>
                             </div>
-                            <Link href="/admin/legalization" className="text-xs font-bold text-[#265243] hover:underline shrink-0">
+                            <Link
+                                href="/admin/legalization"
+                                className="shrink-0 text-xs font-bold text-[#265243] hover:underline"
+                            >
                                 Kelola &rarr;
                             </Link>
                         </div>
                         {recentLegalizations.length === 0 ? (
-                            <div className="p-8 text-center text-xs text-[#527365] font-medium bg-[#f8faf7] rounded-2xl border border-[#e2ebd9]">
+                            <div className="rounded-2xl border border-[#e2ebd9] bg-[#f8faf7] p-8 text-center text-xs font-medium text-[#527365]">
                                 Belum ada permohonan legalisir.
                             </div>
                         ) : (
                             <div className="divide-y divide-[#e2ebd9]">
                                 {recentLegalizations.map((req) => (
-                                    <div key={req.id} className="py-3 flex items-center justify-between gap-3">
+                                    <div
+                                        key={req.id}
+                                        className="flex items-center justify-between gap-3 py-3"
+                                    >
                                         <div className="min-w-0 flex-1">
-                                            <p className="text-xs sm:text-sm font-extrabold text-[#142921] truncate">{req.alumni_name}</p>
-                                            <p className="text-[11px] text-[#527365] font-medium truncate">{req.document_type}</p>
+                                            <p className="truncate text-xs font-extrabold text-[#142921] sm:text-sm">
+                                                {req.alumni_name}
+                                            </p>
+                                            <p className="truncate text-[11px] font-medium text-[#527365]">
+                                                {req.document_type}
+                                            </p>
                                         </div>
-                                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase shrink-0 ${
-                                            req.status === 'pending'
-                                                ? 'bg-amber-100 text-amber-800 border border-amber-300'
-                                                : req.status === 'approved'
-                                                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                                                : req.status === 'processing'
-                                                ? 'bg-blue-100 text-blue-800 border border-blue-300'
-                                                : 'bg-rose-100 text-rose-800 border border-rose-300'
-                                        }`}>
+                                        <span
+                                            className={`shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase ${
+                                                req.status === 'pending'
+                                                    ? 'border border-amber-300 bg-amber-100 text-amber-800'
+                                                    : req.status === 'approved'
+                                                      ? 'border border-emerald-300 bg-emerald-100 text-emerald-800'
+                                                      : req.status ===
+                                                          'processing'
+                                                        ? 'border border-blue-300 bg-blue-100 text-blue-800'
+                                                        : 'border border-rose-300 bg-rose-100 text-rose-800'
+                                            }`}
+                                        >
                                             {req.status}
                                         </span>
                                     </div>

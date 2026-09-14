@@ -21,8 +21,8 @@ export function NavMain({
     const renderGroup = (groupTitle: string, groupItems: NavItem[]) => {
         if (groupItems.length === 0) return null;
         return (
-            <SidebarGroup key={groupTitle} className="px-3 py-1.5 space-y-1">
-                <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-widest text-[#9db588]/80 px-2.5 mb-1 select-none">
+            <SidebarGroup key={groupTitle} className="space-y-1 px-3 py-1.5">
+                <SidebarGroupLabel className="mb-1 px-2.5 text-[10px] font-black tracking-widest text-[#9db588]/80 uppercase select-none">
                     {groupTitle}
                 </SidebarGroupLabel>
                 <SidebarMenu className="space-y-1">
@@ -34,21 +34,29 @@ export function NavMain({
                                     asChild
                                     isActive={active}
                                     tooltip={{ children: item.title }}
-                                    className={`transition-all duration-200 h-9.5 rounded-xl px-3 text-xs sm:text-sm font-semibold ${
+                                    className={`h-9.5 rounded-xl px-3 text-xs font-semibold transition-all duration-200 sm:text-sm ${
                                         active
-                                            ? 'bg-white/20 text-white font-extrabold shadow-sm border border-white/20 hover:bg-white/25 hover:text-white'
+                                            ? 'border border-white/20 bg-white/20 font-extrabold text-white shadow-sm hover:bg-white/25 hover:text-white'
                                             : 'text-[#d1dcd4] hover:bg-[#1f3a2f] hover:text-white'
                                     }`}
                                 >
-                                    <Link href={item.href} prefetch className="flex items-center gap-3">
+                                    <Link
+                                        href={item.href}
+                                        prefetch
+                                        className="flex items-center gap-3"
+                                    >
                                         {item.icon && (
                                             <item.icon
                                                 className={`size-4.5 shrink-0 ${
-                                                    active ? 'text-[#f59e0b]' : 'text-[#9db588]'
+                                                    active
+                                                        ? 'text-[#f59e0b]'
+                                                        : 'text-[#9db588]'
                                                 }`}
                                             />
                                         )}
-                                        <span className="truncate group-data-[collapsible=icon]:hidden">{item.title}</span>
+                                        <span className="truncate group-data-[collapsible=icon]:hidden">
+                                            {item.title}
+                                        </span>
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>

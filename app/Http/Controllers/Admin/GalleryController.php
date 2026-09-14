@@ -26,26 +26,26 @@ class GalleryController extends Controller
         // Transform display image
         $items->getCollection()->transform(function ($item) {
             return [
-                'id'            => $item->id,
-                'title'         => $item->title,
-                'type'          => $item->type,
-                'image_path'    => $item->image_path ? Storage::url($item->image_path) : null,
-                'youtube_url'   => $item->youtube_url,
-                'youtube_id'    => $item->youtube_id,
+                'id' => $item->id,
+                'title' => $item->title,
+                'type' => $item->type,
+                'image_path' => $item->image_path ? Storage::url($item->image_path) : null,
+                'youtube_url' => $item->youtube_url,
+                'youtube_id' => $item->youtube_id,
                 'display_image' => $item->display_image,
-                'description'   => $item->description,
-                'category'      => $item->category,
-                'is_active'     => $item->is_active,
-                'created_at'    => $item->created_at->format('d M Y'),
+                'description' => $item->description,
+                'category' => $item->category,
+                'is_active' => $item->is_active,
+                'created_at' => $item->created_at->format('d M Y'),
             ];
         });
 
         return Inertia::render('admin/gallery/index', [
             'galleries' => $items,
-            'filters'   => ['type' => $type, 'search' => $search],
-            'flash'     => [
+            'filters' => ['type' => $type, 'search' => $search],
+            'flash' => [
                 'success' => session('success'),
-                'error'   => session('error'),
+                'error' => session('error'),
             ],
         ]);
     }
@@ -53,16 +53,16 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
-            'type'        => 'required|in:photo,youtube',
-            'image'       => 'required_if:type,photo|nullable|image|max:5120',
+            'title' => 'required|string|max:255',
+            'type' => 'required|in:photo,youtube',
+            'image' => 'required_if:type,photo|nullable|image|max:5120',
             'youtube_url' => 'required_if:type,youtube|nullable|url',
-            'category'    => 'nullable|string|max:100',
+            'category' => 'nullable|string|max:100',
             'description' => 'nullable|string|max:1000',
         ], [
-            'image.required_if'       => 'Foto wajib diunggah untuk tipe galeri Foto.',
+            'image.required_if' => 'Foto wajib diunggah untuk tipe galeri Foto.',
             'youtube_url.required_if' => 'Link URL YouTube wajib diisi untuk tipe galeri YouTube Video.',
-            'image.max'               => 'Ukuran foto maksimal adalah 5MB.',
+            'image.max' => 'Ukuran foto maksimal adalah 5MB.',
         ]);
 
         $imagePath = null;
@@ -76,15 +76,15 @@ class GalleryController extends Controller
         }
 
         Gallery::create([
-            'title'       => $request->title,
-            'type'        => $request->type,
-            'image_path'  => $imagePath,
+            'title' => $request->title,
+            'type' => $request->type,
+            'image_path' => $imagePath,
             'youtube_url' => $request->youtube_url,
-            'youtube_id'  => $youtubeId,
-            'category'    => $request->category ?: 'Umum',
+            'youtube_id' => $youtubeId,
+            'category' => $request->category ?: 'Umum',
             'description' => $request->description,
-            'is_active'   => true,
-            'order'       => Gallery::max('order') + 1,
+            'is_active' => true,
+            'order' => Gallery::max('order') + 1,
         ]);
 
         return back()->with('success', 'Item galeri berhasil ditambahkan!');
@@ -93,11 +93,11 @@ class GalleryController extends Controller
     public function update(Request $request, Gallery $gallery)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
-            'type'        => 'required|in:photo,youtube',
-            'image'       => 'nullable|image|max:5120',
+            'title' => 'required|string|max:255',
+            'type' => 'required|in:photo,youtube',
+            'image' => 'nullable|image|max:5120',
             'youtube_url' => 'nullable|url',
-            'category'    => 'nullable|string|max:100',
+            'category' => 'nullable|string|max:100',
             'description' => 'nullable|string|max:1000',
         ]);
 
@@ -116,12 +116,12 @@ class GalleryController extends Controller
         }
 
         $gallery->update([
-            'title'       => $request->title,
-            'type'        => $request->type,
-            'image_path'  => $imagePath,
+            'title' => $request->title,
+            'type' => $request->type,
+            'image_path' => $imagePath,
             'youtube_url' => $request->youtube_url,
-            'youtube_id'  => $youtubeId,
-            'category'    => $request->category ?: 'Umum',
+            'youtube_id' => $youtubeId,
+            'category' => $request->category ?: 'Umum',
             'description' => $request->description,
         ]);
 
@@ -141,7 +141,7 @@ class GalleryController extends Controller
 
     public function toggleStatus(Gallery $gallery)
     {
-        $gallery->update(['is_active' => !$gallery->is_active]);
+        $gallery->update(['is_active' => ! $gallery->is_active]);
 
         return back()->with('success', 'Status galeri berhasil diubah.');
     }

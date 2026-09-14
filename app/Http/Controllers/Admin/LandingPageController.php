@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
-use App\Models\Facility;
 use App\Models\LandingPageSetting;
 use App\Models\SchoolMilestone;
 use Illuminate\Http\Request;
@@ -17,14 +16,14 @@ class LandingPageController extends Controller
     {
         $banners = Banner::orderBy('order')->get()->map(function ($b) {
             return [
-                'id'          => $b->id,
-                'title'       => $b->title,
-                'subtitle'    => $b->subtitle,
-                'image'       => $b->image ? Storage::url($b->image) : null,
+                'id' => $b->id,
+                'title' => $b->title,
+                'subtitle' => $b->subtitle,
+                'image' => $b->image ? Storage::url($b->image) : null,
                 'button_text' => $b->button_text,
                 'button_link' => $b->button_link,
-                'order'       => $b->order,
-                'is_active'   => $b->is_active,
+                'order' => $b->order,
+                'is_active' => $b->is_active,
             ];
         });
 
@@ -32,20 +31,20 @@ class LandingPageController extends Controller
 
         // Resolve image URLs for settings that store paths
         foreach (['school_logo', 'principal_photo', 'principal_media_photo', 'footer_banner_bg'] as $key) {
-            if (!empty($settings[$key])) {
-                $settings[$key . '_url'] = Storage::url($settings[$key]);
+            if (! empty($settings[$key])) {
+                $settings[$key.'_url'] = Storage::url($settings[$key]);
             }
         }
 
         $milestones = SchoolMilestone::orderBy('order')->orderBy('year')->get()->toArray();
 
         return Inertia::render('admin/landing-page/index', [
-            'banners'    => $banners,
-            'settings'   => $settings,
+            'banners' => $banners,
+            'settings' => $settings,
             'milestones' => $milestones,
-            'flash'      => [
+            'flash' => [
                 'success' => session('success'),
-                'error'   => session('error'),
+                'error' => session('error'),
             ],
         ]);
     }
@@ -55,12 +54,12 @@ class LandingPageController extends Controller
     public function storeBanner(Request $request)
     {
         $data = $request->validate([
-            'title'       => 'required|string|max:255',
-            'subtitle'    => 'nullable|string|max:500',
-            'image'       => 'nullable|image|max:3072',
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:500',
+            'image' => 'nullable|image|max:3072',
             'button_text' => 'nullable|string|max:100',
             'button_link' => 'nullable|string|max:500',
-            'is_active'   => 'boolean',
+            'is_active' => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {
@@ -77,12 +76,12 @@ class LandingPageController extends Controller
     public function updateBanner(Request $request, Banner $banner)
     {
         $data = $request->validate([
-            'title'       => 'required|string|max:255',
-            'subtitle'    => 'nullable|string|max:500',
-            'image'       => 'nullable|image|max:3072',
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:500',
+            'image' => 'nullable|image|max:3072',
             'button_text' => 'nullable|string|max:100',
             'button_link' => 'nullable|string|max:500',
-            'is_active'   => 'boolean',
+            'is_active' => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {
@@ -110,7 +109,7 @@ class LandingPageController extends Controller
     public function reorderBanners(Request $request)
     {
         $request->validate([
-            'order'   => 'required|array',
+            'order' => 'required|array',
             'order.*' => 'integer|exists:banners,id',
         ]);
 
@@ -126,41 +125,41 @@ class LandingPageController extends Controller
     public function updateSettings(Request $request)
     {
         $request->validate([
-            'school_name'        => 'nullable|string|max:255',
-            'school_tagline'     => 'nullable|string|max:500',
-            'school_address'     => 'nullable|string|max:500',
-            'school_phone'       => 'nullable|string|max:50',
-            'school_email'       => 'nullable|email|max:255',
-            'school_website'     => 'nullable|string|max:255',
-            'legalization_link'  => 'nullable|string|max:500',
-            'complaint_link'     => 'nullable|string|max:500',
+            'school_name' => 'nullable|string|max:255',
+            'school_tagline' => 'nullable|string|max:500',
+            'school_address' => 'nullable|string|max:500',
+            'school_phone' => 'nullable|string|max:50',
+            'school_email' => 'nullable|email|max:255',
+            'school_website' => 'nullable|string|max:255',
+            'legalization_link' => 'nullable|string|max:500',
+            'complaint_link' => 'nullable|string|max:500',
             'school_description' => 'nullable|string',
-            'school_logo'        => 'nullable|image|max:2048',
-            'school_npsn'        => 'nullable|string|max:20',
-            'school_status'      => 'nullable|string|max:50',
-            'total_students'     => 'nullable|string|max:50',
-            'total_teachers'     => 'nullable|string|max:50',
-            'total_classrooms'   => 'nullable|string|max:50',
-            'accreditation'      => 'nullable|string|max:50',
+            'school_logo' => 'nullable|image|max:2048',
+            'school_npsn' => 'nullable|string|max:20',
+            'school_status' => 'nullable|string|max:50',
+            'total_students' => 'nullable|string|max:50',
+            'total_teachers' => 'nullable|string|max:50',
+            'total_classrooms' => 'nullable|string|max:50',
+            'accreditation' => 'nullable|string|max:50',
 
-            'principal_name'       => 'nullable|string|max:255',
-            'principal_title'      => 'nullable|string|max:255',
-            'principal_bio'        => 'nullable|string',
-            'principal_photo'      => 'nullable|image|max:2048',
-            'principal_video_url'  => 'nullable|string|max:500',
+            'principal_name' => 'nullable|string|max:255',
+            'principal_title' => 'nullable|string|max:255',
+            'principal_bio' => 'nullable|string',
+            'principal_photo' => 'nullable|image|max:2048',
+            'principal_video_url' => 'nullable|string|max:500',
             'principal_media_type' => 'nullable|string|in:video,photo',
-            'principal_media_photo'=> 'nullable|image|max:3072',
+            'principal_media_photo' => 'nullable|image|max:3072',
 
-            'vision'  => 'nullable|string',
+            'vision' => 'nullable|string',
             'mission' => 'nullable|string',
 
             'footer_copyright' => 'nullable|string|max:255',
-            'footer_address'   => 'nullable|string|max:500',
-            'footer_phone'     => 'nullable|string|max:50',
-            'footer_email'     => 'nullable|email|max:255',
-            'footer_facebook'  => 'nullable|string|max:500',
+            'footer_address' => 'nullable|string|max:500',
+            'footer_phone' => 'nullable|string|max:50',
+            'footer_email' => 'nullable|email|max:255',
+            'footer_facebook' => 'nullable|string|max:500',
             'footer_instagram' => 'nullable|string|max:500',
-            'footer_youtube'   => 'nullable|string|max:500',
+            'footer_youtube' => 'nullable|string|max:500',
             'footer_banner_title' => 'nullable|string|max:255',
             'footer_banner_subtitle' => 'nullable|string|max:500',
             'footer_banner_bg' => 'nullable|image|max:3072',
@@ -176,7 +175,7 @@ class LandingPageController extends Controller
                     Storage::disk('public')->delete($old);
                 }
                 $allData[$field] = $request->file($field)->store(
-                    str_replace('_', '-', $field) . 's',
+                    str_replace('_', '-', $field).'s',
                     'public'
                 );
             }

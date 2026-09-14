@@ -10,36 +10,46 @@ interface PageHeaderProps {
     action?: ReactNode;
 }
 
-export function PageHeader({ title, description, icon: Icon, badge, action }: PageHeaderProps) {
+export function PageHeader({
+    title,
+    description,
+    icon: Icon,
+    badge,
+    action,
+}: PageHeaderProps) {
     const props = usePage().props as any;
     const schoolLogoUrl = props.school_logo_url;
 
     return (
-        <div className="relative overflow-hidden rounded-2xl bg-[#265243] p-6 sm:p-7 text-white shadow-md border border-[#316150] mb-6">
-            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-start sm:items-center gap-4">
-                    <div className="p-2.5 rounded-2xl bg-white/15 text-white backdrop-blur-md border border-white/20 shadow-sm shrink-0 flex items-center justify-center w-12 h-12">
+        <div className="relative mb-6 overflow-hidden rounded-2xl border border-[#316150] bg-[#265243] p-6 text-white shadow-md sm:p-7">
+            <div className="relative z-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                <div className="flex items-start gap-4 sm:items-center">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15 p-2.5 text-white shadow-sm backdrop-blur-md">
                         {schoolLogoUrl ? (
-                            <img src={schoolLogoUrl} alt="Logo Sekolah" className="w-full h-full object-contain" />
+                            <img
+                                src={schoolLogoUrl}
+                                alt="Logo Sekolah"
+                                className="h-full w-full object-contain"
+                            />
                         ) : Icon ? (
-                            <Icon className="w-6 h-6" />
+                            <Icon className="h-6 w-6" />
                         ) : (
-                            <Building2 className="w-6 h-6" />
+                            <Building2 className="h-6 w-6" />
                         )}
                     </div>
                     <div>
                         {badge && (
-                            <div className="flex items-center gap-2 mb-1.5">
-                                <span className="px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-white/20 text-white backdrop-blur-md border border-white/30">
+                            <div className="mb-1.5 flex items-center gap-2">
+                                <span className="rounded-full border border-white/30 bg-white/20 px-3 py-0.5 text-[11px] font-bold tracking-wider text-white uppercase backdrop-blur-md">
                                     {badge}
                                 </span>
                             </div>
                         )}
-                        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
+                        <h1 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
                             {title}
                         </h1>
                         {description && (
-                            <p className="mt-1 text-xs sm:text-sm text-slate-100/90 max-w-3xl leading-relaxed">
+                            <p className="mt-1 max-w-3xl text-xs leading-relaxed text-slate-100/90 sm:text-sm">
                                 {description}
                             </p>
                         )}
@@ -47,7 +57,7 @@ export function PageHeader({ title, description, icon: Icon, badge, action }: Pa
                 </div>
 
                 {action && (
-                    <div className="flex items-center gap-3 shrink-0 self-start sm:self-auto pt-2 sm:pt-0 [&_a]:!bg-white [&_a]:!text-[#265243] [&_a]:hover:!bg-slate-100 [&_a]:!font-bold [&_a]:!shadow-sm [&_button]:!bg-white [&_button]:!text-[#265243] [&_button]:hover:!bg-slate-100 [&_button]:!font-bold [&_button]:!shadow-sm">
+                    <div className="flex shrink-0 items-center gap-3 self-start pt-2 sm:self-auto sm:pt-0 [&_a]:!bg-white [&_a]:!font-bold [&_a]:!text-[#265243] [&_a]:!shadow-sm [&_a]:hover:!bg-slate-100 [&_button]:!bg-white [&_button]:!font-bold [&_button]:!text-[#265243] [&_button]:!shadow-sm [&_button]:hover:!bg-slate-100">
                         {action}
                     </div>
                 )}

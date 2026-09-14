@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\LandingPageSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,9 +37,9 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $schoolName = \App\Models\LandingPageSetting::get('school_name') ?: 'MAN Tanjungpinang';
-        $logoPath = \App\Models\LandingPageSetting::get('school_logo');
-        $schoolLogoUrl = $logoPath ? \Illuminate\Support\Facades\Storage::url($logoPath) : null;
+        $schoolName = LandingPageSetting::get('school_name') ?: 'MAN Tanjungpinang';
+        $logoPath = LandingPageSetting::get('school_logo');
+        $schoolLogoUrl = $logoPath ? Storage::url($logoPath) : null;
 
         return [
             ...parent::share($request),
@@ -55,4 +57,3 @@ class HandleInertiaRequests extends Middleware
         ];
     }
 }
-

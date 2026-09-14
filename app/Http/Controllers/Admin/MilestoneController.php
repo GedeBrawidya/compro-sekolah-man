@@ -11,10 +11,10 @@ class MilestoneController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'year'        => 'required|integer|min:1900|max:2100',
-            'title'       => 'required|string|max:255',
+            'year' => 'required|integer|min:1900|max:2100',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'order'       => 'nullable|integer',
+            'order' => 'nullable|integer',
         ]);
 
         SchoolMilestone::create($data);
@@ -25,10 +25,10 @@ class MilestoneController extends Controller
     public function update(Request $request, SchoolMilestone $milestone)
     {
         $data = $request->validate([
-            'year'        => 'required|integer|min:1900|max:2100',
-            'title'       => 'required|string|max:255',
+            'year' => 'required|integer|min:1900|max:2100',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'order'       => 'nullable|integer',
+            'order' => 'nullable|integer',
         ]);
 
         $milestone->update($data);
@@ -46,7 +46,7 @@ class MilestoneController extends Controller
     public function reorder(Request $request)
     {
         $request->validate([
-            'order'   => 'required|array',
+            'order' => 'required|array',
             'order.*' => 'integer|exists:school_milestones,id',
         ]);
 

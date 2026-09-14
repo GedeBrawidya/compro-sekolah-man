@@ -44,15 +44,15 @@ class AdminCrudTest extends TestCase
         // Store
         $file = UploadedFile::fake()->image('thumbnail.jpg');
         $storeResponse = $this->actingAs($this->admin)->post(route('admin.news.store'), [
-            'title'     => 'Berita Prestasi Sekolah',
-            'content'   => '<p>Siswa meraih juara 1 olimpiade.</p>',
-            'status'    => 'published',
+            'title' => 'Berita Prestasi Sekolah',
+            'content' => '<p>Siswa meraih juara 1 olimpiade.</p>',
+            'status' => 'published',
             'thumbnail' => $file,
         ]);
         $storeResponse->assertRedirect(route('admin.news.index'));
 
         $this->assertDatabaseHas('news', [
-            'title'  => 'Berita Prestasi Sekolah',
+            'title' => 'Berita Prestasi Sekolah',
             'status' => 'published',
         ]);
 
@@ -64,16 +64,16 @@ class AdminCrudTest extends TestCase
 
         // Update
         $updateResponse = $this->actingAs($this->admin)->put(route('admin.news.update', $news->id), [
-            'title'   => 'Berita Prestasi Terbaru',
+            'title' => 'Berita Prestasi Terbaru',
             'content' => '<p>Siswa meraih juara 1 nasional.</p>',
-            'status'  => 'draft',
+            'status' => 'draft',
         ]);
         $updateResponse->assertRedirect(route('admin.news.index'));
 
         $this->assertDatabaseHas('news', [
-            'id'    => $news->id,
+            'id' => $news->id,
             'title' => 'Berita Prestasi Terbaru',
-            'status'=> 'draft',
+            'status' => 'draft',
         ]);
 
         // Destroy
@@ -90,10 +90,10 @@ class AdminCrudTest extends TestCase
 
         // Store book
         $response = $this->actingAs($this->admin)->post(route('admin.books.store'), [
-            'title'       => 'Matematika Kuantum',
-            'author'      => 'Dr. Budi',
-            'category'    => 'Sains',
-            'isbn'        => '978-1234567890',
+            'title' => 'Matematika Kuantum',
+            'author' => 'Dr. Budi',
+            'category' => 'Sains',
+            'isbn' => '978-1234567890',
             'total_stock' => 2,
             'description' => 'Buku sains kelas 12',
         ]);
@@ -108,9 +108,9 @@ class AdminCrudTest extends TestCase
 
         // Update book
         $this->actingAs($this->admin)->put(route('admin.books.update', $book->id), [
-            'title'       => 'Matematika Kuantum Edisi 2',
-            'author'      => 'Dr. Budi',
-            'category'    => 'Sains & Teknologi',
+            'title' => 'Matematika Kuantum Edisi 2',
+            'author' => 'Dr. Budi',
+            'category' => 'Sains & Teknologi',
             'description' => 'Buku sains kelas 12 edisi revisi',
         ])->assertRedirect();
 
@@ -124,8 +124,8 @@ class AdminCrudTest extends TestCase
         $toggleResponse->assertRedirect();
 
         $this->assertDatabaseHas('book_copies', [
-            'id'            => $copy->id,
-            'status'        => 'borrowed',
+            'id' => $copy->id,
+            'status' => 'borrowed',
             'borrower_name' => 'Ahmad Santoso',
         ]);
 
@@ -138,22 +138,22 @@ class AdminCrudTest extends TestCase
     public function test_admin_can_manage_complaints(): void
     {
         $complaint = Complaint::create([
-            'name'    => 'Budi Utomo',
-            'email'   => 'budi@example.com',
+            'name' => 'Budi Utomo',
+            'email' => 'budi@example.com',
             'subject' => 'AC Rusak',
             'message' => 'AC di ruang XI IPA 1 tidak dingin.',
-            'status'  => 'pending',
+            'status' => 'pending',
         ]);
 
         $this->actingAs($this->admin)->get(route('admin.complaints.index'))->assertOk();
 
         $this->actingAs($this->admin)->put(route('admin.complaints.update-status', $complaint->id), [
-            'status'   => 'resolved',
+            'status' => 'resolved',
             'response' => 'Teknisi sudah memperbaiki AC.',
         ])->assertRedirect();
 
         $this->assertDatabaseHas('complaints', [
-            'id'     => $complaint->id,
+            'id' => $complaint->id,
             'status' => 'resolved',
         ]);
 
@@ -167,7 +167,7 @@ class AdminCrudTest extends TestCase
         $this->actingAs($this->admin)->get(route('admin.dormitory.index'))->assertOk();
 
         $this->actingAs($this->admin)->post(route('admin.dormitory.store'), [
-            'title'   => 'Jadwal Makan Malam Asrama',
+            'title' => 'Jadwal Makan Malam Asrama',
             'content' => 'Jadwal makan malam mulai pukul 18.30 WIB.',
         ])->assertRedirect();
 
@@ -175,7 +175,7 @@ class AdminCrudTest extends TestCase
         $this->assertNotNull($post);
 
         $this->actingAs($this->admin)->put(route('admin.dormitory.update', $post->id), [
-            'title'   => 'Jadwal Makan Malam Asrama Terbaru',
+            'title' => 'Jadwal Makan Malam Asrama Terbaru',
             'content' => 'Jadwal makan malam mulai pukul 18.45 WIB.',
         ])->assertRedirect();
 
@@ -193,9 +193,9 @@ class AdminCrudTest extends TestCase
         // Store photo gallery
         $photo = UploadedFile::fake()->image('gallery.jpg');
         $this->actingAs($this->admin)->post(route('admin.gallery.store'), [
-            'title'    => 'Upacara Bendera',
-            'type'     => 'photo',
-            'image'    => $photo,
+            'title' => 'Upacara Bendera',
+            'type' => 'photo',
+            'image' => $photo,
             'category' => 'Kegiatan',
         ])->assertRedirect();
 
@@ -219,12 +219,12 @@ class AdminCrudTest extends TestCase
         // Store Banner
         $bannerImg = UploadedFile::fake()->image('banner.jpg');
         $this->actingAs($this->admin)->post(route('admin.landing-page.banners.store'), [
-            'title'       => 'Selamat Datang di Sekolah Kami',
-            'subtitle'    => 'Mencetak generasi unggul',
-            'image'       => $bannerImg,
+            'title' => 'Selamat Datang di Sekolah Kami',
+            'subtitle' => 'Mencetak generasi unggul',
+            'image' => $bannerImg,
             'button_text' => 'Selengkapnya',
             'button_link' => '/profil',
-            'is_active'   => true,
+            'is_active' => true,
         ])->assertRedirect();
 
         $banner = Banner::first();
@@ -232,7 +232,7 @@ class AdminCrudTest extends TestCase
 
         // Update Banner
         $this->actingAs($this->admin)->post(route('admin.landing-page.banners.update', $banner->id), [
-            'title'     => 'Selamat Datang versi 2',
+            'title' => 'Selamat Datang versi 2',
             'is_active' => true,
         ])->assertRedirect();
 
@@ -253,19 +253,19 @@ class AdminCrudTest extends TestCase
     public function test_admin_can_manage_legalization_requests(): void
     {
         $req = LegalizationRequest::create([
-            'alumni_name'   => 'Siti Rahma',
-            'email'         => 'siti@example.com',
-            'phone'         => '08123456789',
+            'alumni_name' => 'Siti Rahma',
+            'email' => 'siti@example.com',
+            'phone' => '08123456789',
             'graduation_year' => '2022',
             'document_type' => 'Ijazah SMA',
-            'status'        => 'pending',
+            'status' => 'pending',
         ]);
 
         $this->actingAs($this->admin)->get(route('admin.legalization.index'))->assertOk();
 
         $this->actingAs($this->admin)->put(route('admin.legalization.update-status', $req->id), [
             'status' => 'approved',
-            'notes'  => 'Dokumen terverifikasi sah.',
+            'notes' => 'Dokumen terverifikasi sah.',
         ])->assertRedirect();
 
         $this->assertDatabaseHas('legalization_requests', ['id' => $req->id, 'status' => 'approved']);
@@ -281,10 +281,10 @@ class AdminCrudTest extends TestCase
 
         // Create user
         $this->actingAs($this->admin)->post(route('admin.users.store'), [
-            'name'     => 'Petugas Pustakawan Baru',
-            'email'    => 'pustakawan@sekolah.sch.id',
+            'name' => 'Petugas Pustakawan Baru',
+            'email' => 'pustakawan@sekolah.sch.id',
             'password' => 'password123',
-            'role'     => User::ROLE_PUSTAKAWAN,
+            'role' => User::ROLE_PUSTAKAWAN,
         ])->assertRedirect();
 
         $newUser = User::where('email', 'pustakawan@sekolah.sch.id')->first();
@@ -292,9 +292,9 @@ class AdminCrudTest extends TestCase
 
         // Update user
         $this->actingAs($this->admin)->put(route('admin.users.update', $newUser->id), [
-            'name'  => 'Petugas Pustakawan Utama',
+            'name' => 'Petugas Pustakawan Utama',
             'email' => 'pustakawan@sekolah.sch.id',
-            'role'  => User::ROLE_PUSTAKAWAN,
+            'role' => User::ROLE_PUSTAKAWAN,
         ])->assertRedirect();
 
         $this->assertDatabaseHas('users', ['id' => $newUser->id, 'name' => 'Petugas Pustakawan Utama']);

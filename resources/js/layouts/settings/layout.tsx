@@ -32,44 +32,74 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     const { isCurrentOrParentUrl } = useCurrentUrl();
 
     return (
-        <div className="p-4 sm:p-6 w-full space-y-6">
-            <div style={{ backgroundColor: '#f2f7f0', borderColor: '#b8ceb0' }} className="p-6 rounded-2xl border shadow-xs space-y-6">
+        <div className="w-full space-y-6 p-4 sm:p-6">
+            <div
+                style={{ backgroundColor: '#f2f7f0', borderColor: '#b8ceb0' }}
+                className="space-y-6 rounded-2xl border p-6 shadow-xs"
+            >
                 <div>
-                    <h1 className="text-2xl font-extrabold text-[#142921]">Pengaturan Akun</h1>
-                    <p className="text-xs font-semibold text-[#2e5445] mt-1">Kelola profil, kata sandi, dan tampilan preferensi akun Anda.</p>
+                    <h1 className="text-2xl font-extrabold text-[#142921]">
+                        Pengaturan Akun
+                    </h1>
+                    <p className="mt-1 text-xs font-semibold text-[#2e5445]">
+                        Kelola profil, kata sandi, dan tampilan preferensi akun
+                        Anda.
+                    </p>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-6">
-                    <aside className="w-full lg:w-56 shrink-0">
+                <div className="flex flex-col gap-6 lg:flex-row">
+                    <aside className="w-full shrink-0 lg:w-56">
                         <nav
-                            className="flex flex-row lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0"
+                            className="flex flex-row gap-1.5 overflow-x-auto pb-2 lg:flex-col lg:pb-0"
                             aria-label="Settings"
                         >
                             {sidebarNavItems.map((item, index) => {
-                                const isActive = isCurrentOrParentUrl(item.href);
+                                const isActive = isCurrentOrParentUrl(
+                                    item.href,
+                                );
                                 return (
                                     <Link
                                         key={`${toUrl(item.href)}-${index}`}
                                         href={item.href}
                                         style={{
-                                            backgroundColor: isActive ? '#265243' : 'transparent',
-                                            color: isActive ? '#ffffff' : '#142921',
+                                            backgroundColor: isActive
+                                                ? '#265243'
+                                                : 'transparent',
+                                            color: isActive
+                                                ? '#ffffff'
+                                                : '#142921',
                                         }}
                                         className={cn(
-                                            'px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap',
-                                            !isActive && 'hover:bg-[#dce8d7]'
+                                            'flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold whitespace-nowrap transition-all',
+                                            !isActive && 'hover:bg-[#dce8d7]',
                                         )}
                                     >
-                                        {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
-                                        <span>{item.title === 'Profile' ? 'Profil Saya' : item.title === 'Security' ? 'Keamanan & Password' : item.title === 'Appearance' ? 'Tampilan' : item.title}</span>
+                                        {item.icon && (
+                                            <item.icon className="h-4 w-4 shrink-0" />
+                                        )}
+                                        <span>
+                                            {item.title === 'Profile'
+                                                ? 'Profil Saya'
+                                                : item.title === 'Security'
+                                                  ? 'Keamanan & Password'
+                                                  : item.title === 'Appearance'
+                                                    ? 'Tampilan'
+                                                    : item.title}
+                                        </span>
                                     </Link>
                                 );
                             })}
                         </nav>
                     </aside>
 
-                    <div className="flex-1 min-w-0">
-                        <div style={{ backgroundColor: '#f7faf5', borderColor: '#b8ceb0' }} className="p-6 rounded-2xl border shadow-xs space-y-6">
+                    <div className="min-w-0 flex-1">
+                        <div
+                            style={{
+                                backgroundColor: '#f7faf5',
+                                borderColor: '#b8ceb0',
+                            }}
+                            className="space-y-6 rounded-2xl border p-6 shadow-xs"
+                        >
                             {children}
                         </div>
                     </div>

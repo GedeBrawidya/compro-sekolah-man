@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Middleware\EnsureUserRole;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
 
@@ -18,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->alias([
-            'role' => \App\Http\Middleware\EnsureUserRole::class,
+            'role' => EnsureUserRole::class,
         ]);
 
         $middleware->web(append: [
@@ -28,7 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (\Illuminate\Http\Exceptions\PostTooLargeException $e, Request $request) {
+        $exceptions->render(function (PostTooLargeException $e, Request $request) {
             return back()->with('error', 'Ukuran foto/berkas yang diunggah terlalu besar. Silakan pilih foto dengan ukuran di bawah 3MB.');
         });
 

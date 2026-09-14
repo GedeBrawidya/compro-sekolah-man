@@ -14,30 +14,31 @@ class FacilityController extends Controller
     {
         $facilities = Facility::orderBy('order')->get()->map(function ($f) {
             return [
-                'id'          => $f->id,
-                'title'       => $f->title,
+                'id' => $f->id,
+                'title' => $f->title,
                 'description' => $f->description,
-                'image'       => $f->image ? Storage::url($f->image) : null,
-                'order'       => $f->order,
-                'is_active'   => (bool) $f->is_active,
+                'image' => $f->image ? Storage::url($f->image) : null,
+                'order' => $f->order,
+                'is_active' => (bool) $f->is_active,
             ];
         });
 
         return Inertia::render('admin/facilities/index', [
             'facilities' => $facilities,
-            'flash'      => [
+            'flash' => [
                 'success' => session('success'),
-                'error'   => session('error'),
+                'error' => session('error'),
             ],
         ]);
     }
+
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title'       => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image'       => 'nullable|image|max:3072',
-            'is_active'   => 'boolean',
+            'image' => 'nullable|image|max:3072',
+            'is_active' => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {
@@ -55,10 +56,10 @@ class FacilityController extends Controller
     public function update(Request $request, Facility $facility)
     {
         $data = $request->validate([
-            'title'       => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image'       => 'nullable|image|max:3072',
-            'is_active'   => 'boolean',
+            'image' => 'nullable|image|max:3072',
+            'is_active' => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {
@@ -89,7 +90,7 @@ class FacilityController extends Controller
     public function reorder(Request $request)
     {
         $request->validate([
-            'order'   => 'required|array',
+            'order' => 'required|array',
             'order.*' => 'integer|exists:facilities,id',
         ]);
 

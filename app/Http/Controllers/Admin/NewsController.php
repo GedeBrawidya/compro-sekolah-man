@@ -24,11 +24,11 @@ class NewsController extends Controller
             ->withQueryString();
 
         return Inertia::render('admin/news/index', [
-            'news'    => $news,
+            'news' => $news,
             'filters' => ['search' => $search],
-            'flash'   => [
+            'flash' => [
                 'success' => session('success'),
-                'error'   => session('error'),
+                'error' => session('error'),
             ],
         ]);
     }
@@ -41,10 +41,10 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'     => 'required|string|max:255',
-            'content'   => 'required|string',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
             'thumbnail' => 'nullable|file|max:2048|mimes:jpg,jpeg,png,webp',
-            'status'    => 'required|in:draft,published',
+            'status' => 'required|in:draft,published',
         ], [
             'thumbnail.max' => 'Ukuran file maksimal adalah 2MB.',
         ]);
@@ -55,12 +55,12 @@ class NewsController extends Controller
         }
 
         News::create([
-            'title'        => $request->title,
-            'content'      => $request->content,
-            'thumbnail'    => $thumbnailPath ? Storage::url($thumbnailPath) : null,
-            'status'       => $request->status,
+            'title' => $request->title,
+            'content' => $request->content,
+            'thumbnail' => $thumbnailPath ? Storage::url($thumbnailPath) : null,
+            'status' => $request->status,
             'published_at' => $request->status === 'published' ? now() : null,
-            'author_id'    => $request->user()->id,
+            'author_id' => $request->user()->id,
         ]);
 
         return redirect()->route('admin.news.index')->with('success', 'Berita berhasil dipublikasikan!');
@@ -70,11 +70,11 @@ class NewsController extends Controller
     {
         return Inertia::render('admin/news/edit', [
             'news' => [
-                'id'           => $news->id,
-                'title'        => $news->title,
-                'content'      => $news->content,
-                'thumbnail'    => $news->thumbnail,
-                'status'       => $news->status,
+                'id' => $news->id,
+                'title' => $news->title,
+                'content' => $news->content,
+                'thumbnail' => $news->thumbnail,
+                'status' => $news->status,
                 'published_at' => $news->published_at,
             ],
         ]);
@@ -83,10 +83,10 @@ class NewsController extends Controller
     public function update(Request $request, News $news)
     {
         $request->validate([
-            'title'     => 'required|string|max:255',
-            'content'   => 'required|string',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
             'thumbnail' => 'nullable|file|max:2048|mimes:jpg,jpeg,png,webp',
-            'status'    => 'required|in:draft,published',
+            'status' => 'required|in:draft,published',
         ], [
             'thumbnail.max' => 'Ukuran file maksimal adalah 2MB.',
         ]);
@@ -94,7 +94,7 @@ class NewsController extends Controller
         $thumbnail = $news->thumbnail;
 
         if ($request->hasFile('thumbnail')) {
-            if ($thumbnail && !str_starts_with($thumbnail, 'http')) {
+            if ($thumbnail && ! str_starts_with($thumbnail, 'http')) {
                 $oldPath = str_replace('/storage/', '', $thumbnail);
                 Storage::disk('public')->delete($oldPath);
             }
@@ -103,11 +103,11 @@ class NewsController extends Controller
         }
 
         $news->update([
-            'title'        => $request->title,
-            'content'      => $request->content,
-            'thumbnail'    => $thumbnail,
-            'status'       => $request->status,
-            'published_at' => $request->status === 'published' && !$news->published_at ? now() : $news->published_at,
+            'title' => $request->title,
+            'content' => $request->content,
+            'thumbnail' => $thumbnail,
+            'status' => $request->status,
+            'published_at' => $request->status === 'published' && ! $news->published_at ? now() : $news->published_at,
         ]);
 
         return redirect()->route('admin.news.index')->with('success', 'Berita berhasil diperbarui!');
@@ -115,7 +115,7 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
-        if ($news->thumbnail && !str_starts_with($news->thumbnail, 'http')) {
+        if ($news->thumbnail && ! str_starts_with($news->thumbnail, 'http')) {
             $oldPath = str_replace('/storage/', '', $news->thumbnail);
             Storage::disk('public')->delete($oldPath);
         }

@@ -8,19 +8,23 @@ export default function AppLogo() {
     return (
         <div className="flex items-center gap-3">
             {logoUrl ? (
-                <div className="flex aspect-square size-12 items-center justify-center rounded-xl bg-white/10 p-1 border border-white/20 shadow-md shrink-0">
-                    <img src={logoUrl} alt={schoolName} className="size-full object-contain" />
+                <div className="flex aspect-square size-12 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 p-1 shadow-md">
+                    <img
+                        src={logoUrl}
+                        alt={schoolName}
+                        className="size-full object-contain"
+                    />
                 </div>
             ) : (
-                <div className="bg-[#9db588] text-[#142921] flex aspect-square size-12 items-center justify-center rounded-xl font-black text-xl shadow-md shrink-0">
+                <div className="flex aspect-square size-12 shrink-0 items-center justify-center rounded-xl bg-[#9db588] text-xl font-black text-[#142921] shadow-md">
                     {schoolName ? schoolName.charAt(0) : 'M'}
                 </div>
             )}
             <div className="grid flex-1 text-left group-data-[collapsible=icon]:hidden">
-                <span className="truncate leading-tight font-extrabold text-white text-sm">
+                <span className="truncate text-sm leading-tight font-extrabold text-white">
                     {schoolName}
                 </span>
-                <span className="text-[10px] text-[#9db588] font-bold tracking-wider uppercase mt-0.5">
+                <span className="mt-0.5 text-[10px] font-bold tracking-wider text-[#9db588] uppercase">
                     PROFIL SEKOLAH
                 </span>
             </div>

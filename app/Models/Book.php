@@ -37,9 +37,9 @@ class Book extends Model
         // If no physical copy records created yet, keep existing stock default
         if ($total > 0) {
             $this->update([
-                'total_stock'     => $total,
+                'total_stock' => $total,
                 'available_stock' => $available,
-                'status'          => $available > 0 ? 'available' : 'borrowed',
+                'status' => $available > 0 ? 'available' : 'borrowed',
             ]);
         }
     }

@@ -25,7 +25,7 @@ return new class extends Migration
 
         foreach ($existing as $name) {
             DB::table('book_categories')->insertOrIgnore([
-                'name'       => $name,
+                'name' => $name,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

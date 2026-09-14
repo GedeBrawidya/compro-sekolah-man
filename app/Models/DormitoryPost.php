@@ -25,7 +25,7 @@ class DormitoryPost extends Model
 
         static::creating(function ($post) {
             if (empty($post->slug)) {
-                $post->slug = Str::slug($post->title) . '-' . Str::random(5);
+                $post->slug = Str::slug($post->title).'-'.Str::random(5);
             }
         });
     }

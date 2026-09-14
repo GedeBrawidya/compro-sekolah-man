@@ -74,7 +74,11 @@ export function AppSidebar() {
 
     // Akademik & Asrama Group
     const akademikItems: NavItem[] = [];
-    if (userRole === 'super_admin' || userRole === 'admin' || userRole === 'pustakawan') {
+    if (
+        userRole === 'super_admin' ||
+        userRole === 'admin' ||
+        userRole === 'pustakawan'
+    ) {
         akademikItems.push(
             {
                 title: 'Katalog Buku',
@@ -85,10 +89,14 @@ export function AppSidebar() {
                 title: 'Kategori Buku',
                 href: '/admin/book-categories',
                 icon: Tag,
-            }
+            },
         );
     }
-    if (userRole === 'super_admin' || userRole === 'admin' || userRole === 'pengurus_asrama') {
+    if (
+        userRole === 'super_admin' ||
+        userRole === 'admin' ||
+        userRole === 'pengurus_asrama'
+    ) {
         akademikItems.push({
             title: 'Informasi Asrama',
             href: '/admin/dormitory',
@@ -144,13 +152,21 @@ export function AppSidebar() {
     ];
 
     return (
-        <Sidebar collapsible="none" variant="sidebar" className="bg-transparent shrink-0 py-3 pl-3 sticky top-0 h-screen">
-            <div className="flex flex-col h-full bg-[#265243] text-white rounded-2xl shadow-xl overflow-hidden border border-[#316150]">
+        <Sidebar
+            collapsible="none"
+            variant="sidebar"
+            className="sticky top-0 h-screen shrink-0 bg-transparent py-3 pl-3"
+        >
+            <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-[#316150] bg-[#265243] text-white shadow-xl">
                 {/* Header */}
-                <div className="border-b border-[#316150] px-5 py-5 shrink-0">
+                <div className="shrink-0 border-b border-[#316150] px-5 py-5">
                     <SidebarMenu>
                         <SidebarMenuItem>
-                            <SidebarMenuButton size="lg" asChild className="hover:bg-transparent">
+                            <SidebarMenuButton
+                                size="lg"
+                                asChild
+                                className="hover:bg-transparent"
+                            >
                                 <Link href="/admin/dashboard" prefetch>
                                     <AppLogo />
                                 </Link>
@@ -160,12 +176,12 @@ export function AppSidebar() {
                 </div>
 
                 {/* Nav Items Grouped */}
-                <SidebarContent className="py-2 px-1 flex-1 overflow-y-auto">
+                <SidebarContent className="flex-1 overflow-y-auto px-1 py-2">
                     <NavMain groups={navGroups} />
                 </SidebarContent>
 
                 {/* Footer */}
-                <div className="border-t border-[#316150] px-3 py-3 space-y-1 shrink-0">
+                <div className="shrink-0 space-y-1 border-t border-[#316150] px-3 py-3">
                     <NavFooter items={footerNavItems} className="mt-auto" />
                     <NavUser />
                 </div>

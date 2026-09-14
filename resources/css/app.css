@@ -14,9 +14,9 @@ html {
 
 @theme {
     --font-sans:
-        'Plus Jakarta Sans', 'Poppins', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+        'Plus Jakarta Sans', 'Poppins', 'Instrument Sans', ui-sans-serif,
+        system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -152,31 +152,61 @@ html {
     pointer-events: none;
 }
 
-.ProseMirror h1 { @apply text-3xl font-extrabold mt-6 mb-3; color: #142921 !important; }
-.ProseMirror h2 { @apply text-2xl font-extrabold mt-5 mb-2; color: #142921 !important; }
-.ProseMirror h3 { @apply text-xl font-bold mt-4 mb-2; color: #142921 !important; }
-.ProseMirror p  { @apply leading-relaxed mb-3; color: #142921 !important; }
+.ProseMirror h1 {
+    @apply mt-6 mb-3 text-3xl font-extrabold;
+    color: #142921 !important;
+}
+.ProseMirror h2 {
+    @apply mt-5 mb-2 text-2xl font-extrabold;
+    color: #142921 !important;
+}
+.ProseMirror h3 {
+    @apply mt-4 mb-2 text-xl font-bold;
+    color: #142921 !important;
+}
+.ProseMirror p {
+    @apply mb-3 leading-relaxed;
+    color: #142921 !important;
+}
 
-.ProseMirror strong { @apply font-extrabold; color: #142921 !important; }
-.ProseMirror em { @apply italic; }
-.ProseMirror u { @apply underline; }
-.ProseMirror s { @apply line-through; }
-.ProseMirror code { @apply bg-emerald-100/60 text-[#265243] rounded px-1.5 py-0.5 text-sm font-mono font-bold; }
+.ProseMirror strong {
+    @apply font-extrabold;
+    color: #142921 !important;
+}
+.ProseMirror em {
+    @apply italic;
+}
+.ProseMirror u {
+    @apply underline;
+}
+.ProseMirror s {
+    @apply line-through;
+}
+.ProseMirror code {
+    @apply rounded bg-emerald-100/60 px-1.5 py-0.5 font-mono text-sm font-bold text-[#265243];
+}
 
-.ProseMirror ul { @apply list-disc list-inside space-y-1 mb-3 ml-4; }
-.ProseMirror ol { @apply list-decimal list-inside space-y-1 mb-3 ml-4; }
-.ProseMirror li { @apply leading-relaxed; color: #142921 !important; }
+.ProseMirror ul {
+    @apply mb-3 ml-4 list-inside list-disc space-y-1;
+}
+.ProseMirror ol {
+    @apply mb-3 ml-4 list-inside list-decimal space-y-1;
+}
+.ProseMirror li {
+    @apply leading-relaxed;
+    color: #142921 !important;
+}
 
 .ProseMirror blockquote {
-    @apply border-l-4 border-[#265243] bg-[#f0f4ec] pl-5 py-3 pr-4 rounded-r-xl my-4 italic text-[#265243] font-semibold;
+    @apply my-4 rounded-r-xl border-l-4 border-[#265243] bg-[#f0f4ec] py-3 pr-4 pl-5 font-semibold text-[#265243] italic;
 }
 
 .ProseMirror hr {
-    @apply border-t-2 border-[#b8ceb0] my-6;
+    @apply my-6 border-t-2 border-[#b8ceb0];
 }
 
 .ProseMirror a {
-    @apply text-[#265243] underline underline-offset-2 font-bold hover:text-[#1f4337] transition-colors cursor-pointer;
+    @apply cursor-pointer font-bold text-[#265243] underline underline-offset-2 transition-colors hover:text-[#1f4337];
 }
 
 /* Ensure editor text remains crisp dark green even when dark mode is enabled */

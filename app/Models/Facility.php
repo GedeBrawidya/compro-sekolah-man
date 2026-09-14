@@ -19,6 +19,6 @@ class Facility extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
-        'order'     => 'integer',
+        'order' => 'integer',
     ];
 }
