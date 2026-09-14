@@ -50,43 +50,26 @@ export default function AuthSplitLayout({
 
                     {/* Illustration area */}
                     <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
-                        {/* Isometric illustration / icon display */}
+                        {/* School Logo display */}
                         <div className="relative mb-8">
-                            <div className="w-52 h-52 xl:w-64 xl:h-64 rounded-[40px] bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-center shadow-2xl mx-auto">
-                                <svg viewBox="0 0 200 200" className="w-36 h-36 xl:w-44 xl:h-44 opacity-90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    {/* School building illustration */}
-                                    <rect x="20" y="90" width="160" height="90" rx="4" fill="#9db588" fillOpacity="0.3"/>
-                                    <rect x="30" y="80" width="140" height="20" rx="3" fill="#f59e0b" fillOpacity="0.7"/>
-                                    <rect x="10" y="75" width="180" height="10" rx="2" fill="#f59e0b"/>
-                                    <rect x="45" y="115" width="30" height="35" rx="3" fill="#265243" fillOpacity="0.8"/>
-                                    <rect x="90" y="115" width="25" height="25" rx="3" fill="#9db588" fillOpacity="0.5"/>
-                                    <rect x="130" y="115" width="30" height="25" rx="3" fill="#9db588" fillOpacity="0.5"/>
-                                    <rect x="90" y="125" width="8" height="15" fill="#142921"/>
-                                    <rect x="103" y="125" width="7" height="15" fill="#142921"/>
-                                    <rect x="130" y="125" width="8" height="10" fill="#142921"/>
-                                    <rect x="143" y="125" width="8" height="10" fill="#142921"/>
-                                    <rect x="55" y="50" width="20" height="20" rx="2" fill="#f59e0b" fillOpacity="0.6"/>
-                                    <rect x="85" y="45" width="30" height="25" rx="2" fill="#9db588" fillOpacity="0.5"/>
-                                    <rect x="125" y="50" width="20" height="20" rx="2" fill="#f59e0b" fillOpacity="0.6"/>
-                                    {/* Star/crescent */}
-                                    <circle cx="100" cy="30" r="12" fill="#f59e0b" fillOpacity="0.8"/>
-                                    <circle cx="104" cy="27" r="9" fill="#142921"/>
-                                    <polygon points="100,18 102,24 108,24 103,28 105,34 100,30 95,34 97,28 92,24 98,24" fill="#f59e0b"/>
-                                    {/* Trees */}
-                                    <ellipse cx="175" cy="158" rx="12" ry="18" fill="#265243" fillOpacity="0.7"/>
-                                    <rect x="173" y="172" width="4" height="8" fill="#9db588" fillOpacity="0.6"/>
-                                    <ellipse cx="25" cy="160" rx="10" ry="14" fill="#265243" fillOpacity="0.7"/>
-                                    <rect x="23" y="170" width="4" height="10" fill="#9db588" fillOpacity="0.6"/>
-                                    {/* Ground */}
-                                    <rect x="0" y="178" width="200" height="22" rx="2" fill="#9db588" fillOpacity="0.2"/>
-                                    <rect x="20" y="178" width="160" height="4" fill="#9db588" fillOpacity="0.3"/>
-                                </svg>
+                            <div className="w-52 h-52 xl:w-64 xl:h-64 rounded-[40px] bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center p-8 shadow-2xl mx-auto group">
+                                {logoUrl ? (
+                                    <img
+                                        src={logoUrl}
+                                        alt={schoolName}
+                                        className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.4)] transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                ) : (
+                                    <div className="w-28 h-28 rounded-3xl bg-[#9db588] text-[#142921] flex items-center justify-center font-black text-6xl shadow-inner">
+                                        {schoolName.charAt(0)}
+                                    </div>
+                                )}
                             </div>
                             {/* Floating badges */}
-                            <div className="absolute -top-4 -right-4 bg-[#f59e0b] text-[#142921] rounded-2xl px-3 py-1.5 text-[11px] font-black shadow-lg border border-[#f59e0b]/50">
+                            <div className="absolute -top-4 -right-4 bg-[#f59e0b] text-[#142921] rounded-2xl px-3.5 py-1.5 text-[11px] font-black shadow-lg border border-[#f59e0b]/50">
                                 ✦ Portal Sekolah
                             </div>
-                            <div className="absolute -bottom-3 -left-4 bg-white/10 backdrop-blur-md text-white rounded-2xl px-3 py-1.5 text-[11px] font-bold border border-white/20 shadow-lg">
+                            <div className="absolute -bottom-3 -left-4 bg-white/10 backdrop-blur-md text-white rounded-2xl px-3.5 py-1.5 text-[11px] font-bold border border-white/20 shadow-lg">
                                 📚 Sistem Informasi
                             </div>
                         </div>
