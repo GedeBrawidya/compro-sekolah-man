@@ -355,13 +355,14 @@ export default function Welcome({
     // Scroll listener for dynamic navbar transformation
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 40) {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > 100) {
                 setIsScrolled(true);
-            } else {
+            } else if (currentScrollY < 40) {
                 setIsScrolled(false);
             }
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -575,22 +576,44 @@ export default function Welcome({
 
                 {/* ── 1. DYNAMIC NAVBAR (ULTRA-SMOOTH MORPHING WITH SAFE TOP SPACING) ── */}
                 <div
-                    className={`sticky top-0 z-50 w-full flex justify-center pointer-events-none transition-all duration-400 ease-in-out ${
+                    style={{
+                        transition: 'padding 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                        willChange: 'padding',
+                    }}
+                    className={`sticky top-0 z-50 w-full flex justify-center pointer-events-none ${
                         isScrolled ? 'px-3 sm:px-6 pt-2 sm:pt-3' : 'px-0 pt-0'
                     }`}
                 >
                     <header
-                        className={`pointer-events-auto transition-all duration-400 ease-in-out flex items-center justify-between w-full border backdrop-blur-xl ${
+                        style={{
+                            transition:
+                                'max-width 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                                'border-radius 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                                'padding 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                                'background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                                'border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                                'box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                                'backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                                'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                            willChange: 'max-width, border-radius, padding, box-shadow, background-color, transform',
+                        }}
+                        className={`pointer-events-auto flex items-center justify-between w-full border backdrop-blur-xl ${
                             isMobileMenuOpen
                                 ? 'max-w-7xl bg-white/98 border-[#c8dac5] rounded-2xl px-4 sm:px-8 py-3 shadow-xl'
                                 : isScrolled
-                                ? 'max-w-7xl bg-white/95 border-[#c8dac5] rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 sm:py-3 shadow-xl'
-                                : 'max-w-none bg-white border-b border-[#e2ebd9] rounded-none px-4 sm:px-8 py-3 sm:py-3.5 shadow-none'
+                                ? 'max-w-7xl bg-white/90 border-[#c8dac5] rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 sm:py-3 shadow-lg shadow-[#142921]/5'
+                                : 'max-w-full bg-white border-b border-[#e2ebd9] rounded-none px-4 sm:px-8 py-3.5 sm:py-4 shadow-none'
                         }`}
                     >
                         <div className="max-w-7xl mx-auto w-full flex items-center justify-between relative">
                             {/* Brand Logo & Name */}
-                            <div className="flex items-center gap-3 cursor-pointer shrink-0 mr-4 lg:mr-8" onClick={() => handleTabClick('home')}>
+                            <div
+                                className={`flex items-center gap-3 cursor-pointer shrink-0 mr-4 lg:mr-8 origin-left ${
+                                    isScrolled ? 'scale-[0.97]' : 'scale-100'
+                                }`}
+                                style={{ transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
+                                onClick={() => handleTabClick('home')}
+                            >
                                 {settings.school_logo_url ? (
                                     <img src={settings.school_logo_url} alt="Logo" className="w-10 h-10 object-contain" />
                                 ) : (
