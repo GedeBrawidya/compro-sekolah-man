@@ -383,10 +383,6 @@ export default function Welcome({
             | 'legalization'
             | 'complaints',
     ) => {
-        if (tabId === 'books') {
-            window.open('/?tab=books', '_blank');
-            return;
-        }
         if (tabId === 'legalization') {
             const defaultLink =
                 'https://docs.google.com/forms/d/e/1FAIpQLSeQFirrXnNpCuZEPGK4SOIWuBrs4c3sEPJLEoZB9l0LRWbTqw/formResponse';
@@ -1418,38 +1414,61 @@ export default function Welcome({
                                     </div>
                                 </div>
 
-                                {/* Right Round Arrow Slider Buttons (< and >) */}
+                                {/* Right Round Arrow Slider Buttons (< and >) & Mobile Slide Dots */}
                                 {banners.length > 1 && (
-                                    <div className="hidden shrink-0 items-center gap-2.5 self-end sm:flex sm:self-auto">
-                                        <button
-                                            onClick={() =>
-                                                setCurrentBannerIndex(
-                                                    (prev) =>
-                                                        (prev -
-                                                            1 +
-                                                            banners.length) %
-                                                        banners.length,
-                                                )
-                                            }
-                                            aria-label="Previous Banner"
-                                            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-[#142921] shadow-lg transition-all hover:scale-105 hover:bg-[#265243] hover:text-white active:scale-95"
-                                        >
-                                            <ChevronLeft className="h-5 w-5" />
-                                        </button>
-                                        <button
-                                            onClick={() =>
-                                                setCurrentBannerIndex(
-                                                    (prev) =>
-                                                        (prev + 1) %
-                                                        banners.length,
-                                                )
-                                            }
-                                            aria-label="Next Banner"
-                                            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-[#142921] shadow-lg transition-all hover:scale-105 hover:bg-[#265243] hover:text-white active:scale-95"
-                                        >
-                                            <ChevronRight className="h-5 w-5" />
-                                        </button>
-                                    </div>
+                                    <>
+                                        <div className="hidden shrink-0 items-center gap-2.5 self-end sm:flex sm:self-auto">
+                                            <button
+                                                onClick={() =>
+                                                    setCurrentBannerIndex(
+                                                        (prev) =>
+                                                            (prev -
+                                                                1 +
+                                                                banners.length) %
+                                                            banners.length,
+                                                    )
+                                                }
+                                                aria-label="Previous Banner"
+                                                className="flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-[#142921] shadow-lg transition-all hover:scale-105 hover:bg-[#265243] hover:text-white active:scale-95"
+                                            >
+                                                <ChevronLeft className="h-5 w-5" />
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    setCurrentBannerIndex(
+                                                        (prev) =>
+                                                            (prev + 1) %
+                                                            banners.length,
+                                                    )
+                                                }
+                                                aria-label="Next Banner"
+                                                className="flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-[#142921] shadow-lg transition-all hover:scale-105 hover:bg-[#265243] hover:text-white active:scale-95"
+                                            >
+                                                <ChevronRight className="h-5 w-5" />
+                                            </button>
+                                        </div>
+
+                                        {/* Mobile Slide Indicator Dots */}
+                                        <div className="flex items-center justify-center gap-1.5 pt-2 sm:hidden">
+                                            {banners.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() =>
+                                                        setCurrentBannerIndex(
+                                                            idx,
+                                                        )
+                                                    }
+                                                    aria-label={`Go to banner slide ${idx + 1}`}
+                                                    className={`h-1.5 cursor-pointer rounded-full transition-all duration-300 ${
+                                                        idx ===
+                                                        currentBannerIndex
+                                                            ? 'w-6 bg-emerald-400'
+                                                            : 'w-1.5 bg-white/40'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -1522,8 +1541,8 @@ export default function Welcome({
                         <div className="space-y-12 sm:space-y-18 lg:space-y-20">
                             {/* SECTION: SAMBUTAN KEPALA SEKOLAH (EXTENDED CARD WIDTH HORIZONTALLY & VERTICALLY FOR DESKTOP) */}
                             <section className="space-y-10 pb-4 sm:space-y-14 lg:pb-8">
-                                <div className="relative -mx-6 mt-6 pt-16 sm:-mx-12 sm:mt-10 sm:pt-28 lg:-mx-20 lg:pt-32">
-                                    <div className="relative flex min-h-[580px] flex-col justify-between space-y-16 rounded-[2.5rem] bg-[#064e3b] p-8 text-white shadow-2xl sm:space-y-20 sm:rounded-[3.5rem] sm:p-14 lg:min-h-[680px] lg:p-20">
+                                <div className="relative -mx-2 mt-4 pt-10 sm:-mx-12 sm:mt-10 sm:pt-28 lg:-mx-20 lg:pt-32">
+                                    <div className="relative flex min-h-[580px] flex-col justify-between space-y-12 rounded-[2.5rem] bg-[#064e3b] p-5 text-white shadow-2xl sm:space-y-20 sm:rounded-[3.5rem] sm:p-14 lg:min-h-[680px] lg:p-20">
                                         {/* MAIN GRID: KATA SAMBUTAN (LEFT 7 COLS) & FOTO RECTANGLE SUPER ROUNDED (RIGHT 5 COLS) */}
                                         <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
                                             {/* KOLOM KIRI: KATA SAMBUTAN (SOLID CLEAN TYPOGRAPHY) */}

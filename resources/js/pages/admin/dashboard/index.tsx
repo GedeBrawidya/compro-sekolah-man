@@ -3,7 +3,9 @@ import {
     ArrowRight,
     BookMarked,
     Building2,
+    ExternalLink,
     FileCheck,
+    Image as ImageIcon,
     LayoutTemplate,
     MessageSquare,
     Newspaper,
@@ -17,27 +19,21 @@ interface Props {
         total_books: number;
         available_books: number;
         total_dormitory_posts: number;
-        pending_complaints: number;
-        pending_legalizations: number;
+        total_facilities: number;
+        total_galleries: number;
         total_users: number;
+        legalization_link?: string;
+        complaint_link?: string;
     };
     visitorStats?: Array<{
         day: string;
         visitors: number;
     }>;
-    recentComplaints: Array<{
+    recentDormitoryPosts?: Array<{
         id: number;
-        name: string;
-        email: string;
-        subject: string;
-        status: 'pending' | 'processed' | 'resolved';
-        created_at: string;
-    }>;
-    recentLegalizations: Array<{
-        id: number;
-        alumni_name: string;
-        document_type: string;
-        status: 'pending' | 'processing' | 'approved' | 'rejected';
+        title: string;
+        content: string;
+        author?: string;
         created_at: string;
     }>;
     recentNews: Array<{
@@ -52,13 +48,11 @@ interface Props {
 export default function AdminDashboard({
     stats,
     visitorStats = [],
-    recentComplaints,
-    recentLegalizations,
-    recentNews,
+    recentDormitoryPosts = [],
+    recentNews = [],
     userRole,
 }: Props) {
     const pageProps = usePage().props as any;
-    const schoolLogoUrl = pageProps.school_logo_url;
 
     const roleLabels: Record<string, { label: string; color: string }> = {
         super_admin: {
@@ -157,8 +151,8 @@ export default function AdminDashboard({
                             </h1>
                             <p className="text-xs leading-relaxed font-medium text-emerald-100/90 sm:text-sm">
                                 Posisi data publikasi berita, koleksi
-                                perpustakaan, profil asrama, legalisir alumni,
-                                dan pengaduan saat ini.
+                                perpustakaan, profil asrama, galeri dokumentasi,
+                                serta link form legalisir dan pengaduan.
                             </p>
                         </div>
 
@@ -185,6 +179,7 @@ export default function AdminDashboard({
 
                 {/* ── 2. TOP METRIC KPI CARDS ROW ── */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    {/* KPI 1: Berita */}
                     <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
@@ -207,6 +202,7 @@ export default function AdminDashboard({
                         </div>
                     </div>
 
+                    {/* KPI 2: Buku */}
                     <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
@@ -229,46 +225,54 @@ export default function AdminDashboard({
                         </div>
                     </div>
 
+                    {/* KPI 3: Link E-Legalisir */}
                     <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
                                 <span className="text-xs font-bold text-[#527365]">
-                                    E-Legalisir Alumni
+                                    Form E-Legalisir
                                 </span>
                                 <span className="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-black text-emerald-800">
-                                    {stats.pending_legalizations} Pending
+                                    Link Aktif
                                 </span>
                             </div>
-                            <h3 className="text-3xl font-black text-[#142921]">
-                                {stats.pending_legalizations}
+                            <h3 className="text-lg font-black text-[#142921]">
+                                Form Online
                             </h3>
-                            <p className="pt-1 text-[11px] font-medium text-[#527365]">
-                                Perlu verifikasi dokumen
-                            </p>
+                            <Link
+                                href="/admin/legalization"
+                                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#265243] hover:underline"
+                            >
+                                Edit Link Form &rarr;
+                            </Link>
                         </div>
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-800">
                             <FileCheck className="h-5 w-5" />
                         </div>
                     </div>
 
+                    {/* KPI 4: Link Pengaduan */}
                     <div className="flex items-start justify-between rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all hover:border-[#265243]">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
                                 <span className="text-xs font-bold text-[#527365]">
-                                    Pengaduan Masuk
+                                    Form Pengaduan
                                 </span>
-                                <span className="rounded-md border border-rose-200 bg-rose-50 px-2 py-0.5 text-[10px] font-black text-rose-700">
-                                    Respon
+                                <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-black text-blue-700">
+                                    Link Aktif
                                 </span>
                             </div>
-                            <h3 className="text-3xl font-black text-[#142921]">
-                                {stats.pending_complaints}
+                            <h3 className="text-lg font-black text-[#142921]">
+                                Form Masukan
                             </h3>
-                            <p className="pt-1 text-[11px] font-medium text-[#527365]">
-                                Menunggu tindak lanjut
-                            </p>
+                            <Link
+                                href="/admin/complaints"
+                                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#265243] hover:underline"
+                            >
+                                Edit Link Form &rarr;
+                            </Link>
                         </div>
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-rose-200 bg-rose-50 text-rose-600">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-blue-200 bg-blue-50 text-blue-700">
                             <MessageSquare className="h-5 w-5" />
                         </div>
                     </div>
@@ -542,18 +546,18 @@ export default function AdminDashboard({
                             )}
                         </div>
 
-                        {/* Dark Card 2: Layanan Alumni */}
+                        {/* Dark Card 2: Layanan Form External */}
                         <div className="flex flex-1 flex-col justify-between space-y-4 rounded-3xl border border-emerald-900/40 bg-[#142921] p-6 text-white shadow-md">
                             <div className="flex items-start justify-between gap-3">
                                 <div>
                                     <span className="block text-xs font-bold tracking-wider text-emerald-200/90 uppercase">
                                         Layanan E-Legalisir
                                     </span>
-                                    <h4 className="mt-1 text-3xl font-black text-[#f59e0b]">
-                                        {stats.pending_legalizations}
+                                    <h4 className="mt-1 text-xl font-black text-[#f59e0b]">
+                                        Form Tersambung
                                     </h4>
                                     <p className="mt-0.5 text-xs font-medium text-emerald-100/80">
-                                        Permohonan perlu diproses
+                                        Perbarui link Google Form di CMS
                                     </p>
                                 </div>
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white">
@@ -564,7 +568,7 @@ export default function AdminDashboard({
                                 href="/admin/legalization"
                                 className="inline-flex items-center gap-1.5 border-t border-white/10 pt-2 text-xs font-bold text-[#9db588] transition-colors hover:text-white"
                             >
-                                Proses Legalisir Alumni &rarr;
+                                Kelola Link E-Legalisir &rarr;
                             </Link>
                         </div>
                     </div>
@@ -591,7 +595,7 @@ export default function AdminDashboard({
                     {/* Clean Body Content */}
                     <div className="p-6 sm:p-8">
                         {/* Metrics - Clean Row Divided by Thin Lines */}
-                        <div className="grid grid-cols-1 divide-y divide-[#e2ebd9] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+                        <div className="grid grid-cols-1 divide-y divide-[#e2ebd9] sm:grid-cols-4 sm:divide-x sm:divide-y-0">
                             <div className="py-2 text-center first:pl-0 sm:px-6 sm:py-0 sm:text-left">
                                 <span className="block text-xs font-extrabold tracking-wider text-[#527365] uppercase">
                                     Pustaka Tersedia
@@ -599,29 +603,40 @@ export default function AdminDashboard({
                                 <span className="mt-1 block text-2xl font-black text-[#265243]">
                                     {stats.available_books}{' '}
                                     <span className="text-xs font-bold text-[#527365]">
-                                        Buku
+                                        / {stats.total_books} Buku
+                                    </span>
+                                </span>
+                            </div>
+                            <div className="py-2 text-center sm:px-6 sm:py-0 sm:text-left">
+                                <span className="block text-xs font-extrabold tracking-wider text-emerald-800 uppercase">
+                                    Fasilitas Sekolah
+                                </span>
+                                <span className="mt-1 block text-2xl font-black text-emerald-800">
+                                    {stats.total_facilities}{' '}
+                                    <span className="text-xs font-bold text-emerald-700">
+                                        Sarana
                                     </span>
                                 </span>
                             </div>
                             <div className="py-2 text-center sm:px-6 sm:py-0 sm:text-left">
                                 <span className="block text-xs font-extrabold tracking-wider text-amber-700 uppercase">
-                                    Legalisir Pending
+                                    Galeri Dokumentasi
                                 </span>
                                 <span className="mt-1 block text-2xl font-black text-amber-800">
-                                    {stats.pending_legalizations}{' '}
+                                    {stats.total_galleries}{' '}
                                     <span className="text-xs font-bold text-amber-700">
-                                        Dokumen
+                                        Media
                                     </span>
                                 </span>
                             </div>
                             <div className="py-2 text-center sm:px-6 sm:py-0 sm:text-left">
-                                <span className="block text-xs font-extrabold tracking-wider text-rose-700 uppercase">
-                                    Pengaduan Pending
+                                <span className="block text-xs font-extrabold tracking-wider text-blue-700 uppercase">
+                                    Postingan Asrama
                                 </span>
-                                <span className="mt-1 block text-2xl font-black text-rose-800">
-                                    {stats.pending_complaints}{' '}
-                                    <span className="text-xs font-bold text-rose-700">
-                                        Pesan
+                                <span className="mt-1 block text-2xl font-black text-blue-800">
+                                    {stats.total_dormitory_posts}{' '}
+                                    <span className="text-xs font-bold text-blue-700">
+                                        Artikel
                                     </span>
                                 </span>
                             </div>
@@ -629,121 +644,104 @@ export default function AdminDashboard({
                     </div>
                 </div>
 
-                {/* ── 5. BOTTOM SECTION: RECENT TABLES (COMPLAINTS & LEGALIZATIONS) ── */}
+                {/* ── 5. BOTTOM SECTION: RECENT ACTIVITY (DORMITORY & NEWS) ── */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    {/* Complaints Widget */}
+                    {/* Recent Dormitory Posts Widget */}
                     <div className="space-y-4 rounded-3xl border border-[#c8dac5] bg-white p-6 shadow-xs">
                         <div className="flex items-center justify-between gap-2">
                             <div>
                                 <h3 className="flex items-center gap-2 text-base font-black text-[#142921]">
-                                    <MessageSquare className="h-4.5 w-4.5 text-[#265243]" />{' '}
-                                    Pengaduan Masuk Terbaru
+                                    <Building2 className="h-4.5 w-4.5 text-[#265243]" />{' '}
+                                    Postingan Asrama Terbaru
                                 </h3>
                                 <p className="text-xs font-medium text-[#527365]">
-                                    Kotak suara &amp; masukan dari masyarakat
+                                    Informasi & kegiatan santri di asrama
                                 </p>
                             </div>
                             <Link
-                                href="/admin/complaints"
+                                href="/admin/dormitory"
                                 className="shrink-0 text-xs font-bold text-[#265243] hover:underline"
                             >
-                                Lihat Semua &rarr;
+                                Kelola &rarr;
                             </Link>
                         </div>
-                        {recentComplaints.length === 0 ? (
+                        {recentDormitoryPosts.length === 0 ? (
                             <div className="rounded-2xl border border-[#e2ebd9] bg-[#f8faf7] p-8 text-center text-xs font-medium text-[#527365]">
-                                Belum ada pengaduan masyarakat.
+                                Belum ada postingan asrama.
                             </div>
                         ) : (
                             <div className="divide-y divide-[#e2ebd9]">
-                                {recentComplaints.map((item) => (
+                                {recentDormitoryPosts.map((item) => (
                                     <div
                                         key={item.id}
                                         className="flex items-center justify-between gap-3 py-3"
                                     >
                                         <div className="min-w-0 flex-1">
                                             <p className="truncate text-xs font-extrabold text-[#142921] sm:text-sm">
-                                                {item.subject || 'Tanpa Subjek'}
+                                                {item.title}
                                             </p>
                                             <p className="truncate text-[11px] font-medium text-[#527365]">
-                                                {item.name} • {item.email}
+                                                {item.author || 'Pengurus Asrama'} •{' '}
+                                                {item.created_at}
                                             </p>
                                         </div>
-                                        <span
-                                            className={`shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase ${
-                                                item.status === 'pending'
-                                                    ? 'border border-amber-300 bg-amber-100 text-amber-800'
-                                                    : item.status ===
-                                                        'processed'
-                                                      ? 'border border-blue-300 bg-blue-100 text-blue-800'
-                                                      : 'border border-emerald-300 bg-emerald-100 text-emerald-800'
-                                            }`}
+                                        <Link
+                                            href="/admin/dormitory"
+                                            className="shrink-0 rounded-full border border-[#c8dac5] bg-[#f4f8f3] px-2.5 py-1 text-[10px] font-extrabold text-[#265243] hover:bg-[#265243] hover:text-white"
                                         >
-                                            {item.status === 'pending'
-                                                ? 'Pending'
-                                                : item.status === 'processed'
-                                                  ? 'Diproses'
-                                                  : 'Selesai'}
-                                        </span>
+                                            Lihat
+                                        </Link>
                                     </div>
                                 ))}
                             </div>
                         )}
                     </div>
 
-                    {/* Legalization Widget */}
+                    {/* Recent News Widget */}
                     <div className="space-y-4 rounded-3xl border border-[#c8dac5] bg-white p-6 shadow-xs">
                         <div className="flex items-center justify-between gap-2">
                             <div>
                                 <h3 className="flex items-center gap-2 text-base font-black text-[#142921]">
-                                    <FileCheck className="h-4.5 w-4.5 text-[#265243]" />{' '}
-                                    Permohonan Legalisir Terbaru
+                                    <Newspaper className="h-4.5 w-4.5 text-[#265243]" />{' '}
+                                    Berita & Artikel Terbaru
                                 </h3>
                                 <p className="text-xs font-medium text-[#527365]">
-                                    Permohonan verifikasi ijazah/transkrip
-                                    alumni
+                                    Artikel berita resmi yang baru dipublikasi
                                 </p>
                             </div>
                             <Link
-                                href="/admin/legalization"
+                                href="/admin/news"
                                 className="shrink-0 text-xs font-bold text-[#265243] hover:underline"
                             >
                                 Kelola &rarr;
                             </Link>
                         </div>
-                        {recentLegalizations.length === 0 ? (
+                        {recentNews.length === 0 ? (
                             <div className="rounded-2xl border border-[#e2ebd9] bg-[#f8faf7] p-8 text-center text-xs font-medium text-[#527365]">
-                                Belum ada permohonan legalisir.
+                                Belum ada artikel berita.
                             </div>
                         ) : (
                             <div className="divide-y divide-[#e2ebd9]">
-                                {recentLegalizations.map((req) => (
+                                {recentNews.map((news) => (
                                     <div
-                                        key={req.id}
+                                        key={news.id}
                                         className="flex items-center justify-between gap-3 py-3"
                                     >
                                         <div className="min-w-0 flex-1">
                                             <p className="truncate text-xs font-extrabold text-[#142921] sm:text-sm">
-                                                {req.alumni_name}
+                                                {news.title}
                                             </p>
                                             <p className="truncate text-[11px] font-medium text-[#527365]">
-                                                {req.document_type}
+                                                {news.author?.name || 'Admin'} •{' '}
+                                                {news.published_at || 'Terbaru'}
                                             </p>
                                         </div>
-                                        <span
-                                            className={`shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase ${
-                                                req.status === 'pending'
-                                                    ? 'border border-amber-300 bg-amber-100 text-amber-800'
-                                                    : req.status === 'approved'
-                                                      ? 'border border-emerald-300 bg-emerald-100 text-emerald-800'
-                                                      : req.status ===
-                                                          'processing'
-                                                        ? 'border border-blue-300 bg-blue-100 text-blue-800'
-                                                        : 'border border-rose-300 bg-rose-100 text-rose-800'
-                                            }`}
+                                        <Link
+                                            href="/admin/news"
+                                            className="shrink-0 rounded-full border border-[#c8dac5] bg-[#f4f8f3] px-2.5 py-1 text-[10px] font-extrabold text-[#265243] hover:bg-[#265243] hover:text-white"
                                         >
-                                            {req.status}
-                                        </span>
+                                            Detail
+                                        </Link>
                                     </div>
                                 ))}
                             </div>
