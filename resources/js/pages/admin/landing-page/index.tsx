@@ -1,24 +1,34 @@
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import {
+    AlertTriangle,
+    Award,
     Building2,
     CheckCircle2,
     ChevronDown,
     ChevronUp,
     Clock,
     Edit3,
+    FileText,
+    Globe,
     GraduationCap,
     History,
     Image as ImageIcon,
     LayoutTemplate,
+    Link2,
+    Mail,
     MapPin,
     Phone,
     Plus,
     Save,
+    School,
+    Sparkles,
     Target,
     Trash2,
+    UploadCloud,
+    UserCheck,
+    Users,
     Video,
     X,
-    AlertTriangle,
 } from 'lucide-react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { PageHeader } from '@/components/page-header';
@@ -79,6 +89,8 @@ function FieldInput({
     placeholder = '',
     type = 'text',
     required = false,
+    icon: Icon,
+    hint,
 }: {
     label?: string;
     value: string;
@@ -86,28 +98,35 @@ function FieldInput({
     placeholder?: string;
     type?: string;
     required?: boolean;
+    icon?: React.ElementType;
+    hint?: string;
 }) {
     return (
-        <div>
+        <div className="space-y-1.5">
             {label && (
-                <label className="mb-1.5 block text-xs font-semibold text-[#142921]">
+                <label className="block text-xs font-semibold text-slate-700">
                     {label}{' '}
-                    {required && <span className="text-rose-500">*</span>}
+                    {required && <span className="font-bold text-rose-500">*</span>}
                 </label>
             )}
-            <input
-                type={type}
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                placeholder={placeholder}
-                required={required}
-                style={{
-                    backgroundColor: '#e4ebe2',
-                    borderColor: '#b8ceb0',
-                    color: '#142921',
-                }}
-                className="w-full rounded-xl border px-4 py-2.5 text-xs font-semibold transition-all placeholder:text-[#527365] focus:bg-white focus:ring-2 focus:ring-[#265243] focus:outline-none"
-            />
+            <div className="relative">
+                {Icon && (
+                    <Icon className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                )}
+                <input
+                    type={type}
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
+                    placeholder={placeholder}
+                    required={required}
+                    className={`w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2.5 text-xs font-semibold text-slate-800 shadow-2xs transition-all placeholder:text-slate-400 hover:bg-slate-50 focus:border-[#265243] focus:bg-white focus:ring-4 focus:ring-[#265243]/10 focus:outline-none ${
+                        Icon ? 'pl-10 pr-4' : 'px-4'
+                    }`}
+                />
+            </div>
+            {hint && (
+                <p className="text-[11px] font-medium text-slate-500">{hint}</p>
+            )}
         </div>
     );
 }
@@ -118,17 +137,19 @@ function FieldTextarea({
     onChange,
     placeholder = '',
     rows = 4,
+    hint,
 }: {
     label?: string;
     value: string;
     onChange: (v: string) => void;
     placeholder?: string;
     rows?: number;
+    hint?: string;
 }) {
     return (
-        <div>
+        <div className="space-y-1.5">
             {label && (
-                <label className="mb-1.5 block text-xs font-semibold text-[#142921]">
+                <label className="block text-xs font-semibold text-slate-700">
                     {label}
                 </label>
             )}
@@ -137,13 +158,11 @@ function FieldTextarea({
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                style={{
-                    backgroundColor: '#e4ebe2',
-                    borderColor: '#b8ceb0',
-                    color: '#142921',
-                }}
-                className="w-full resize-y rounded-xl border px-4 py-2.5 text-xs font-semibold transition-all placeholder:text-[#527365] focus:bg-white focus:ring-2 focus:ring-[#265243] focus:outline-none"
+                className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-2.5 text-xs font-semibold text-slate-800 shadow-2xs transition-all placeholder:text-slate-400 hover:bg-slate-50 focus:border-[#265243] focus:bg-white focus:ring-4 focus:ring-[#265243]/10 focus:outline-none"
             />
+            {hint && (
+                <p className="text-[11px] font-medium text-slate-500">{hint}</p>
+            )}
         </div>
     );
 }
@@ -214,18 +233,16 @@ function BannerModal({
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-            <div
-                style={{ backgroundColor: '#ffffff', borderColor: '#c8dac5' }}
-                className="w-full max-w-lg overflow-hidden rounded-2xl border shadow-2xl"
-            >
-                <div className="flex items-center justify-between border-b border-[#b8ceb0]/40 px-6 py-4">
-                    <h3 className="text-base font-bold text-[#142921]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                <div className="flex items-center justify-between border-b border-slate-100 bg-[#142921] px-6 py-4 text-white">
+                    <h3 className="flex items-center gap-2 text-base font-bold">
+                        <ImageIcon className="h-5 w-5 text-emerald-400" />
                         {editing ? 'Edit Banner' : 'Tambah Banner Baru'}
                     </h3>
                     <button
                         onClick={onClose}
-                        className="cursor-pointer text-[#527365] transition-colors hover:text-[#142921]"
+                        className="cursor-pointer text-slate-300 transition-colors hover:text-white"
                     >
                         <X className="h-5 w-5" />
                     </button>
@@ -234,15 +251,15 @@ function BannerModal({
                 <form onSubmit={handleSubmit} className="space-y-4 p-6">
                     {/* Image Upload */}
                     <div>
-                        <label className="mb-1.5 block text-xs font-semibold text-[#142921]">
+                        <label className="mb-1.5 block text-xs font-semibold text-slate-700">
                             Gambar Banner
                         </label>
                         {imagePreview ? (
-                            <div className="relative mb-2">
+                            <div className="relative mb-2 overflow-hidden rounded-xl border border-slate-200">
                                 <img
                                     src={imagePreview}
                                     alt="preview"
-                                    className="h-40 w-full rounded-xl border border-[#b8ceb0] object-cover"
+                                    className="h-40 w-full object-cover"
                                 />
                                 <button
                                     type="button"
@@ -252,7 +269,7 @@ function BannerModal({
                                         if (fileRef.current)
                                             fileRef.current.value = '';
                                     }}
-                                    className="absolute top-2 right-2 flex cursor-pointer items-center gap-1 rounded-lg bg-white/90 p-1.5 text-xs font-bold text-rose-600 shadow-xs hover:bg-white"
+                                    className="absolute top-2 right-2 flex cursor-pointer items-center gap-1 rounded-lg bg-slate-900/80 p-1.5 text-xs font-bold text-white shadow-sm hover:bg-rose-600"
                                 >
                                     ✕
                                 </button>
@@ -260,18 +277,14 @@ function BannerModal({
                         ) : (
                             <div
                                 onClick={() => fileRef.current?.click()}
-                                style={{
-                                    backgroundColor: '#eef4eb',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="flex h-36 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed transition-all hover:border-[#265243] hover:bg-[#dce8d7]"
+                                className="flex h-36 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-emerald-200 bg-emerald-50/30 transition-all hover:border-[#265243] hover:bg-emerald-50/60"
                             >
-                                <ImageIcon className="h-8 w-8 text-[#265243]" />
-                                <p className="text-center text-xs font-medium text-[#2e5445]">
-                                    Klik untuk upload gambar
+                                <UploadCloud className="h-8 w-8 text-[#265243]" />
+                                <p className="text-center text-xs font-semibold text-slate-700">
+                                    Klik untuk upload gambar banner
                                     <br />
-                                    <span className="text-[10px] text-[#527365]">
-                                        (Maksimal 3MB, resolusi 1920×600)
+                                    <span className="text-[10px] text-slate-500">
+                                        (Maksimal 3MB, rekomendasi 1920×600)
                                     </span>
                                 </p>
                             </div>
@@ -304,34 +317,33 @@ function BannerModal({
                     <label className="flex cursor-pointer items-center gap-2.5 pt-1 select-none">
                         <div
                             onClick={() => setIsActive(!isActive)}
-                            className={`flex h-6 w-10 items-center rounded-full px-0.5 transition-colors ${isActive ? 'bg-[#265243]' : 'bg-[#b8ceb0]'}`}
+                            className={`flex h-6 w-10 items-center rounded-full px-0.5 transition-colors ${
+                                isActive ? 'bg-[#265243]' : 'bg-slate-300'
+                            }`}
                         >
                             <div
-                                className={`h-5 w-5 rounded-full bg-white shadow transition-transform ${isActive ? 'translate-x-4' : 'translate-x-0'}`}
+                                className={`h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${
+                                    isActive ? 'translate-x-4' : 'translate-x-0'
+                                }`}
                             />
                         </div>
-                        <span className="text-xs font-semibold text-[#142921]">
+                        <span className="text-xs font-semibold text-slate-700">
                             Banner aktif (tampil di halaman publik)
                         </span>
                     </label>
 
-                    <div className="flex items-center justify-end gap-3 border-t border-[#b8ceb0]/40 pt-2">
+                    <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-3">
                         <button
                             type="button"
                             onClick={onClose}
-                            style={{
-                                backgroundColor: '#eef4eb',
-                                borderColor: '#b8ceb0',
-                                color: '#265243',
-                            }}
-                            className="cursor-pointer rounded-xl border px-4 py-2 text-xs font-semibold transition-all hover:bg-[#dce8d7]"
+                            className="cursor-pointer rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-200"
                         >
                             Batal
                         </button>
                         <button
                             type="submit"
                             disabled={processing || !title}
-                            className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-5 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337] disabled:opacity-50"
+                            className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-5 py-2 text-xs font-bold text-white shadow-sm transition-all hover:bg-[#1f4337] disabled:opacity-50"
                         >
                             <Save className="h-4 w-4" />{' '}
                             {editing ? 'Simpan Perubahan' : 'Tambah Banner'}
@@ -397,7 +409,7 @@ export default function LandingPageIndex({
         setPreview(URL.createObjectURL(f));
     };
 
-    const [activeTab, setActiveTab] = useState<TabKey>('banner');
+    const [activeTab, setActiveTab] = useState<TabKey>('sekolah');
     const [bannerModal, setBannerModal] = useState<{
         open: boolean;
         editing: BannerItem | null;
@@ -418,8 +430,7 @@ export default function LandingPageIndex({
         onConfirm: () => {},
     });
 
-    /* Milestone (Sejarah Singkat) State */
-    /* Milestone (Sejarah Singkat) — Inertia prop, auto-updated after router.post/delete */
+    /* Milestone State */
     const [milestoneModal, setMilestoneModal] = useState<{
         open: boolean;
         editing: MilestoneItem | null;
@@ -533,7 +544,12 @@ export default function LandingPageIndex({
 
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [logoPreview, setLogoPreview] = useState<string | null>(
-        settings.school_logo ?? null,
+        settings.school_logo_url ??
+            (settings.school_logo &&
+            (settings.school_logo.startsWith('http') ||
+                settings.school_logo.startsWith('/'))
+                ? settings.school_logo
+                : null),
     );
     const logoRef = useRef<HTMLInputElement>(null);
 
@@ -559,7 +575,14 @@ export default function LandingPageIndex({
     );
     const [principalPhotoPreview, setPrincipalPhotoPreview] = useState<
         string | null
-    >(settings.principal_photo_url ?? null);
+    >(
+        settings.principal_photo_url ??
+            (settings.principal_photo &&
+            (settings.principal_photo.startsWith('http') ||
+                settings.principal_photo.startsWith('/'))
+                ? settings.principal_photo
+                : null),
+    );
     const principalPhotoRef = useRef<HTMLInputElement>(null);
 
     const [principalMediaPhotoFile, setPrincipalMediaPhotoFile] =
@@ -568,7 +591,11 @@ export default function LandingPageIndex({
         useState<string | null>(
             settings.principal_media_photo_url ??
                 settings.principal_photo_url ??
-                null,
+                (settings.principal_media_photo &&
+                (settings.principal_media_photo.startsWith('http') ||
+                    settings.principal_media_photo.startsWith('/'))
+                    ? settings.principal_media_photo
+                    : null),
         );
     const principalMediaPhotoRef = useRef<HTMLInputElement>(null);
 
@@ -606,7 +633,14 @@ export default function LandingPageIndex({
     );
     const [footerBannerBgPreview, setFooterBannerBgPreview] = useState<
         string | null
-    >(settings.footer_banner_bg_url ?? null);
+    >(
+        settings.footer_banner_bg_url ??
+            (settings.footer_banner_bg &&
+            (settings.footer_banner_bg.startsWith('http') ||
+                settings.footer_banner_bg.startsWith('/'))
+                ? settings.footer_banner_bg
+                : null),
+    );
     const footerBannerBgRef = useRef<HTMLInputElement>(null);
 
     const saveSettings = (e: FormEvent) => {
@@ -678,15 +712,16 @@ export default function LandingPageIndex({
         <>
             <Head title="CMS Beranda - Admin - MAN TANJUNGPINANG" />
 
-            <div className="w-full space-y-6 p-6">
+            <div className="w-full space-y-6 p-4 sm:p-6">
                 <PageHeader
-                    title="CMS Beranda"
-                    description="Kelola konten halaman utama (landing page) website sekolah."
+                    title="CMS Beranda & Profil Sekolah"
+                    description="Kelola konten halaman utama, identitas sekolah, logo, dan informasi publik secara terintegrasi."
                     icon={LayoutTemplate}
+                    badge="Pengaturan Landing Page"
                 />
 
-                {/* Tab Navigation - Full Outer Cell Fill with Vertical Sekat Lines */}
-                <div className="grid w-full grid-cols-2 divide-y divide-[#e2ebe0] overflow-hidden rounded-2xl border border-[#e2ebe0] bg-white shadow-xs sm:grid-cols-4 sm:divide-y-0 xl:grid-cols-7 xl:divide-x">
+                {/* Tab Navigation */}
+                <div className="flex w-full flex-wrap items-center gap-1.5 rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xs sm:gap-2">
                     {TABS.map((tab) => {
                         const Icon = tab.icon;
                         const active = activeTab === tab.key;
@@ -694,24 +729,15 @@ export default function LandingPageIndex({
                             <button
                                 key={tab.key}
                                 onClick={() => setActiveTab(tab.key)}
-                                style={
+                                className={`flex flex-1 min-w-[120px] cursor-pointer items-center justify-center gap-2 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 ${
                                     active
-                                        ? {
-                                              backgroundColor: '#265243',
-                                              color: '#ffffff',
-                                          }
-                                        : {
-                                              backgroundColor: 'transparent',
-                                              color: '#142921',
-                                          }
-                                }
-                                className={`flex h-full w-full cursor-pointer items-center justify-center gap-2.5 px-3 py-4 text-center text-xs font-bold transition-all duration-150 sm:text-sm ${
-                                    active
-                                        ? ''
-                                        : 'hover:bg-[#f2f7f1] hover:text-[#265243]'
+                                        ? 'scale-[1.02] bg-gradient-to-r from-[#265243] to-[#1d4236] text-white shadow-md shadow-[#265243]/20'
+                                        : 'text-slate-600 hover:bg-slate-100/80 hover:text-[#265243]'
                                 }`}
                             >
-                                <Icon className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
+                                <Icon
+                                    className={`h-4 w-4 shrink-0 ${active ? 'text-white' : 'text-[#265243]'}`}
+                                />
                                 <span className="truncate">{tab.label}</span>
                             </button>
                         );
@@ -721,8 +747,8 @@ export default function LandingPageIndex({
                 {/* ────────── BANNER TAB ────────── */}
                 {activeTab === 'banner' && (
                     <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <p className="text-xs font-semibold text-[#2e5445]">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="text-xs font-semibold text-slate-600">
                                 Kelola slide banner yang tampil di bagian atas
                                 halaman utama.
                             </p>
@@ -733,22 +759,16 @@ export default function LandingPageIndex({
                                         editing: null,
                                     })
                                 }
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337]"
+                                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#265243] to-[#1f4337] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:shadow-md hover:-translate-y-0.5"
                             >
                                 <Plus className="h-4 w-4" /> Tambah Banner
                             </button>
                         </div>
 
                         {banners.length === 0 ? (
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="rounded-2xl border-2 border-dashed p-16 text-center shadow-xs"
-                            >
-                                <ImageIcon className="mx-auto mb-3 h-10 w-10 text-[#265243]/40" />
-                                <p className="text-xs font-semibold text-[#2e5445]">
+                            <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-white p-12 text-center shadow-xs">
+                                <ImageIcon className="mx-auto mb-3 h-10 w-10 text-slate-300" />
+                                <p className="text-xs font-semibold text-slate-600">
                                     Belum ada banner. Klik &quot;Tambah
                                     Banner&quot; untuk menambahkan slide
                                     pertama.
@@ -759,11 +779,7 @@ export default function LandingPageIndex({
                                 {banners.map((b) => (
                                     <div
                                         key={b.id}
-                                        style={{
-                                            backgroundColor: '#e8efe5',
-                                            borderColor: '#b8ceb0',
-                                        }}
-                                        className={`flex items-stretch overflow-hidden rounded-2xl border shadow-xs transition-all hover:shadow-md ${
+                                        className={`flex flex-col sm:flex-row items-stretch overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs transition-all hover:shadow-md ${
                                             b.is_active ? '' : 'opacity-60'
                                         }`}
                                     >
@@ -772,27 +788,26 @@ export default function LandingPageIndex({
                                             <img
                                                 src={b.image}
                                                 alt={b.title}
-                                                className="w-36 flex-shrink-0 object-cover sm:w-48"
+                                                className="h-32 w-full object-cover sm:h-auto sm:w-48 shrink-0"
                                             />
                                         ) : (
-                                            <div
-                                                style={{
-                                                    backgroundColor: '#eef4eb',
-                                                }}
-                                                className="flex w-36 flex-shrink-0 items-center justify-center sm:w-48"
-                                            >
-                                                <ImageIcon className="h-8 w-8 text-[#265243]/40" />
+                                            <div className="flex h-32 w-full sm:w-48 shrink-0 items-center justify-center bg-slate-100 text-slate-400">
+                                                <ImageIcon className="h-8 w-8" />
                                             </div>
                                         )}
 
                                         <div className="flex flex-1 flex-col justify-between gap-3 p-5 sm:flex-row sm:items-center">
                                             <div>
                                                 <div className="mb-1 flex items-center gap-2">
-                                                    <p className="text-base font-bold text-[#142921]">
+                                                    <p className="text-sm font-bold text-slate-900">
                                                         {b.title}
                                                     </p>
                                                     <span
-                                                        className={`rounded-md px-2.5 py-0.5 text-[10px] font-bold ${b.is_active ? 'bg-[#265243] text-white' : 'bg-[#8fa89b] text-white'}`}
+                                                        className={`rounded-md px-2.5 py-0.5 text-[10px] font-bold ${
+                                                            b.is_active
+                                                                ? 'bg-emerald-100 text-emerald-800'
+                                                                : 'bg-slate-200 text-slate-600'
+                                                        }`}
                                                     >
                                                         {b.is_active
                                                             ? 'Aktif'
@@ -800,12 +815,12 @@ export default function LandingPageIndex({
                                                     </span>
                                                 </div>
                                                 {b.subtitle && (
-                                                    <p className="line-clamp-2 text-xs font-semibold text-[#2e5445]">
+                                                    <p className="line-clamp-2 text-xs font-medium text-slate-500">
                                                         {b.subtitle}
                                                     </p>
                                                 )}
                                             </div>
-                                            <div className="flex flex-shrink-0 items-center gap-2">
+                                            <div className="flex shrink-0 items-center gap-2">
                                                 <button
                                                     onClick={() =>
                                                         setBannerModal({
@@ -813,13 +828,7 @@ export default function LandingPageIndex({
                                                             editing: b,
                                                         })
                                                     }
-                                                    style={{
-                                                        backgroundColor:
-                                                            '#eef4eb',
-                                                        borderColor: '#b8ceb0',
-                                                        color: '#265243',
-                                                    }}
-                                                    className="cursor-pointer rounded-xl border p-2 transition-all hover:bg-[#dce8d7]"
+                                                    className="cursor-pointer rounded-xl border border-slate-200 bg-slate-50 p-2 text-[#265243] transition-all hover:bg-slate-100"
                                                     title="Edit"
                                                 >
                                                     <Edit3 className="h-4 w-4" />
@@ -840,7 +849,6 @@ export default function LandingPageIndex({
                             </div>
                         )}
 
-                        {/* Banner Modal */}
                         {bannerModal.open && (
                             <BannerModal
                                 editing={bannerModal.editing}
@@ -857,54 +865,77 @@ export default function LandingPageIndex({
 
                 {/* ────────── PROFIL SEKOLAH TAB ────────── */}
                 {activeTab === 'sekolah' && (
-                    <form onSubmit={saveSettings} className="space-y-5">
+                    <form onSubmit={saveSettings} className="space-y-6">
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-                            {/* Logo */}
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="flex flex-col items-center gap-4 rounded-2xl border p-5 shadow-xs"
-                            >
-                                <h3 className="w-full text-sm font-extrabold text-[#142921]">
-                                    Logo Sekolah
-                                </h3>
+                            {/* Logo Card */}
+                            <div className="flex flex-col items-center space-y-4 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                                <div className="flex w-full items-center justify-between border-b border-slate-100 pb-3">
+                                    <h3 className="flex items-center gap-2 text-xs font-bold tracking-wider text-slate-800 uppercase">
+                                        <Sparkles className="h-4 w-4 text-[#265243]" />
+                                        Logo Sekolah
+                                    </h3>
+                                    <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-[#265243]">
+                                        Identitas
+                                    </span>
+                                </div>
+
                                 {logoPreview ? (
-                                    <div className="relative">
-                                        <img
-                                            src={logoPreview}
-                                            alt="logo"
-                                            className="h-32 w-32 rounded-xl border border-[#b8ceb0] bg-white object-contain p-2"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setLogoPreview(null);
-                                                setLogoFile(null);
-                                                if (logoRef.current)
-                                                    logoRef.current.value = '';
-                                            }}
-                                            className="absolute -top-2 -right-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-rose-600 text-xs text-white shadow-xs hover:bg-rose-700"
-                                        >
-                                            ✕
-                                        </button>
+                                    <div className="flex w-full flex-col items-center gap-4">
+                                        <div className="group relative flex h-40 w-40 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50/50 p-4 shadow-inner transition-all hover:bg-slate-50">
+                                            <img
+                                                src={logoPreview}
+                                                alt="Logo Sekolah"
+                                                onError={() =>
+                                                    setLogoPreview(null)
+                                                }
+                                                className="max-h-full max-w-full object-contain filter drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
+                                            />
+                                        </div>
+                                        <div className="flex flex-wrap items-center justify-center gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    logoRef.current?.click()
+                                                }
+                                                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-[#265243] px-3.5 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337]"
+                                            >
+                                                <UploadCloud className="h-3.5 w-3.5" />
+                                                Ganti Logo
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setLogoPreview(null);
+                                                    setLogoFile(null);
+                                                    if (logoRef.current)
+                                                        logoRef.current.value =
+                                                            '';
+                                                }}
+                                                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-bold text-rose-600 transition-all hover:bg-rose-100"
+                                            >
+                                                <Trash2 className="h-3.5 w-3.5" />
+                                                Hapus
+                                            </button>
+                                        </div>
                                     </div>
                                 ) : (
                                     <div
                                         onClick={() => logoRef.current?.click()}
-                                        style={{
-                                            backgroundColor: '#e4ebe2',
-                                            borderColor: '#b8ceb0',
-                                        }}
-                                        className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed transition-all hover:border-[#265243] hover:bg-[#dce8d7]"
+                                        className="flex h-44 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 p-4 transition-all hover:border-[#265243] hover:bg-emerald-50"
                                     >
-                                        <ImageIcon className="h-8 w-8 text-[#265243]" />
-                                        <p className="text-center text-[10px] font-semibold text-[#2e5445]">
-                                            Upload Logo
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-[#265243]">
+                                            <UploadCloud className="h-6 w-6" />
+                                        </div>
+                                        <p className="text-center text-xs font-bold text-slate-700">
+                                            Upload Logo Sekolah
+                                        </p>
+                                        <p className="text-center text-[10px] text-slate-500">
+                                            Format PNG, JPG, atau SVG (Maksimal
+                                            3MB)
                                         </p>
                                     </div>
                                 )}
+
                                 <input
                                     ref={logoRef}
                                     type="file"
@@ -920,26 +951,17 @@ export default function LandingPageIndex({
                                         )
                                     }
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => logoRef.current?.click()}
-                                    className="cursor-pointer text-xs font-bold text-[#265243] underline hover:text-[#1f4337]"
-                                >
-                                    {logoPreview ? 'Ganti Logo' : 'Pilih Logo'}
-                                </button>
                             </div>
 
-                            {/* Identitas */}
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="space-y-4 rounded-2xl border p-5 shadow-xs lg:col-span-2"
-                            >
-                                <h3 className="text-sm font-extrabold text-[#142921]">
-                                    Identitas Sekolah
-                                </h3>
+                            {/* Identitas Card */}
+                            <div className="space-y-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md lg:col-span-2">
+                                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                                    <h3 className="flex items-center gap-2 text-xs font-bold tracking-wider text-slate-800 uppercase">
+                                        <Building2 className="h-4 w-4 text-[#265243]" />
+                                        Identitas & Informasi Utama Sekolah
+                                    </h3>
+                                </div>
+
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                     <FieldInput
                                         label="Nama Sekolah"
@@ -947,24 +969,28 @@ export default function LandingPageIndex({
                                         onChange={setSchoolName}
                                         placeholder="MAN Contoh Kota"
                                         required
+                                        icon={Building2}
                                     />
                                     <FieldInput
                                         label="NPSN"
                                         value={schoolNpsn}
                                         onChange={setSchoolNpsn}
                                         placeholder="12345678"
+                                        icon={FileText}
                                     />
                                     <FieldInput
                                         label="Status Sekolah"
                                         value={schoolStatus}
                                         onChange={setSchoolStatus}
                                         placeholder="Negeri / Swasta"
+                                        icon={School}
                                     />
                                     <FieldInput
                                         label="Website"
                                         value={schoolWebsite}
                                         onChange={setSchoolWebsite}
                                         placeholder="https://mancontoh.sch.id"
+                                        icon={Globe}
                                     />
                                     <FieldInput
                                         label="Telepon"
@@ -972,6 +998,7 @@ export default function LandingPageIndex({
                                         onChange={setSchoolPhone}
                                         placeholder="(0274) 123456"
                                         type="tel"
+                                        icon={Phone}
                                     />
                                     <FieldInput
                                         label="Email"
@@ -979,58 +1006,73 @@ export default function LandingPageIndex({
                                         onChange={setSchoolEmail}
                                         placeholder="info@mancontoh.sch.id"
                                         type="email"
+                                        icon={Mail}
                                     />
                                 </div>
+
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                     <FieldInput
                                         label="Link E-Legalisir"
                                         value={legalizationLink}
                                         onChange={setLegalizationLink}
                                         placeholder="https://docs.google.com/forms/..."
+                                        icon={Link2}
                                     />
                                     <FieldInput
                                         label="Link Form Pengaduan"
                                         value={complaintLink}
                                         onChange={setComplaintLink}
                                         placeholder="https://docs.google.com/forms/..."
+                                        icon={Link2}
                                     />
                                 </div>
-                                <div className="space-y-3 border-t border-[#b8ceb0]/40 pt-2">
-                                    <h4 className="text-xs font-bold tracking-wider text-[#265243] uppercase">
-                                        Data Statistik (Banner Strip Beranda)
-                                    </h4>
+
+                                {/* Section Statistik */}
+                                <div className="space-y-3 border-t border-slate-100 pt-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="h-2 w-2 rounded-full bg-[#265243]"></span>
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#265243]">
+                                            Data Statistik (Banner Strip Beranda)
+                                        </h4>
+                                    </div>
                                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                                         <FieldInput
                                             label="Siswa Aktif"
                                             value={totalStudents}
                                             onChange={setTotalStudents}
                                             placeholder="850+"
+                                            icon={Users}
                                         />
                                         <FieldInput
                                             label="Guru & Staf"
                                             value={totalTeachers}
                                             onChange={setTotalTeachers}
                                             placeholder="54+"
+                                            icon={UserCheck}
                                         />
                                         <FieldInput
                                             label="Ruang Kelas"
                                             value={totalClassrooms}
                                             onChange={setTotalClassrooms}
                                             placeholder="24"
+                                            icon={School}
                                         />
                                         <FieldInput
                                             label="Akreditasi"
                                             value={accreditation}
                                             onChange={setAccreditation}
                                             placeholder="A (Unggul)"
+                                            icon={Award}
                                         />
                                     </div>
                                 </div>
+
                                 <FieldInput
                                     label="Tagline / Moto Sekolah"
                                     value={schoolTagline}
                                     onChange={setSchoolTagline}
                                     placeholder="Unggul dalam Prestasi, Mulia dalam Akhlak"
+                                    icon={Sparkles}
                                 />
                                 <FieldTextarea
                                     label="Alamat Lengkap"
@@ -1053,7 +1095,7 @@ export default function LandingPageIndex({
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337] disabled:opacity-50"
+                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-gradient-to-r from-[#265243] to-[#1f4337] px-7 py-3 text-xs font-bold text-white shadow-md shadow-[#265243]/20 transition-all hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50"
                             >
                                 <Save className="h-4 w-4" />{' '}
                                 {saving
@@ -1064,22 +1106,16 @@ export default function LandingPageIndex({
                     </form>
                 )}
 
-                {/* ────────── MEDIA SAMBUTAN TAB (DEDICATED PINTASAN) ────────── */}
+                {/* ────────── MEDIA SAMBUTAN TAB ────────── */}
                 {activeTab === 'media' && (
-                    <form onSubmit={saveSettings} className="space-y-5">
-                        <div
-                            style={{
-                                backgroundColor: '#e8efe5',
-                                borderColor: '#b8ceb0',
-                            }}
-                            className="space-y-6 rounded-2xl border p-6 shadow-xs"
-                        >
-                            <div className="border-b border-[#b8ceb0]/40 pb-4">
-                                <h3 className="flex items-center gap-2 text-base font-extrabold text-[#142921]">
+                    <form onSubmit={saveSettings} className="space-y-6">
+                        <div className="space-y-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                            <div className="border-b border-slate-100 pb-4">
+                                <h3 className="flex items-center gap-2 text-base font-bold text-slate-800">
                                     <Video className="h-5 w-5 text-[#265243]" />{' '}
                                     Media Atas Kata Sambutan (Video / Foto)
                                 </h3>
-                                <p className="mt-1 text-xs font-medium text-[#527365]">
+                                <p className="mt-1 text-xs font-medium text-slate-500">
                                     Pilih jenis media yang akan ditampilkan di
                                     atas Kata Sambutan Kepala Sekolah pada
                                     beranda website. Anda dapat memilih antara
@@ -1089,7 +1125,7 @@ export default function LandingPageIndex({
 
                             {/* Pilihan Tipe Media Utama */}
                             <div className="space-y-2">
-                                <label className="block text-xs font-bold tracking-wider text-[#142921] uppercase">
+                                <label className="block text-xs font-bold tracking-wider text-slate-700 uppercase">
                                     Pilih Tipe Media Utama
                                 </label>
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -1098,28 +1134,19 @@ export default function LandingPageIndex({
                                         onClick={() =>
                                             setPrincipalMediaType('video')
                                         }
-                                        style={
+                                        className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all ${
                                             principalMediaType === 'video'
-                                                ? {
-                                                      backgroundColor:
-                                                          '#dce8d7',
-                                                      borderColor: '#265243',
-                                                  }
-                                                : {
-                                                      backgroundColor:
-                                                          '#e4ebe2',
-                                                      borderColor: '#b8ceb0',
-                                                  }
-                                        }
-                                        className="flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all"
+                                                ? 'border-[#265243] bg-emerald-50/60 ring-2 ring-[#265243]/20'
+                                                : 'border-slate-200 bg-slate-50/50 hover:bg-slate-50'
+                                        }`}
                                     >
                                         <div className="flex items-center gap-3">
                                             <span className="text-xl">🎥</span>
                                             <div>
-                                                <p className="text-xs font-bold text-[#142921]">
+                                                <p className="text-xs font-bold text-slate-800">
                                                     Video YouTube Sekolah
                                                 </p>
-                                                <p className="text-[11px] text-[#527365]">
+                                                <p className="text-[11px] text-slate-500">
                                                     Menampilkan player video
                                                     YouTube profil sekolah
                                                 </p>
@@ -1144,28 +1171,19 @@ export default function LandingPageIndex({
                                         onClick={() =>
                                             setPrincipalMediaType('photo')
                                         }
-                                        style={
+                                        className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all ${
                                             principalMediaType === 'photo'
-                                                ? {
-                                                      backgroundColor:
-                                                          '#dce8d7',
-                                                      borderColor: '#265243',
-                                                  }
-                                                : {
-                                                      backgroundColor:
-                                                          '#e4ebe2',
-                                                      borderColor: '#b8ceb0',
-                                                  }
-                                        }
-                                        className="flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all"
+                                                ? 'border-[#265243] bg-emerald-50/60 ring-2 ring-[#265243]/20'
+                                                : 'border-slate-200 bg-slate-50/50 hover:bg-slate-50'
+                                        }`}
                                     >
                                         <div className="flex items-center gap-3">
                                             <span className="text-xl">🖼️</span>
                                             <div>
-                                                <p className="text-xs font-bold text-[#142921]">
+                                                <p className="text-xs font-bold text-slate-800">
                                                     Foto Media Utama Sekolah
                                                 </p>
-                                                <p className="text-[11px] text-[#527365]">
+                                                <p className="text-[11px] text-slate-500">
                                                     Menampilkan gambar/foto
                                                     utama banner sekolah
                                                 </p>
@@ -1188,7 +1206,7 @@ export default function LandingPageIndex({
                             </div>
 
                             {/* Dynamic Content Form */}
-                            <div className="border-t border-[#b8ceb0]/40 pt-4">
+                            <div className="border-t border-slate-100 pt-4">
                                 {principalMediaType === 'video' ? (
                                     <div className="space-y-3">
                                         <FieldInput
@@ -1196,8 +1214,9 @@ export default function LandingPageIndex({
                                             value={principalVideoUrl}
                                             onChange={setPrincipalVideoUrl}
                                             placeholder="https://youtu.be/swh2GC1XqyE?si=zDzgUxvpB2XObqte"
+                                            icon={Video}
                                         />
-                                        <p className="text-xs font-semibold text-[#527365]">
+                                        <p className="text-xs font-medium text-slate-500">
                                             💡 Masukkan URL video YouTube
                                             lengkap atau tautan pendek
                                             (youtu.be). Video ini akan tampil di
@@ -1206,19 +1225,24 @@ export default function LandingPageIndex({
                                     </div>
                                 ) : (
                                     <div className="space-y-3">
-                                        <label className="block text-xs font-bold text-[#142921]">
+                                        <label className="block text-xs font-bold text-slate-700">
                                             Foto Media Utama (Landscape 16:9)
                                         </label>
                                         {principalMediaPhotoPreview ? (
-                                            <div className="relative max-w-xl text-center">
+                                            <div className="relative max-w-xl">
                                                 <img
                                                     src={
                                                         principalMediaPhotoPreview
                                                     }
                                                     alt="media preview"
-                                                    className="h-48 w-full rounded-xl border border-[#b8ceb0] object-cover shadow-xs"
+                                                    onError={() =>
+                                                        setPrincipalMediaPhotoPreview(
+                                                            null,
+                                                        )
+                                                    }
+                                                    className="h-48 w-full rounded-xl border border-slate-200 object-cover shadow-xs"
                                                 />
-                                                <div className="mt-2 flex items-center justify-center gap-4">
+                                                <div className="mt-2 flex items-center justify-start gap-4">
                                                     <button
                                                         type="button"
                                                         onClick={() =>
@@ -1255,18 +1279,14 @@ export default function LandingPageIndex({
                                                 onClick={() =>
                                                     principalMediaPhotoRef.current?.click()
                                                 }
-                                                style={{
-                                                    backgroundColor: '#e4ebe2',
-                                                    borderColor: '#b8ceb0',
-                                                }}
-                                                className="flex h-40 w-full max-w-xl cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed transition-all hover:border-[#265243] hover:bg-[#dce8d7]"
+                                                className="flex h-40 w-full max-w-xl cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 transition-all hover:border-[#265243] hover:bg-emerald-50"
                                             >
-                                                <ImageIcon className="h-8 w-8 text-[#265243]" />
-                                                <p className="text-center text-xs font-bold text-[#2e5445]">
+                                                <UploadCloud className="h-8 w-8 text-[#265243]" />
+                                                <p className="text-center text-xs font-bold text-slate-700">
                                                     Klik untuk upload foto media
                                                     utama
                                                 </p>
-                                                <span className="text-[10px] text-[#527365]">
+                                                <span className="text-[10px] text-slate-500">
                                                     (Maksimal 3MB, format
                                                     JPG/PNG landscape)
                                                 </span>
@@ -1296,7 +1316,7 @@ export default function LandingPageIndex({
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337] disabled:opacity-50"
+                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-gradient-to-r from-[#265243] to-[#1f4337] px-6 py-2.5 text-xs font-bold text-white shadow-md shadow-[#265243]/20 transition-all hover:shadow-lg disabled:opacity-50"
                             >
                                 <Save className="h-4 w-4" />{' '}
                                 {saving
@@ -1309,60 +1329,68 @@ export default function LandingPageIndex({
 
                 {/* ────────── KEPALA SEKOLAH TAB ────────── */}
                 {activeTab === 'kepala' && (
-                    <form onSubmit={saveSettings} className="space-y-5">
+                    <form onSubmit={saveSettings} className="space-y-6">
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                             {/* Foto Kepala Sekolah */}
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="flex flex-col items-center gap-4 rounded-2xl border p-5 shadow-xs"
-                            >
-                                <h3 className="w-full text-sm font-extrabold text-[#142921]">
+                            <div className="flex flex-col items-center space-y-4 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                                <h3 className="w-full text-xs font-bold tracking-wider text-slate-800 uppercase border-b border-slate-100 pb-3">
                                     Foto Kepala Sekolah
                                 </h3>
                                 {principalPhotoPreview ? (
-                                    <div className="relative text-center">
+                                    <div className="flex flex-col items-center gap-3">
                                         <img
                                             src={principalPhotoPreview}
                                             alt="kepala"
-                                            className="h-48 w-36 rounded-xl border border-[#b8ceb0] object-cover"
+                                            onError={() =>
+                                                setPrincipalPhotoPreview(null)
+                                            }
+                                            className="h-48 w-36 rounded-xl border border-slate-200 object-cover shadow-sm"
                                         />
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setPrincipalPhotoPreview(null);
-                                                setPrincipalPhotoFile(null);
-                                                if (principalPhotoRef.current)
-                                                    principalPhotoRef.current.value =
-                                                        '';
-                                            }}
-                                            className="mx-auto mt-2 flex cursor-pointer items-center justify-center gap-1 text-xs font-bold text-rose-600 hover:underline"
-                                        >
-                                            <Trash2 className="h-3.5 w-3.5" />{' '}
-                                            Hapus Foto
-                                        </button>
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    principalPhotoRef.current?.click()
+                                                }
+                                                className="cursor-pointer text-xs font-bold text-[#265243] underline hover:text-[#1f4337]"
+                                            >
+                                                Ganti Foto
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setPrincipalPhotoPreview(
+                                                        null,
+                                                    );
+                                                    setPrincipalPhotoFile(null);
+                                                    if (
+                                                        principalPhotoRef.current
+                                                    )
+                                                        principalPhotoRef.current.value =
+                                                            '';
+                                                }}
+                                                className="flex cursor-pointer items-center gap-1 text-xs font-bold text-rose-600 hover:underline"
+                                            >
+                                                <Trash2 className="h-3.5 w-3.5" />{' '}
+                                                Hapus
+                                            </button>
+                                        </div>
                                     </div>
                                 ) : (
                                     <div
                                         onClick={() =>
                                             principalPhotoRef.current?.click()
                                         }
-                                        style={{
-                                            backgroundColor: '#e4ebe2',
-                                            borderColor: '#b8ceb0',
-                                        }}
-                                        className="flex h-48 w-36 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed transition-all hover:border-[#265243] hover:bg-[#dce8d7]"
+                                        className="flex h-48 w-36 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 p-3 transition-all hover:border-[#265243] hover:bg-emerald-50"
                                     >
-                                        <ImageIcon className="h-8 w-8 text-[#265243]" />
-                                        <p className="text-center text-[10px] font-semibold text-[#2e5445]">
+                                        <UploadCloud className="h-7 w-7 text-[#265243]" />
+                                        <p className="text-center text-[10px] font-bold text-slate-700">
                                             Upload Foto
                                             <br />
                                             Kepala Sekolah
                                         </p>
-                                        <span className="text-[9px] text-[#527365]">
-                                            (Maks 3MB)
+                                        <span className="text-[9px] text-slate-500">
+                                            (Maksimal 3MB)
                                         </span>
                                     </div>
                                 )}
@@ -1381,29 +1409,12 @@ export default function LandingPageIndex({
                                         )
                                     }
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        principalPhotoRef.current?.click()
-                                    }
-                                    className="cursor-pointer text-xs font-bold text-[#265243] underline hover:text-[#1f4337]"
-                                >
-                                    {principalPhotoPreview
-                                        ? 'Ganti Foto'
-                                        : 'Pilih Foto'}
-                                </button>
                             </div>
 
                             {/* Data Kepala Sekolah */}
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="space-y-4 rounded-2xl border p-5 shadow-xs lg:col-span-2"
-                            >
-                                <h3 className="text-sm font-extrabold text-[#142921]">
-                                    Data Kepala Sekolah
+                            <div className="space-y-4 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md lg:col-span-2">
+                                <h3 className="text-xs font-bold tracking-wider text-slate-800 uppercase border-b border-slate-100 pb-3">
+                                    Data & Kata Sambutan Kepala Sekolah
                                 </h3>
                                 <FieldInput
                                     label="Nama Lengkap"
@@ -1411,12 +1422,14 @@ export default function LandingPageIndex({
                                     onChange={setPrincipalName}
                                     placeholder="Drs. H. Ahmad, M.Pd."
                                     required
+                                    icon={GraduationCap}
                                 />
                                 <FieldInput
                                     label="Gelar / Jabatan"
                                     value={principalTitle}
                                     onChange={setPrincipalTitle}
                                     placeholder="Kepala MAN Contoh Kota"
+                                    icon={School}
                                 />
                                 <FieldTextarea
                                     label="Kata Sambutan / Biografi Singkat"
@@ -1432,7 +1445,7 @@ export default function LandingPageIndex({
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337] disabled:opacity-50"
+                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-gradient-to-r from-[#265243] to-[#1f4337] px-6 py-2.5 text-xs font-bold text-white shadow-md shadow-[#265243]/20 transition-all hover:shadow-lg disabled:opacity-50"
                             >
                                 <Save className="h-4 w-4" />{' '}
                                 {saving
@@ -1445,16 +1458,10 @@ export default function LandingPageIndex({
 
                 {/* ────────── VISI & MISI TAB ────────── */}
                 {activeTab === 'visi' && (
-                    <form onSubmit={saveSettings} className="space-y-5">
+                    <form onSubmit={saveSettings} className="space-y-6">
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="space-y-3 rounded-2xl border p-5 shadow-xs"
-                            >
-                                <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#142921]">
+                            <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                                <h3 className="flex items-center gap-2 text-sm font-bold text-slate-800 border-b border-slate-100 pb-3">
                                     <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#265243] text-xs font-bold text-white">
                                         V
                                     </span>
@@ -1468,15 +1475,9 @@ export default function LandingPageIndex({
                                     rows={8}
                                 />
                             </div>
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="space-y-3 rounded-2xl border p-5 shadow-xs"
-                            >
-                                <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#142921]">
-                                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#5e8363] text-xs font-bold text-white">
+                            <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                                <h3 className="flex items-center gap-2 text-sm font-bold text-slate-800 border-b border-slate-100 pb-3">
+                                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#4d735e] text-xs font-bold text-white">
                                         M
                                     </span>
                                     Misi Sekolah
@@ -1487,12 +1488,8 @@ export default function LandingPageIndex({
                                     onChange={setMission}
                                     placeholder="1. Menyelenggarakan pembelajaran yang inovatif...&#10;2. Mengembangkan karakter islami siswa...&#10;3. Meningkatkan kualitas SDM..."
                                     rows={8}
+                                    hint="💡 Pisahkan setiap poin misi dengan baris baru (Enter). Sistem akan otomatis menampilkannya sebagai daftar bernomor."
                                 />
-                                <p className="text-xs font-semibold text-[#527365]">
-                                    💡 Pisahkan setiap poin misi dengan baris
-                                    baru (Enter). Sistem akan otomatis
-                                    menampilkannya sebagai list.
-                                </p>
                             </div>
                         </div>
 
@@ -1500,7 +1497,7 @@ export default function LandingPageIndex({
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337] disabled:opacity-50"
+                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-gradient-to-r from-[#265243] to-[#1f4337] px-6 py-2.5 text-xs font-bold text-white shadow-md shadow-[#265243]/20 transition-all hover:shadow-lg disabled:opacity-50"
                             >
                                 <Save className="h-4 w-4" />{' '}
                                 {saving ? 'Menyimpan...' : 'Simpan Visi & Misi'}
@@ -1512,32 +1509,24 @@ export default function LandingPageIndex({
                 {/* ────────── SEJARAH SINGKAT TAB ────────── */}
                 {activeTab === 'sejarah' && (
                     <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-xs font-semibold text-[#2e5445]">
-                                    Kelola timeline sejarah/milestone sekolah
-                                    yang tampil di halaman Profil &gt; Sejarah
-                                    Singkat.
-                                </p>
-                            </div>
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="text-xs font-semibold text-slate-600">
+                                Kelola timeline sejarah/milestone sekolah
+                                yang tampil di halaman Profil &gt; Sejarah
+                                Singkat.
+                            </p>
                             <button
                                 onClick={() => openMilestoneModal(null)}
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337]"
+                                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#265243] to-[#1f4337] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:shadow-md"
                             >
                                 <Plus className="h-4 w-4" /> Tambah Milestone
                             </button>
                         </div>
 
                         {milestones.length === 0 ? (
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="rounded-2xl border-2 border-dashed p-16 text-center shadow-xs"
-                            >
-                                <Clock className="mx-auto mb-3 h-10 w-10 text-[#265243]/40" />
-                                <p className="text-xs font-semibold text-[#2e5445]">
+                            <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-white p-12 text-center shadow-xs">
+                                <Clock className="mx-auto mb-3 h-10 w-10 text-slate-300" />
+                                <p className="text-xs font-semibold text-slate-600">
                                     Belum ada milestone. Klik &quot;Tambah
                                     Milestone&quot; untuk menambahkan entri
                                     sejarah pertama.
@@ -1548,11 +1537,7 @@ export default function LandingPageIndex({
                                 {milestones.map((ms) => (
                                     <div
                                         key={ms.id}
-                                        style={{
-                                            backgroundColor: '#e8efe5',
-                                            borderColor: '#b8ceb0',
-                                        }}
-                                        className="flex items-stretch overflow-hidden rounded-2xl border shadow-xs transition-all hover:shadow-md"
+                                        className="flex items-stretch overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs transition-all hover:shadow-md"
                                     >
                                         {/* Year Badge */}
                                         <div className="flex w-20 shrink-0 items-center justify-center bg-[#142921] text-base font-black text-white sm:w-24">
@@ -1560,27 +1545,21 @@ export default function LandingPageIndex({
                                         </div>
                                         <div className="flex flex-1 flex-col justify-between gap-3 p-4 sm:flex-row sm:items-center">
                                             <div>
-                                                <p className="text-sm font-bold text-[#142921]">
+                                                <p className="text-sm font-bold text-slate-900">
                                                     {ms.title}
                                                 </p>
                                                 {ms.description && (
-                                                    <p className="mt-0.5 line-clamp-2 text-xs font-medium text-[#2e5445]">
+                                                    <p className="mt-0.5 line-clamp-2 text-xs font-medium text-slate-500">
                                                         {ms.description}
                                                     </p>
                                                 )}
                                             </div>
-                                            <div className="flex flex-shrink-0 items-center gap-2">
+                                            <div className="flex shrink-0 items-center gap-2">
                                                 <button
                                                     onClick={() =>
                                                         openMilestoneModal(ms)
                                                     }
-                                                    style={{
-                                                        backgroundColor:
-                                                            '#eef4eb',
-                                                        borderColor: '#b8ceb0',
-                                                        color: '#265243',
-                                                    }}
-                                                    className="cursor-pointer rounded-xl border p-2 transition-all hover:bg-[#dce8d7]"
+                                                    className="cursor-pointer rounded-xl border border-slate-200 bg-slate-50 p-2 text-[#265243] transition-all hover:bg-slate-100"
                                                     title="Edit"
                                                 >
                                                     <Edit3 className="h-4 w-4" />
@@ -1601,28 +1580,19 @@ export default function LandingPageIndex({
                             </div>
                         )}
 
-                        {/* Milestone Add/Edit Modal */}
+                        {/* Milestone Modal */}
                         {milestoneModal.open && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                                <div
-                                    style={{
-                                        backgroundColor: '#ffffff',
-                                        borderColor: '#c8dac5',
-                                    }}
-                                    className="w-full max-w-md overflow-hidden rounded-2xl border shadow-2xl"
-                                >
-                                    <div
-                                        className="flex items-center justify-between border-b border-[#b8ceb0]/40 px-6 py-4"
-                                        style={{ backgroundColor: '#142921' }}
-                                    >
-                                        <h3 className="text-base font-bold text-white">
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
+                                <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                                    <div className="flex items-center justify-between bg-[#142921] px-6 py-4 text-white">
+                                        <h3 className="text-base font-bold">
                                             {milestoneModal.editing
                                                 ? 'Edit Milestone'
                                                 : 'Tambah Milestone Baru'}
                                         </h3>
                                         <button
                                             onClick={closeMilestoneModal}
-                                            className="cursor-pointer text-white/70 transition-colors hover:text-white"
+                                            className="cursor-pointer text-slate-300 transition-colors hover:text-white"
                                         >
                                             <X className="h-5 w-5" />
                                         </button>
@@ -1653,16 +1623,11 @@ export default function LandingPageIndex({
                                             placeholder="Deskripsi singkat tentang peristiwa ini..."
                                             rows={3}
                                         />
-                                        <div className="flex items-center justify-end gap-3 border-t border-[#b8ceb0]/40 pt-2">
+                                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-3">
                                             <button
                                                 type="button"
                                                 onClick={closeMilestoneModal}
-                                                style={{
-                                                    backgroundColor: '#eef4eb',
-                                                    borderColor: '#b8ceb0',
-                                                    color: '#265243',
-                                                }}
-                                                className="cursor-pointer rounded-xl border px-4 py-2 text-xs font-semibold transition-all hover:bg-[#dce8d7]"
+                                                className="cursor-pointer rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-200"
                                             >
                                                 Batal
                                             </button>
@@ -1673,7 +1638,7 @@ export default function LandingPageIndex({
                                                     !milestoneTitle ||
                                                     !milestoneYear
                                                 }
-                                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-5 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337] disabled:opacity-50"
+                                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-5 py-2 text-xs font-bold text-white shadow-sm transition-all hover:bg-[#1f4337] disabled:opacity-50"
                                             >
                                                 <Save className="h-4 w-4" />{' '}
                                                 {milestoneModal.editing
@@ -1690,20 +1655,14 @@ export default function LandingPageIndex({
 
                 {/* ────────── FOOTER TAB ────────── */}
                 {activeTab === 'footer' && (
-                    <form onSubmit={saveSettings} className="space-y-5">
+                    <form onSubmit={saveSettings} className="space-y-6">
                         {/* Box Banner CTA Footer Uploader */}
-                        <div
-                            style={{
-                                backgroundColor: '#e8efe5',
-                                borderColor: '#b8ceb0',
-                            }}
-                            className="space-y-4 rounded-2xl border p-5 shadow-xs"
-                        >
-                            <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#142921]">
+                        <div className="space-y-4 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                            <h3 className="flex items-center gap-2 text-xs font-bold tracking-wider text-slate-800 uppercase border-b border-slate-100 pb-3">
                                 <ImageIcon className="h-4 w-4 text-[#265243]" />{' '}
                                 Banner Box Footer (Floating CTA Box)
                             </h3>
-                            <p className="text-xs font-semibold text-[#527365]">
+                            <p className="text-xs font-medium text-slate-500">
                                 Upload gambar latar belakang penuh dan sesuaikan
                                 judul utama (misal: "MAN TANJUNGPINANG") yang
                                 tampil melayang di atas footer.
@@ -1712,17 +1671,22 @@ export default function LandingPageIndex({
                             <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-3">
                                 {/* Upload Box */}
                                 <div className="space-y-2">
-                                    <label className="block text-xs font-bold text-[#142921]">
+                                    <label className="block text-xs font-bold text-slate-700">
                                         Gambar Latar Belakang Banner Footer
                                     </label>
                                     {footerBannerBgPreview ? (
-                                        <div className="group relative h-32 overflow-hidden rounded-xl border border-[#b8ceb0]">
+                                        <div className="group relative h-32 overflow-hidden rounded-xl border border-slate-200">
                                             <img
                                                 src={footerBannerBgPreview}
                                                 alt="Preview Banner Footer"
+                                                onError={() =>
+                                                    setFooterBannerBgPreview(
+                                                        null,
+                                                    )
+                                                }
                                                 className="h-full w-full object-cover"
                                             />
-                                            <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+                                            <div className="absolute inset-0 flex items-center justify-center gap-2 bg-slate-900/60 opacity-0 transition-opacity group-hover:opacity-100">
                                                 <button
                                                     type="button"
                                                     onClick={() =>
@@ -1739,17 +1703,13 @@ export default function LandingPageIndex({
                                             onClick={() =>
                                                 footerBannerBgRef.current?.click()
                                             }
-                                            style={{
-                                                backgroundColor: '#e4ebe2',
-                                                borderColor: '#b8ceb0',
-                                            }}
-                                            className="flex h-32 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed transition-all hover:border-[#265243] hover:bg-[#dce8d7]"
+                                            className="flex h-32 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 transition-all hover:border-[#265243] hover:bg-emerald-50"
                                         >
-                                            <ImageIcon className="h-6 w-6 text-[#265243]" />
-                                            <p className="text-center text-[11px] font-semibold text-[#2e5445]">
+                                            <UploadCloud className="h-6 w-6 text-[#265243]" />
+                                            <p className="text-center text-[11px] font-bold text-slate-700">
                                                 Klik untuk upload gambar banner
                                                 <br />
-                                                <span className="text-[10px] text-[#527365]">
+                                                <span className="text-[10px] text-slate-500">
                                                     (Maks 3MB, 1920×600)
                                                 </span>
                                             </p>
@@ -1780,26 +1740,22 @@ export default function LandingPageIndex({
                                         onChange={setFooterBannerTitle}
                                         placeholder="MAN TANJUNGPINANG"
                                         required
+                                        icon={Building2}
                                     />
                                     <FieldInput
                                         label="Sub-judul / Deskripsi Banner Footer"
                                         value={footerBannerSubtitle}
                                         onChange={setFooterBannerSubtitle}
                                         placeholder="Mewujudkan Generasi Cerdas, Berkarakter, dan Berdaya Saing Global..."
+                                        icon={Sparkles}
                                     />
                                 </div>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="space-y-4 rounded-2xl border p-5 shadow-xs"
-                            >
-                                <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#142921]">
+                            <div className="space-y-4 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                                <h3 className="flex items-center gap-2 text-xs font-bold tracking-wider text-slate-800 uppercase border-b border-slate-100 pb-3">
                                     <Phone className="h-4 w-4 text-[#265243]" />{' '}
                                     Informasi Kontak Footer
                                 </h3>
@@ -1823,6 +1779,7 @@ export default function LandingPageIndex({
                                         onChange={setFooterPhone}
                                         placeholder="(0271) 123456"
                                         type="tel"
+                                        icon={Phone}
                                     />
                                     <FieldInput
                                         label="Email"
@@ -1830,18 +1787,13 @@ export default function LandingPageIndex({
                                         onChange={setFooterEmail}
                                         placeholder="info@sekolah.sch.id"
                                         type="email"
+                                        icon={Mail}
                                     />
                                 </div>
                             </div>
 
-                            <div
-                                style={{
-                                    backgroundColor: '#e8efe5',
-                                    borderColor: '#b8ceb0',
-                                }}
-                                className="space-y-4 rounded-2xl border p-5 shadow-xs"
-                            >
-                                <h3 className="text-sm font-extrabold text-[#142921]">
+                            <div className="space-y-4 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+                                <h3 className="text-xs font-bold tracking-wider text-slate-800 uppercase border-b border-slate-100 pb-3">
                                     Media Sosial
                                 </h3>
                                 <FieldInput
@@ -1849,18 +1801,21 @@ export default function LandingPageIndex({
                                     value={footerFacebook}
                                     onChange={setFooterFacebook}
                                     placeholder="https://facebook.com/sekolah"
+                                    icon={Globe}
                                 />
                                 <FieldInput
                                     label="Instagram URL"
                                     value={footerInstagram}
                                     onChange={setFooterInstagram}
                                     placeholder="https://instagram.com/sekolah"
+                                    icon={Globe}
                                 />
                                 <FieldInput
                                     label="YouTube URL"
                                     value={footerYoutube}
                                     onChange={setFooterYoutube}
                                     placeholder="https://youtube.com/@sekolah"
+                                    icon={Video}
                                 />
                             </div>
                         </div>
@@ -1869,7 +1824,7 @@ export default function LandingPageIndex({
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#265243] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337] disabled:opacity-50"
+                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-gradient-to-r from-[#265243] to-[#1f4337] px-6 py-2.5 text-xs font-bold text-white shadow-md shadow-[#265243]/20 transition-all hover:shadow-lg disabled:opacity-50"
                             >
                                 <Save className="h-4 w-4" />{' '}
                                 {saving
@@ -1881,51 +1836,41 @@ export default function LandingPageIndex({
                 )}
             </div>
 
-            {/* Success / Error Pop-up Modal */}
+            {/* Success / Error Toast Modal */}
             {toastModalMsg && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div
-                        style={{
-                            backgroundColor: '#f7faf5',
-                            borderColor: '#b8ceb0',
-                        }}
-                        className="animate-in fade-in zoom-in w-full max-w-sm overflow-hidden rounded-2xl border shadow-2xl duration-150"
-                    >
-                        <div className="space-y-4 p-6 text-center">
+                    <div className="animate-in fade-in zoom-in w-full max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl duration-150">
+                        <div className="space-y-4 text-center">
                             <div
                                 className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full shadow-xs ${
                                     toastModalMsg.type === 'error'
                                         ? 'bg-rose-100 text-rose-600'
-                                        : 'bg-[#dce8d7] text-[#265243]'
+                                        : 'bg-emerald-100 text-[#265243]'
                                 }`}
                             >
                                 {toastModalMsg.type === 'error' ? (
-                                    <AlertTriangle className="h-8 w-8 text-rose-600" />
+                                    <AlertTriangle className="h-7 w-7 text-rose-600" />
                                 ) : (
-                                    <CheckCircle2 className="h-8 w-8 text-[#265243]" />
+                                    <CheckCircle2 className="h-7 w-7 text-[#265243]" />
                                 )}
                             </div>
                             <div>
                                 <h3
-                                    className={`text-lg font-extrabold ${toastModalMsg.type === 'error' ? 'text-rose-700' : 'text-[#142921]'}`}
+                                    className={`text-base font-bold ${toastModalMsg.type === 'error' ? 'text-rose-700' : 'text-slate-900'}`}
                                 >
                                     {toastModalMsg.title}
                                 </h3>
-                                <p className="mt-1.5 text-xs leading-relaxed font-semibold text-[#2e5445]">
+                                <p className="mt-1.5 text-xs leading-relaxed font-medium text-slate-600">
                                     {toastModalMsg.msg}
                                 </p>
                             </div>
-                            <div className="flex justify-center border-t border-[#b8ceb0]/40 pt-2">
+                            <div className="flex justify-center border-t border-slate-100 pt-3">
                                 <button
                                     type="button"
                                     onClick={() => setToastModalMsg(null)}
-                                    className={`w-full cursor-pointer rounded-xl px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all ${
-                                        toastModalMsg.type === 'error'
-                                            ? 'bg-rose-600 hover:bg-rose-700'
-                                            : 'bg-[#265243] hover:bg-[#1f4337]'
-                                    }`}
+                                    className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#265243] px-6 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337]"
                                 >
-                                    OK, Mengerti
+                                    Tutup
                                 </button>
                             </div>
                         </div>
@@ -1933,29 +1878,23 @@ export default function LandingPageIndex({
                 </div>
             )}
 
-            {/* Custom Confirm Modal */}
+            {/* Confirmation Modal */}
             {confirmModal.isOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div
-                        style={{
-                            backgroundColor: '#f7faf5',
-                            borderColor: '#b8ceb0',
-                        }}
-                        className="animate-in fade-in zoom-in w-full max-w-md overflow-hidden rounded-2xl border shadow-2xl duration-150"
-                    >
-                        <div className="space-y-4 p-6 text-center">
-                            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600">
-                                <Trash2 className="h-6 w-6" />
+                    <div className="animate-in fade-in zoom-in w-full max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl duration-150">
+                        <div className="space-y-4 text-center">
+                            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600 shadow-xs">
+                                <AlertTriangle className="h-6 w-6 text-rose-600" />
                             </div>
                             <div>
-                                <h3 className="text-lg font-extrabold text-[#142921]">
+                                <h3 className="text-base font-bold text-slate-900">
                                     {confirmModal.title}
                                 </h3>
-                                <p className="mt-1 text-xs leading-relaxed font-semibold text-[#2e5445]">
+                                <p className="mt-1 text-xs leading-relaxed font-medium text-slate-600">
                                     {confirmModal.description}
                                 </p>
                             </div>
-                            <div className="flex items-center justify-center gap-3 border-t border-[#b8ceb0]/40 pt-3">
+                            <div className="flex items-center justify-center gap-3 border-t border-slate-100 pt-3">
                                 <button
                                     type="button"
                                     onClick={() =>
@@ -1964,19 +1903,14 @@ export default function LandingPageIndex({
                                             isOpen: false,
                                         }))
                                     }
-                                    style={{
-                                        backgroundColor: '#eef4eb',
-                                        borderColor: '#b8ceb0',
-                                        color: '#265243',
-                                    }}
-                                    className="cursor-pointer rounded-xl border px-5 py-2.5 text-xs font-bold transition-all hover:bg-[#dce8d7]"
+                                    className="cursor-pointer rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-200"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="button"
                                     onClick={confirmModal.onConfirm}
-                                    className="cursor-pointer rounded-xl bg-rose-600 px-5 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-rose-700"
+                                    className="cursor-pointer rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-rose-700"
                                 >
                                     {confirmModal.confirmText}
                                 </button>
@@ -1988,7 +1922,3 @@ export default function LandingPageIndex({
         </>
     );
 }
-
-LandingPageIndex.layout = {
-    breadcrumbs: [{ title: 'CMS Beranda', href: '/admin/landing-page' }],
-};
