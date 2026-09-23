@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { WelcomeSeo } from '@/components/welcome/WelcomeSeo';
 import {
     Award,
     BookOpen,
@@ -734,15 +735,12 @@ export default function Welcome({
 
     return (
         <>
-            <Head title="MAN TANJUNGPINANG - Portal Sekolah">
-                <meta
-                    name="description"
-                    content={`Portal Resmi ${schoolName} - ${schoolTagline}`}
-                />
-                {logoUrl && <link rel="icon" href={logoUrl} />}
-                {logoUrl && <link rel="shortcut icon" href={logoUrl} />}
-                {logoUrl && <link rel="apple-touch-icon" href={logoUrl} />}
-            </Head>
+            <WelcomeSeo
+                settings={settings}
+                activeTab={activeTab}
+                selectedNews={selectedNews}
+                selectedGallery={selectedGallery}
+            />
 
             <div className="flex min-h-screen flex-col justify-between bg-[#f8faf7] font-sans text-[#142921] antialiased selection:bg-[#265243] selection:text-white">
                 {/* ── 1. DYNAMIC NAVBAR (ULTRA-SMOOTH MORPHING WITH SAFE TOP SPACING) ── */}
