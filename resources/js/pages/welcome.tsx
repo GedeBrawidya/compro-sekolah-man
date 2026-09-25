@@ -135,6 +135,10 @@ export default function Welcome({
     }, [bookSearch, bookCategory, bookAvailability]);
 
     const handleTabClick = (tabId: TabType) => {
+        if (tabId === 'books') {
+            window.open('/?tab=books', '_blank');
+            return;
+        }
         if (tabId === 'legalization') {
             const defaultLink =
                 'https://docs.google.com/forms/d/e/1FAIpQLSeQFirrXnNpCuZEPGK4SOIWuBrs4c3sEPJLEoZB9l0LRWbTqw/formResponse';
