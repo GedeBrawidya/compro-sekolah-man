@@ -1168,10 +1168,6 @@ export default function LandingPageIndex({
                                                     <p className="text-xs font-bold text-slate-800">
                                                         Video YouTube Sekolah
                                                     </p>
-                                                    <p className="text-[11px] text-slate-500">
-                                                        Menampilkan player video
-                                                        YouTube profil sekolah
-                                                    </p>
                                                 </div>
                                             </div>
                                             <input
@@ -1204,10 +1200,6 @@ export default function LandingPageIndex({
                                                 <div>
                                                     <p className="text-xs font-bold text-slate-800">
                                                         Foto Media Utama Sekolah
-                                                    </p>
-                                                    <p className="text-[11px] text-slate-500">
-                                                        Menampilkan gambar/foto
-                                                        utama banner sekolah
                                                     </p>
                                                 </div>
                                             </div>
