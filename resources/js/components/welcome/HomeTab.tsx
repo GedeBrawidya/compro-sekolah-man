@@ -71,7 +71,7 @@ export function HomeTab({
     return (
         <>
             {/* ── 2. HERO BANNER SLIDER (FULL WIDTH max-w-[98%] xl:max-w-[96%]) ── */}
-            <div className="relative z-20 mx-auto mt-2 w-full max-w-[98%] px-2 sm:mt-4 sm:px-4 xl:max-w-[96%]">
+            <div data-aos="fade-up" data-aos-duration="1000" className="relative z-20 mx-auto mt-2 w-full max-w-[98%] px-2 sm:mt-4 sm:px-4 xl:max-w-[96%]">
                 <div
                     onTouchStart={handleBannerTouchStart}
                     onTouchEnd={handleBannerTouchEnd}
@@ -222,7 +222,7 @@ export function HomeTab({
             </div>
 
             {/* ── 3. SECTION: KOTAK PINTASAN CEPAT ── */}
-            <div className="relative z-30 mx-auto mt-4 w-full max-w-[98%] px-2 sm:mt-5 sm:px-4 xl:max-w-[96%]">
+            <div data-aos="fade-up" data-aos-delay="100" className="relative z-30 mx-auto mt-4 w-full max-w-[98%] px-2 sm:mt-5 sm:px-4 xl:max-w-[96%]">
                 <div className="overflow-hidden rounded-3xl border border-[#c8dac5] bg-white shadow-sm">
                     <div className="grid grid-cols-2 divide-x divide-y divide-[#c8dac5]/50 lg:grid-cols-4 lg:divide-y-0">
                         {[
@@ -278,13 +278,13 @@ export function HomeTab({
             <main className="mx-auto w-full max-w-7xl flex-1 space-y-12 px-4 pt-6 pb-16 sm:space-y-18 sm:px-6 sm:pt-8 lg:px-8">
                 <div className="space-y-12 sm:space-y-18 lg:space-y-20">
                     {/* SECTION: SAMBUTAN KEPALA SEKOLAH */}
-                    <section className="space-y-10 pb-4 sm:space-y-14 lg:pb-8">
+                    <section data-aos="fade-up" data-aos-duration="900" className="space-y-10 pb-4 sm:space-y-14 lg:pb-8">
                         <div className="relative -mx-2 mt-4 pt-10 sm:-mx-12 sm:mt-10 sm:pt-28 lg:-mx-20 lg:pt-32">
                             <div className="relative flex min-h-[580px] flex-col justify-between space-y-12 rounded-[2.5rem] bg-[#064e3b] p-5 text-white shadow-2xl sm:space-y-20 sm:rounded-[3.5rem] sm:p-14 lg:min-h-[680px] lg:p-20">
                                 {/* MAIN GRID */}
                                 <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
                                     {/* KOLOM KIRI: KATA SAMBUTAN */}
-                                    <div className="relative space-y-8 lg:col-span-7">
+                                    <div data-aos="fade-right" data-aos-delay="150" className="relative space-y-8 lg:col-span-7">
                                         <div className="pointer-events-none absolute -top-10 -left-6 z-0 text-[11rem] leading-none font-black text-[#10b981]/15 select-none">
                                             “
                                         </div>
@@ -329,7 +329,7 @@ export function HomeTab({
                                     </div>
 
                                     {/* KOLOM KANAN: FOTO KEPALA SEKOLAH */}
-                                    <div className="relative z-20 mt-4 flex items-center justify-center pt-4 sm:-mt-36 lg:col-span-5 lg:-mt-52 lg:justify-end lg:pt-0">
+                                    <div data-aos="fade-left" data-aos-delay="200" className="relative z-20 mt-4 flex items-center justify-center pt-4 sm:-mt-36 lg:col-span-5 lg:-mt-52 lg:justify-end lg:pt-0">
                                         <div className="relative z-10 flex h-[380px] w-72 shrink-0 items-center justify-center overflow-hidden rounded-[6rem] bg-[#fef08a] shadow-2xl sm:h-[440px] sm:w-88 lg:h-[500px] lg:w-[400px]">
                                             {settings.principal_photo_url ? (
                                                 <img
@@ -437,7 +437,7 @@ export function HomeTab({
                     </section>
 
                     {/* ── SECTION: GALERI DOKUMENTASI ── */}
-                    <section className="mt-8 space-y-10 pt-3 pb-6 sm:mt-12 sm:pt-5 lg:pb-12">
+                    <section data-aos="fade-up" className="mt-8 space-y-10 pt-3 pb-6 sm:mt-12 sm:pt-5 lg:pb-12">
                         <div className="mx-auto max-w-2xl space-y-2 text-center">
                             <p className="text-xs font-extrabold tracking-widest text-[#527365] uppercase italic sm:text-sm">
                                 Dokumentasi Unggulan
@@ -677,7 +677,7 @@ export function HomeTab({
                     </section>
 
                     {/* ── SECTION: BERITA TERBARU ── */}
-                    <section className="mt-6 space-y-8 px-3 pt-2 sm:-mx-12 sm:mt-10 sm:px-0 sm:pt-4 lg:-mx-20">
+                    <section data-aos="fade-up" className="mt-6 space-y-8 px-3 pt-2 sm:-mx-12 sm:mt-10 sm:px-0 sm:pt-4 lg:-mx-20">
                         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                             <div className="space-y-1">
                                 <p className="text-xs font-bold tracking-widest text-[#527365] uppercase">
@@ -710,6 +710,8 @@ export function HomeTab({
                                         <Link
                                             key={item.id}
                                             href={`/news/${item.slug}`}
+                                            data-aos="fade-up"
+                                            data-aos-delay={idx * 100}
                                             className="group relative flex flex-col justify-between overflow-hidden rounded-[2.25rem] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                                         >
                                             <div className="absolute top-4 left-4 z-10">

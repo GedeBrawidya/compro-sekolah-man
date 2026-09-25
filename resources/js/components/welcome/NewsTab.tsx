@@ -87,7 +87,7 @@ export function NewsTab({
     return (
         <div className="space-y-6">
             {/* HERO HEADER BANNER CARD FOR NEWS */}
-            <div className="relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] p-8 text-white shadow-xl sm:p-12 md:flex-row">
+            <div data-aos="fade-up" className="relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] p-8 text-white shadow-xl sm:p-12 md:flex-row">
                 <div className="relative z-10 max-w-2xl space-y-2">
                     <div className="flex items-center gap-2">
                         <span className="rounded-full bg-[#f59e0b] px-3.5 py-1 text-[10px] font-black tracking-widest text-white uppercase shadow-xs sm:text-[11px]">
@@ -123,6 +123,8 @@ export function NewsTab({
                             <Link
                                 key={item.id}
                                 href={`/news/${item.slug}`}
+                                data-aos="fade-up"
+                                data-aos-delay={idx * 80}
                                 className="group relative flex flex-col justify-between overflow-hidden rounded-[2.25rem] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                             >
                                 <div className="absolute top-4 left-4 z-10">

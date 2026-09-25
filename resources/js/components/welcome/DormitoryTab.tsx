@@ -88,7 +88,7 @@ export function DormitoryTab({
     return (
         <div className="space-y-8 sm:space-y-12">
             {/* HERO HEADER BANNER CARD FOR DORMITORY */}
-            <div className="relative grid min-h-[340px] grid-cols-1 items-stretch overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] text-white shadow-xl lg:grid-cols-12">
+            <div data-aos="fade-up" className="relative grid min-h-[340px] grid-cols-1 items-stretch overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] text-white shadow-xl lg:grid-cols-12">
                 <div className="group relative min-h-[280px] overflow-hidden lg:col-span-4 lg:min-h-full">
                     <img
                         src={
@@ -239,9 +239,11 @@ export function DormitoryTab({
             ) : (
                 <>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {paginatedDorm.map((post) => (
+                        {paginatedDorm.map((post, idx) => (
                             <div
                                 key={post.id}
+                                data-aos="fade-up"
+                                data-aos-delay={idx * 80}
                                 className="group relative flex flex-col justify-between overflow-hidden rounded-[2.25rem] border border-[#c8dac5] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                             >
                                 <div className="absolute top-4 left-4 z-10">

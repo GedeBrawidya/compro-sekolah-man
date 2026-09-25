@@ -23,6 +23,7 @@ export function WelcomeFooter({
 
     return (
         <footer
+            data-aos="fade-up"
             className={`mt-auto border-t border-[#265243] bg-[#142921] pb-8 text-white shadow-2xl ${activeTab === 'books' ? 'pt-12 sm:pt-16' : 'pt-32 sm:pt-36'}`}
         >
             <div className="mx-auto max-w-7xl space-y-12 px-4 sm:px-6 lg:px-8">

@@ -39,7 +39,7 @@ export function FooterBanner({ settings, activeTab }: FooterBannerProps) {
     };
 
     return (
-        <div className="relative z-30 mx-auto mt-16 -mb-20 w-full max-w-6xl px-4 sm:-mb-24">
+        <div data-aos="zoom-in" className="relative z-30 mx-auto mt-16 -mb-20 w-full max-w-6xl px-4 sm:-mb-24">
             <div className="relative flex min-h-[280px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border border-emerald-900/40 bg-[#142921] p-10 text-center text-white shadow-2xl sm:min-h-[340px] sm:p-16">
                 {/* Background Image */}
                 {settings.footer_banner_bg_url ? (

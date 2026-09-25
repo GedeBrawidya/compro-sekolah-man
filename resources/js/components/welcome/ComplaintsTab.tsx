@@ -11,7 +11,7 @@ export function ComplaintsTab({
     handleComplaintSubmit,
 }: ComplaintsTabProps) {
     return (
-        <div className="mx-auto max-w-3xl space-y-6">
+        <div data-aos="fade-up" className="mx-auto max-w-3xl space-y-6">
             <div
                 style={{
                     backgroundColor: '#ffffff',

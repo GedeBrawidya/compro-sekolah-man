@@ -1,4 +1,5 @@
 import { useForm, usePage } from '@inertiajs/react';
+import AOS from 'aos';
 import { CheckCircle2 } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
 
@@ -108,6 +109,19 @@ export default function Welcome({
         subject: '',
         message: '',
     });
+
+    useEffect(() => {
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-out-cubic',
+            offset: 50,
+        });
+    }, []);
+
+    useEffect(() => {
+        AOS.refresh();
+    }, [activeTab]);
 
     useEffect(() => {
         const timer = setTimeout(() => {

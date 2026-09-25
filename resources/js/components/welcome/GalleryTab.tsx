@@ -93,7 +93,7 @@ export function GalleryTab({
     return (
         <div className="space-y-6">
             {/* HERO HEADER BANNER CARD FOR GALLERY */}
-            <div className="relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] p-8 text-white shadow-xl sm:p-12 md:flex-row">
+            <div data-aos="fade-up" className="relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] p-8 text-white shadow-xl sm:p-12 md:flex-row">
                 <div className="relative z-10 max-w-2xl space-y-2">
                     <div className="flex items-center gap-2">
                         <span className="rounded-full bg-[#f59e0b] px-3.5 py-1 text-[10px] font-black tracking-widest text-white uppercase shadow-xs sm:text-[11px]">
@@ -148,9 +148,11 @@ export function GalleryTab({
             ) : (
                 <>
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                        {paginatedGalleries.map((item) => (
+                        {paginatedGalleries.map((item, idx) => (
                             <div
                                 key={item.id}
+                                data-aos="zoom-in"
+                                data-aos-delay={idx * 60}
                                 onClick={() => setSelectedGallery(item)}
                                 style={{
                                     backgroundColor: '#ffffff',

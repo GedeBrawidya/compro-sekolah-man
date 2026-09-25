@@ -120,7 +120,7 @@ export function BooksTab({
     return (
         <div className="space-y-6">
             {/* Header & Controls */}
-            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+            <div data-aos="fade-up" className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                 <div className="space-y-1">
                     <p className="text-xs font-bold tracking-widest text-[#527365] uppercase">
                         Katalog Digital
@@ -392,9 +392,11 @@ export function BooksTab({
             ) : (
                 <>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {paginatedBooks.map((book) => (
+                        {paginatedBooks.map((book, idx) => (
                             <div
                                 key={book.id}
+                                data-aos="fade-up"
+                                data-aos-delay={idx * 60}
                                 className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#c8dac5] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md sm:rounded-3xl"
                             >
                                 <div className="absolute top-3 left-3 z-10">

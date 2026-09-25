@@ -148,7 +148,7 @@ export function ProfileTab({
     })();
 
     return (
-        <div className="animate-in fade-in relative space-y-8 px-3 duration-300 sm:-mx-12 sm:px-0 lg:-mx-20">
+        <div data-aos="fade-up" className="animate-in fade-in relative space-y-8 px-3 duration-300 sm:-mx-12 sm:px-0 lg:-mx-20">
             {/* VIDEO PROFIL HEADER */}
             {(settings.principal_media_type ?? 'video') === 'photo' ? (
                 <div className="relative flex aspect-video max-h-[500px] w-full items-center justify-center overflow-hidden rounded-3xl bg-slate-900 shadow-xl sm:rounded-[2.5rem]">
@@ -246,7 +246,7 @@ export function ProfileTab({
             )}
 
             {/* PINTASAN NAVIGASI PROFIL */}
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-6">
+            <div data-aos="fade-up" data-aos-delay="100" className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-6">
                 {[
                     { id: 'profile', label: 'Profil Sekolah' },
                     { id: 'vision', label: 'Visi & Misi' },
@@ -365,7 +365,7 @@ export function ProfileTab({
                         </div>
 
                         {/* VISI CARD */}
-                        <div className="group relative overflow-hidden rounded-3xl border border-emerald-900/50 bg-[#142921] p-6 text-white shadow-xl sm:p-8">
+                        <div data-aos="zoom-in" className="group relative overflow-hidden rounded-3xl border border-emerald-900/50 bg-[#142921] p-6 text-white shadow-xl sm:p-8">
                             <div className="relative z-10 space-y-4">
                                 <div className="flex items-center gap-3">
                                     <div>
@@ -415,6 +415,8 @@ export function ProfileTab({
                                     return (
                                         <div
                                             key={idx}
+                                            data-aos="fade-up"
+                                            data-aos-delay={idx * 60}
                                             className={`group relative flex min-h-[90px] items-center justify-between gap-4 rounded-2xl border border-[#c8dac5] bg-white p-5 shadow-xs transition-all duration-300 hover:border-[#265243] hover:shadow-md sm:p-6 ${isFullWidth ? 'md:col-span-2' : ''}`}
                                         >
                                             <div className="flex flex-1 items-center">
@@ -540,9 +542,11 @@ export function ProfileTab({
                             {(facilities && facilities.length > 0
                                 ? facilities
                                 : DEFAULT_FACILITIES
-                            ).map((fac) => (
+                            ).map((fac, idx) => (
                                 <div
                                     key={fac.id}
+                                    data-aos="fade-up"
+                                    data-aos-delay={idx * 80}
                                     onClick={() => setSelectedFacility(fac)}
                                     className="group relative flex h-72 cursor-pointer flex-col justify-end overflow-hidden rounded-2xl border border-[#2d5645]/40 bg-[#142921] shadow-lg transition-all duration-500 hover:-translate-y-1.5 hover:border-[#f59e0b]/60 hover:shadow-2xl sm:h-80"
                                 >
@@ -582,7 +586,7 @@ export function ProfileTab({
             </div>
 
             {/* MOTTO SEKOLAH QUOTE BANNER */}
-            <div className="relative space-y-4 overflow-hidden rounded-3xl border border-emerald-900/40 bg-[#142921] p-8 text-center text-white shadow-xl sm:p-12">
+            <div data-aos="zoom-in" className="relative space-y-4 overflow-hidden rounded-3xl border border-emerald-900/40 bg-[#142921] p-8 text-center text-white shadow-xl sm:p-12">
                 <div className="flex justify-center">
                     <span className="inline-block rounded-full bg-[#f59e0b] px-4 py-1.5 text-xs font-black tracking-widest text-white uppercase shadow-md">
                         MOTTO SEKOLAH
