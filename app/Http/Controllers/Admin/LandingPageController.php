@@ -141,6 +141,7 @@ class LandingPageController extends Controller
             'total_teachers' => 'nullable|string|max:50',
             'total_classrooms' => 'nullable|string|max:50',
             'accreditation' => 'nullable|string|max:50',
+            'academic_year' => 'nullable|string|max:50',
 
             'principal_name' => 'nullable|string|max:255',
             'principal_title' => 'nullable|string|max:255',

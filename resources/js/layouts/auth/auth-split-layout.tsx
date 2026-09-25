@@ -78,10 +78,10 @@ export default function AuthSplitLayout({
                             </div>
                             {/* Floating badges */}
                             <div className="absolute -top-4 -right-4 rounded-2xl border border-[#f59e0b]/50 bg-[#f59e0b] px-3.5 py-1.5 text-[11px] font-black text-[#142921] shadow-lg">
-                                ✦ Portal Sekolah
+                                Portal Sekolah
                             </div>
                             <div className="absolute -bottom-3 -left-4 rounded-2xl border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-bold text-white shadow-lg backdrop-blur-md">
-                                📚 Sistem Informasi
+                                Sistem Informasi
                             </div>
                         </div>
 
@@ -96,24 +96,6 @@ export default function AuthSplitLayout({
                             Kelola data sekolah, berita, fasilitas, dan
                             administrasi dalam satu platform terintegrasi.
                         </p>
-                    </div>
-
-                    {/* Bottom stats */}
-                    <div className="flex items-center justify-center gap-8 border-t border-white/10 py-4">
-                        {[
-                            { label: 'Berita', val: '∞' },
-                            { label: 'Fasilitas', val: '✓' },
-                            { label: 'Galeri', val: '✓' },
-                        ].map((item) => (
-                            <div key={item.label} className="text-center">
-                                <div className="text-lg font-black text-[#f59e0b]">
-                                    {item.val}
-                                </div>
-                                <div className="text-[11px] font-bold text-white/50">
-                                    {item.label}
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>

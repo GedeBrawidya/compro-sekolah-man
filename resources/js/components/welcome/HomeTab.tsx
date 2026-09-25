@@ -120,8 +120,14 @@ export function HomeTab({
                     {/* Top Row inside Banner Card: Small Tag */}
                     <div className="relative z-20 flex items-center justify-between">
                         <span className="rounded-full bg-[#0d2a20] px-4 py-1.5 text-xs font-extrabold tracking-wider text-white uppercase shadow-xs">
-                            TAHUN AJARAN {new Date().getFullYear()} -{' '}
-                            {new Date().getFullYear() + 1}
+                            {settings.academic_year
+                                ? settings.academic_year
+                                      .trim()
+                                      .toUpperCase()
+                                      .startsWith('TAHUN AJARAN')
+                                    ? settings.academic_year
+                                    : `TAHUN AJARAN ${settings.academic_year}`
+                                : `TAHUN AJARAN ${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`}
                         </span>
                         <span className="hidden text-xs font-bold tracking-widest text-white/70 uppercase sm:inline-block">
                             {schoolName}

@@ -3,6 +3,7 @@ import {
     AlertTriangle,
     Award,
     Building2,
+    Calendar,
     CheckCircle2,
     ChevronDown,
     ChevronUp,
@@ -541,6 +542,9 @@ export default function LandingPageIndex({
     const [accreditation, setAccreditation] = useState(
         settings.accreditation ?? '',
     );
+    const [academicYear, setAcademicYear] = useState(
+        settings.academic_year ?? '',
+    );
 
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [logoPreview, setLogoPreview] = useState<string | null>(
@@ -663,6 +667,7 @@ export default function LandingPageIndex({
             total_teachers: totalTeachers,
             total_classrooms: totalClassrooms,
             accreditation: accreditation,
+            academic_year: academicYear,
             principal_name: principalName,
             principal_title: principalTitle,
             principal_bio: principalBio,
@@ -1072,6 +1077,15 @@ export default function LandingPageIndex({
                                             />
                                         </div>
                                     </div>
+
+                                    <FieldInput
+                                        label="Tahun Ajaran"
+                                        value={academicYear}
+                                        onChange={setAcademicYear}
+                                        placeholder="2026/2027 atau 2026 - 2027"
+                                        icon={Calendar}
+                                        hint="Tahun Ajaran aktif yang ditampilkan pada banner slide utama di beranda."
+                                    />
 
                                     <FieldInput
                                         label="Tagline / Moto Sekolah"
