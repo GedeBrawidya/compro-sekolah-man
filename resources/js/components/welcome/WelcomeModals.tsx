@@ -45,7 +45,7 @@ export function WelcomeModals({
                                 <img
                                     src={selectedNews.thumbnail}
                                     alt={selectedNews.title}
-                                    className="h-64 w-full rounded-2xl border border-[#b8ceb0] object-cover"
+                                    className="aspect-video w-full rounded-2xl border border-[#b8ceb0] object-cover"
                                 />
                             )}
                             <div className="flex items-center gap-3 text-xs font-bold text-[#527365]">

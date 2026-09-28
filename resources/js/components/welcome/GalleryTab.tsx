@@ -164,10 +164,10 @@ export function GalleryTab({
                                     <img
                                         src={item.display_image}
                                         alt={item.title}
-                                        className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                     />
                                 ) : (
-                                    <div className="flex h-48 w-full items-center justify-center bg-[#dce8d7] text-[#265243]">
+                                    <div className="flex aspect-video w-full items-center justify-center bg-[#dce8d7] text-[#265243]">
                                         <ImageIcon className="h-10 w-10" />
                                     </div>
                                 )}

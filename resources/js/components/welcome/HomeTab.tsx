@@ -285,7 +285,7 @@ export function HomeTab({
                 <div className="space-y-12 sm:space-y-18 lg:space-y-20">
                     {/* SECTION: SAMBUTAN KEPALA SEKOLAH */}
                     <section data-aos="fade-up" data-aos-duration="900" className="space-y-10 pb-4 sm:space-y-14 lg:pb-8">
-                        <div className="relative -mx-2 mt-4 pt-10 sm:-mx-12 sm:mt-10 sm:pt-28 lg:-mx-20 lg:pt-32">
+                        <div className="relative -mx-2 mt-4 overflow-x-hidden pt-10 sm:-mx-12 sm:mt-10 sm:pt-28 lg:-mx-20 lg:pt-32">
                             <div className="relative flex min-h-[580px] flex-col justify-between space-y-12 rounded-[2.5rem] bg-[#064e3b] p-5 text-white shadow-2xl sm:space-y-20 sm:rounded-[3.5rem] sm:p-14 lg:min-h-[680px] lg:p-20">
                                 {/* MAIN GRID */}
                                 <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
@@ -335,7 +335,7 @@ export function HomeTab({
                                     </div>
 
                                     {/* KOLOM KANAN: FOTO KEPALA SEKOLAH */}
-                                    <div data-aos="fade-left" data-aos-delay="200" className="relative z-20 mt-4 flex items-center justify-center pt-4 sm:-mt-36 lg:col-span-5 lg:-mt-52 lg:justify-end lg:pt-0">
+                                    <div data-aos="fade-left" data-aos-delay="200" className="relative z-20 mt-4 flex items-center justify-center pt-4 lg:col-span-5 lg:-mt-52 lg:justify-end lg:pt-0">
                                         <div className="relative z-10 flex h-[380px] w-72 shrink-0 items-center justify-center overflow-hidden rounded-[6rem] bg-[#fef08a] shadow-2xl sm:h-[440px] sm:w-88 lg:h-[500px] lg:w-[400px]">
                                             {settings.principal_photo_url ? (
                                                 <img
@@ -354,7 +354,7 @@ export function HomeTab({
                                         </div>
 
                                         {/* Floating Overlay Card */}
-                                        <div className="absolute -bottom-4 -left-2 z-30 max-w-[220px] transform space-y-1.5 rounded-2xl border border-white/15 bg-[#0b2b22] p-4 shadow-2xl transition-all hover:scale-105 sm:-bottom-6 sm:left-2 sm:max-w-[250px] sm:p-5 lg:-bottom-8 lg:-left-8">
+                                        <div className="absolute -bottom-4 left-2 z-30 max-w-[180px] transform space-y-1.5 rounded-2xl border border-white/15 bg-[#0b2b22] p-3 shadow-2xl transition-all hover:scale-105 sm:-bottom-6 sm:left-2 sm:max-w-[250px] sm:p-5 lg:-bottom-8 lg:-left-8">
                                             <div className="flex items-center gap-2">
                                                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#10b981]/40 bg-[#059669]/40 text-[#10b981]">
                                                     <GraduationCap className="h-4 w-4" />
@@ -454,7 +454,7 @@ export function HomeTab({
                         </div>
 
                         {featuredGalleries.length > 0 ? (
-                            <div className="space-y-6 px-3 sm:-mx-12 sm:px-0 lg:-mx-20">
+                            <div className="space-y-6 overflow-x-hidden px-3 sm:-mx-12 sm:px-0 lg:-mx-20">
                                 {/* HERO SHOWCASE CARD */}
                                 <div
                                     onClick={() =>
@@ -683,7 +683,7 @@ export function HomeTab({
                     </section>
 
                     {/* ── SECTION: BERITA TERBARU ── */}
-                    <section data-aos="fade-up" className="mt-6 space-y-8 px-3 pt-2 sm:-mx-12 sm:mt-10 sm:px-0 sm:pt-4 lg:-mx-20">
+                    <section data-aos="fade-up" className="mt-6 space-y-8 overflow-x-hidden px-3 pt-2 sm:-mx-12 sm:mt-10 sm:px-0 sm:pt-4 lg:-mx-20">
                         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                             <div className="space-y-1">
                                 <p className="text-xs font-bold tracking-widest text-[#527365] uppercase">

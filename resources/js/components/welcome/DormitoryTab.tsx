@@ -89,7 +89,7 @@ export function DormitoryTab({
         <div className="space-y-8 sm:space-y-12">
             {/* HERO HEADER BANNER CARD FOR DORMITORY */}
             <div data-aos="fade-up" className="relative grid min-h-[340px] grid-cols-1 items-stretch overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] text-white shadow-xl lg:grid-cols-12">
-                <div className="group relative min-h-[280px] overflow-hidden lg:col-span-4 lg:min-h-full">
+                <div className="group relative min-h-[220px] overflow-hidden lg:col-span-4 lg:min-h-full">
                     <img
                         src={
                             settings.dormitory_pengasuh_photo_url ||
@@ -137,7 +137,7 @@ export function DormitoryTab({
                         <p className="mb-2.5 text-[11px] font-bold tracking-wider text-amber-300 uppercase">
                             Pintasan Kontak &amp; Media Sosial Pengurus:
                         </p>
-                        <div className="flex flex-wrap items-center gap-2.5">
+                        <div className="flex flex-wrap items-center gap-2">
                             <a
                                 href={
                                     settings.dormitory_wa_putra ||

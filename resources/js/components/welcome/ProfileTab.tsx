@@ -148,7 +148,7 @@ export function ProfileTab({
     })();
 
     return (
-        <div data-aos="fade-up" className="animate-in fade-in relative space-y-8 px-3 duration-300 sm:-mx-12 sm:px-0 lg:-mx-20">
+        <div data-aos="fade-up" className="animate-in fade-in relative space-y-8 overflow-x-hidden px-3 duration-300 sm:-mx-12 sm:px-0 lg:-mx-20">
             {/* VIDEO PROFIL HEADER */}
             {(settings.principal_media_type ?? 'video') === 'photo' ? (
                 <div className="relative flex aspect-video max-h-[500px] w-full items-center justify-center overflow-hidden rounded-3xl bg-slate-900 shadow-xl sm:rounded-[2.5rem]">

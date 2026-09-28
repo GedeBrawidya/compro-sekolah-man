@@ -247,7 +247,7 @@ export function WelcomeFooter({
                 </div>
 
                 {/* Bottom Copyright Bar */}
-                <div className="border-t border-[#265243] pt-6 text-center text-xs font-medium text-white/70 sm:text-left">
+                <div className="border-t border-[#265243] pt-6 text-center text-xs font-medium text-white/70">
                     <p>
                         {settings.footer_copyright ||
                             `© Copyright ${new Date().getFullYear()} ${schoolName}. All rights reserved.`}
