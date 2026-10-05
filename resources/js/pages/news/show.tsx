@@ -10,7 +10,6 @@ import {
     Check,
     Eye,
     Globe,
-    LogIn,
     MessageSquare,
     Newspaper,
     Pin,

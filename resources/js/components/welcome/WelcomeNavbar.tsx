@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Building2, ChevronDown, LogIn, Menu, X } from 'lucide-react';
+import { Building2, ChevronDown, Menu, X } from 'lucide-react';
 import { ProfileSubTabType, TabType } from './types';
 
 interface WelcomeNavbarProps {
@@ -71,10 +71,16 @@ export function WelcomeNavbar({
                           : 'max-w-full rounded-none border-b border-[#e2ebd9] bg-white px-4 py-3.5 shadow-none sm:px-8 sm:py-4'
                 }`}
             >
-                <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between">
-                    {/* Brand Logo & Name */}
+                <div
+                    className={`relative mx-auto flex w-full items-center justify-between ${
+                        isScrolled
+                            ? 'max-w-7xl px-0'
+                            : 'max-w-[98%] px-2 sm:px-4 xl:max-w-[96%]'
+                    }`}
+                >
+                    {/* Brand Logo & Name (Far Left - Aligned with banner left edge) */}
                     <div
-                        className={`mr-4 flex shrink-0 origin-left cursor-pointer items-center gap-3 lg:mr-8 ${
+                        className={`flex shrink-0 origin-left cursor-pointer items-center gap-2.5 sm:gap-3 ${
                             isScrolled ? 'scale-[0.97]' : 'scale-100'
                         }`}
                         style={{
@@ -87,25 +93,25 @@ export function WelcomeNavbar({
                             <img
                                 src={settings.school_logo_url}
                                 alt="Logo Sekolah"
-                                className="h-10 w-10 object-contain"
+                                className="h-9 w-9 object-contain sm:h-10 sm:w-10"
                             />
                         ) : (
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#265243] text-lg font-black text-white shadow-sm">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#265243] text-base font-black text-white shadow-sm sm:h-10 sm:w-10 sm:text-lg">
                                 S
                             </div>
                         )}
-                        <div>
-                            <h1 className="text-xs leading-tight font-extrabold tracking-tight text-[#142921] sm:text-sm">
+                        <div className="flex flex-col min-w-0">
+                            <h1 className="truncate text-xs leading-tight font-extrabold tracking-tight text-[#142921] sm:text-sm">
                                 {schoolName}
                             </h1>
-                            <p className="text-[9px] font-bold text-[#527365] sm:text-[10px]">
+                            <p className="truncate text-[9px] font-bold text-[#527365] sm:text-[10px]">
                                 Portal Resmi Sekolah
                             </p>
                         </div>
                     </div>
 
-                    {/* Nav Links (Desktop) */}
-                    <nav className="hidden items-center gap-1 lg:flex xl:gap-2">
+                    {/* Nav Links (Desktop - Comfortably spaced out to the far right, aligned with banner right edge) */}
+                    <nav className="hidden flex-1 items-center justify-end gap-1.5 lg:flex xl:gap-2.5">
                         <button
                             onClick={() => handleTabClick('home')}
                             style={
@@ -116,7 +122,7 @@ export function WelcomeNavbar({
                                       }
                                     : { color: '#142921' }
                             }
-                            className={`rounded-full px-3.5 py-2 text-xs font-extrabold whitespace-nowrap transition-all duration-300 ${
+                            className={`rounded-full px-3.5 py-2 text-xs font-extrabold whitespace-nowrap transition-all duration-300 xl:px-4 xl:py-2 ${
                                 activeTab === 'home'
                                     ? 'scale-[1.02] shadow-xs'
                                     : 'hover:bg-[#e2ebd9]'
@@ -144,7 +150,7 @@ export function WelcomeNavbar({
                                           }
                                         : { color: '#142921' }
                                 }
-                                className={`flex cursor-pointer items-center gap-1 rounded-full px-3.5 py-2 text-xs font-extrabold whitespace-nowrap transition-all duration-300 ${
+                                className={`flex cursor-pointer items-center gap-1 rounded-full px-3.5 py-2 text-xs font-extrabold whitespace-nowrap transition-all duration-300 xl:px-4 xl:py-2 ${
                                     activeTab === 'profile' ||
                                     activeTab === 'vision'
                                         ? 'scale-[1.02] shadow-xs'
@@ -256,7 +262,7 @@ export function WelcomeNavbar({
                                           }
                                         : { color: '#142921' }
                                 }
-                                className={`rounded-full px-3.5 py-2 text-xs font-extrabold whitespace-nowrap transition-all duration-300 ${
+                                className={`rounded-full px-3.5 py-2 text-xs font-extrabold whitespace-nowrap transition-all duration-300 xl:px-4 xl:py-2 ${
                                     activeTab === tab.id
                                         ? 'scale-[1.02] shadow-xs'
                                         : 'hover:bg-[#e2ebd9]'
@@ -265,11 +271,9 @@ export function WelcomeNavbar({
                                 {tab.label}
                             </button>
                         ))}
-                    </nav>
 
-                    {/* Admin Login Button (Desktop) */}
-                    <div className="hidden shrink-0 items-center gap-2 lg:flex">
-                        {auth?.user ? (
+                        {/* Admin Dashboard Button (Desktop) */}
+                        {auth?.user && (
                             <Link
                                 href="/admin/dashboard"
                                 style={{
@@ -281,41 +285,29 @@ export function WelcomeNavbar({
                                 <Building2 className="h-3.5 w-3.5 text-white" />{' '}
                                 Admin
                             </Link>
-                        ) : (
-                            <Link
-                                href="/login"
-                                style={{
-                                    backgroundColor: '#265243',
-                                    color: '#ffffff',
-                                }}
-                                className="inline-flex items-center gap-2 rounded-full px-4.5 py-2 text-xs font-extrabold shadow-sm transition-all hover:scale-105 hover:bg-[#1a3d31]"
-                            >
-                                <LogIn className="h-3.5 w-3.5 text-white" />{' '}
-                                Login
-                            </Link>
                         )}
-                    </div>
+                    </nav>
 
-                    {/* Mobile Hamburger Garis 3 Button (Pojok Kanan Header) */}
+                    {/* Mobile Hamburger Button */}
                     <button
                         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
                         aria-label="Toggle Navigation Menu"
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c8dac5] text-[#142921] shadow-md transition-all lg:hidden ${
+                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#c8dac5] text-[#142921] shadow-md transition-all sm:h-10 sm:w-10 lg:hidden ${
                             isMobileMenuOpen
                                 ? 'bg-white text-[#265243] ring-2 ring-[#265243]/20 hover:bg-[#265243] hover:text-white'
                                 : 'bg-[#f4f8f3] hover:bg-[#265243] hover:text-white'
                         }`}
                     >
                         {isMobileMenuOpen ? (
-                            <X className="h-5 w-5" />
+                            <X className="h-4 w-4 sm:h-5 sm:w-5" />
                         ) : (
-                            <Menu className="h-5 w-5" />
+                            <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
                         )}
                     </button>
 
                     {/* Mobile Listdown Dropdown Menu Panel */}
                     {isMobileMenuOpen && (
-                        <div className="animate-in fade-in slide-in-from-top-3 absolute top-full right-0 left-0 z-50 mt-2 space-y-2 rounded-3xl border border-[#c8dac5] bg-white/98 p-4 shadow-2xl backdrop-blur-xl duration-300 lg:hidden">
+                        <div className="animate-in fade-in slide-in-from-top-3 absolute top-full right-0 left-0 z-50 mt-2 max-h-[calc(80vh-3rem)] overflow-y-auto space-y-1.5 rounded-3xl border border-[#c8dac5] bg-white/98 p-3.5 shadow-2xl backdrop-blur-xl duration-300 lg:hidden">
                             <div className="space-y-1">
                                 {/* Beranda */}
                                 <button
@@ -351,14 +343,14 @@ export function WelcomeNavbar({
                                     </button>
 
                                     {isMobileProfileOpen && (
-                                        <div className="animate-in fade-in space-y-1.5 py-1 pl-4 duration-200">
+                                        <div className="animate-in fade-in space-y-1 py-1 pl-3 duration-200">
                                             <button
                                                 onClick={() => {
                                                     handleTabClick('profile');
                                                     setProfileSubTab('profile');
                                                     setIsMobileMenuOpen(false);
                                                 }}
-                                                className={`flex w-full items-center gap-2.5 rounded-xl px-4 py-2 text-left text-xs font-extrabold transition-all ${
+                                                className={`flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2 text-left text-xs font-extrabold transition-all ${
                                                     activeTab === 'profile' &&
                                                     profileSubTab === 'profile'
                                                         ? 'bg-[#265243] text-white shadow-2xs'
@@ -376,7 +368,7 @@ export function WelcomeNavbar({
                                                     setProfileSubTab('vision');
                                                     setIsMobileMenuOpen(false);
                                                 }}
-                                                className={`flex w-full items-center gap-2.5 rounded-xl px-4 py-2 text-left text-xs font-extrabold transition-all ${
+                                                className={`flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2 text-left text-xs font-extrabold transition-all ${
                                                     activeTab === 'profile' &&
                                                     profileSubTab === 'vision'
                                                         ? 'bg-[#265243] text-white shadow-2xs'
@@ -394,7 +386,7 @@ export function WelcomeNavbar({
                                                     setProfileSubTab('history');
                                                     setIsMobileMenuOpen(false);
                                                 }}
-                                                className={`flex w-full items-center gap-2.5 rounded-xl px-4 py-2 text-left text-xs font-extrabold transition-all ${
+                                                className={`flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2 text-left text-xs font-extrabold transition-all ${
                                                     activeTab === 'profile' &&
                                                     profileSubTab === 'history'
                                                         ? 'bg-[#265243] text-white shadow-2xs'
@@ -414,7 +406,7 @@ export function WelcomeNavbar({
                                                     );
                                                     setIsMobileMenuOpen(false);
                                                 }}
-                                                className={`flex w-full items-center gap-2.5 rounded-xl px-4 py-2 text-left text-xs font-extrabold transition-all ${
+                                                className={`flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2 text-left text-xs font-extrabold transition-all ${
                                                     activeTab === 'profile' &&
                                                     profileSubTab ===
                                                         'facilities'
@@ -473,8 +465,8 @@ export function WelcomeNavbar({
                                 ))}
                             </div>
 
-                            <div className="border-t border-[#c8dac5] pt-2">
-                                {auth?.user ? (
+                            {auth?.user && (
+                                <div className="border-t border-[#c8dac5] pt-2">
                                     <Link
                                         href="/admin/dashboard"
                                         onClick={() =>
@@ -485,19 +477,8 @@ export function WelcomeNavbar({
                                         <Building2 className="h-4 w-4 text-white" />{' '}
                                         Dashboard Admin
                                     </Link>
-                                ) : (
-                                    <Link
-                                        href="/login"
-                                        onClick={() =>
-                                            setIsMobileMenuOpen(false)
-                                        }
-                                        className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#265243] px-4 py-2.5 text-xs font-black text-white shadow-sm transition-all hover:bg-[#1a3d31]"
-                                    >
-                                        <LogIn className="h-4 w-4 text-white" />{' '}
-                                        Login Admin
-                                    </Link>
-                                )}
-                            </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
