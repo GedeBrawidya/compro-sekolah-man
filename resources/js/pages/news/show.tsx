@@ -146,10 +146,10 @@ export default function NewsShow({
                         style={{
                             transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
                         }}
-                        className={`pointer-events-auto flex items-center justify-between border backdrop-blur-xl ${
+                        className={`pointer-events-auto flex items-center justify-between backdrop-blur-xl ${
                             isScrolled
-                                ? 'w-full max-w-6xl rounded-full border-[#c8dac5] bg-white/90 px-6 py-2.5 shadow-2xl'
-                                : 'w-full max-w-full rounded-none border-b border-[#c8dac5] bg-[#f4f8f3]/95 px-4 py-3.5 shadow-xs sm:px-8'
+                                ? 'w-full max-w-6xl rounded-full border-none bg-white/90 px-6 py-2.5 shadow-2xl'
+                                : 'w-full max-w-full rounded-none border-b border-slate-200/50 bg-[#f4f8f3]/95 px-4 py-3.5 shadow-xs sm:px-8'
                         }`}
                     >
                         <div

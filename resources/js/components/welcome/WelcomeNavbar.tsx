@@ -52,12 +52,12 @@ export function WelcomeNavbar({
                 style={{
                     transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
-                className={`pointer-events-auto flex w-full items-center justify-between border backdrop-blur-xl ${
+                className={`pointer-events-auto flex w-full items-center justify-between backdrop-blur-xl ${
                     isMobileMenuOpen
-                        ? 'max-w-7xl rounded-2xl border-[#c8dac5] bg-white/98 px-4 py-3 shadow-xl sm:px-8'
+                        ? 'max-w-7xl rounded-2xl border border-slate-200/60 bg-white/98 px-4 py-3 shadow-xl sm:px-8'
                         : isScrolled
-                          ? 'max-w-7xl rounded-2xl border-[#c8dac5] bg-white/90 px-4 py-2.5 shadow-xl shadow-[#142921]/8 sm:rounded-full sm:px-6 sm:py-3'
-                          : 'max-w-full rounded-none border-b border-[#e2ebd9] bg-white px-4 py-3.5 shadow-none sm:px-8 sm:py-4'
+                          ? 'max-w-7xl rounded-2xl border-none bg-white/90 px-4 py-2.5 shadow-xl shadow-[#142921]/10 sm:rounded-full sm:px-6 sm:py-3'
+                          : 'max-w-full rounded-none border-b border-slate-200/50 bg-white px-4 py-3.5 shadow-none sm:px-8 sm:py-4'
                 }`}
             >
                 <div

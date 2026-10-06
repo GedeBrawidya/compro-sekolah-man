@@ -295,7 +295,7 @@ export default function Welcome({
                 selectedGallery={selectedGallery}
             />
 
-            <div className="flex min-h-screen flex-col justify-between bg-[#f8faf7] font-sans text-[#142921] antialiased selection:bg-[#265243] selection:text-white">
+            <div className="flex min-h-screen flex-col justify-between overflow-x-clip bg-[#f8faf7] font-sans text-[#142921] antialiased selection:bg-[#265243] selection:text-white">
                 <WelcomeNavbar
                     settings={settings}
                     auth={auth}
