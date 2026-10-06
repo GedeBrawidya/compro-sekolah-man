@@ -88,10 +88,7 @@ export function DormitoryTab({
     return (
         <div className="space-y-8 sm:space-y-12">
             {/* HERO HEADER BANNER CARD FOR DORMITORY */}
-            <div data-aos="fade-up" className="relative grid min-h-[340px] grid-cols-1 items-stretch overflow-hidden rounded-3xl border border-emerald-800/30 bg-gradient-to-br from-[#142921] via-[#1b3a2e] to-[#0f211a] text-white shadow-2xl lg:grid-cols-12 lg:rounded-[2.5rem]">
-                {/* Ambient Soft Glow Background Elements */}
-                <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl"></div>
-                <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl"></div>
+            <div data-aos="fade-up" className="relative grid min-h-[340px] grid-cols-1 items-stretch overflow-hidden rounded-3xl border-none bg-[#142921] text-white shadow-2xl lg:grid-cols-12 lg:rounded-[2.5rem]">
 
                 <div className="group relative min-h-[260px] overflow-hidden lg:col-span-5 lg:min-h-full">
                     <img

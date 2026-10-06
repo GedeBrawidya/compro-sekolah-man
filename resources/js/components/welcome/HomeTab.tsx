@@ -75,7 +75,7 @@ export function HomeTab({
                 <div
                     onTouchStart={handleBannerTouchStart}
                     onTouchEnd={handleBannerTouchEnd}
-                    className="relative flex min-h-[620px] flex-col justify-between overflow-hidden rounded-[2rem] border border-emerald-900/30 bg-[#142921] p-6 text-white shadow-2xl sm:min-h-[720px] sm:rounded-[2.5rem] sm:p-12 lg:min-h-[800px] lg:p-14"
+                    className="relative flex min-h-[620px] flex-col justify-between overflow-hidden rounded-[2rem] border-none bg-[#142921] p-6 text-white shadow-2xl sm:min-h-[720px] sm:rounded-[2.5rem] sm:p-12 lg:min-h-[800px] lg:p-14"
                 >
                     {/* Background Images */}
                     {banners.length > 0 ? (

@@ -348,7 +348,7 @@ export default function NewsShow({
                                 </div>
 
                                 {/* Action Banner Card inside Sidebar */}
-                                <div className="space-y-4 rounded-3xl border border-emerald-900/40 bg-[#142921] p-6 text-white shadow-lg">
+                                <div className="space-y-4 rounded-3xl border-none bg-[#142921] p-6 text-white shadow-lg">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/15 font-bold text-emerald-300">
                                         <Globe className="h-5 w-5 text-white" />
                                     </div>
