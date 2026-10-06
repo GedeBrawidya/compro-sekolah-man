@@ -241,14 +241,22 @@ export default function Welcome({
     };
 
     useEffect(() => {
+        let ticking = false;
         const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > 100) {
-                setIsScrolled(true);
-            } else if (currentScrollY < 40) {
-                setIsScrolled(false);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    if (currentScrollY > 40) {
+                        setIsScrolled(true);
+                    } else if (currentScrollY < 15) {
+                        setIsScrolled(false);
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         };
+        handleScroll();
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);

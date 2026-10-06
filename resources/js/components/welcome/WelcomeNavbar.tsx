@@ -42,8 +42,7 @@ export function WelcomeNavbar({
     return (
         <div
             style={{
-                transition: 'padding 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-                willChange: 'padding',
+                transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
             className={`pointer-events-none sticky top-0 z-50 flex w-full justify-center ${
                 isScrolled ? 'px-3 pt-2 sm:px-6 sm:pt-3' : 'px-0 pt-0'
@@ -51,27 +50,20 @@ export function WelcomeNavbar({
         >
             <header
                 style={{
-                    transition:
-                        'max-width 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                        'border-radius 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                        'padding 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                        'background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                        'border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                        'box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                        'backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                        'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-                    willChange:
-                        'max-width, border-radius, padding, box-shadow, background-color, transform',
+                    transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
                 className={`pointer-events-auto flex w-full items-center justify-between border backdrop-blur-xl ${
                     isMobileMenuOpen
                         ? 'max-w-7xl rounded-2xl border-[#c8dac5] bg-white/98 px-4 py-3 shadow-xl sm:px-8'
                         : isScrolled
-                          ? 'max-w-7xl rounded-2xl border-[#c8dac5] bg-white/90 px-4 py-2.5 shadow-lg shadow-[#142921]/5 sm:rounded-full sm:px-6 sm:py-3'
+                          ? 'max-w-7xl rounded-2xl border-[#c8dac5] bg-white/90 px-4 py-2.5 shadow-xl shadow-[#142921]/8 sm:rounded-full sm:px-6 sm:py-3'
                           : 'max-w-full rounded-none border-b border-[#e2ebd9] bg-white px-4 py-3.5 shadow-none sm:px-8 sm:py-4'
                 }`}
             >
                 <div
+                    style={{
+                        transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
                     className={`relative mx-auto flex w-full items-center justify-between ${
                         isScrolled
                             ? 'max-w-7xl px-0'
@@ -80,13 +72,9 @@ export function WelcomeNavbar({
                 >
                     {/* Brand Logo & Name (Far Left - Aligned with banner left edge) */}
                     <div
-                        className={`flex shrink-0 origin-left cursor-pointer items-center gap-2.5 sm:gap-3 ${
+                        className={`flex shrink-0 origin-left cursor-pointer items-center gap-2.5 sm:gap-3 transition-transform duration-700 ${
                             isScrolled ? 'scale-[0.97]' : 'scale-100'
                         }`}
-                        style={{
-                            transition:
-                                'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-                        }}
                         onClick={() => handleTabClick('home')}
                     >
                         {settings.school_logo_url ? (

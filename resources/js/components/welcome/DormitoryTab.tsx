@@ -88,8 +88,12 @@ export function DormitoryTab({
     return (
         <div className="space-y-8 sm:space-y-12">
             {/* HERO HEADER BANNER CARD FOR DORMITORY */}
-            <div data-aos="fade-up" className="relative grid min-h-[340px] grid-cols-1 items-stretch overflow-hidden rounded-[2.5rem] border border-emerald-900/30 bg-[#142921] text-white shadow-xl lg:grid-cols-12">
-                <div className="group relative min-h-[220px] overflow-hidden lg:col-span-4 lg:min-h-full">
+            <div data-aos="fade-up" className="relative grid min-h-[340px] grid-cols-1 items-stretch overflow-hidden rounded-3xl border border-emerald-800/30 bg-gradient-to-br from-[#142921] via-[#1b3a2e] to-[#0f211a] text-white shadow-2xl lg:grid-cols-12 lg:rounded-[2.5rem]">
+                {/* Ambient Soft Glow Background Elements */}
+                <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl"></div>
+                <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl"></div>
+
+                <div className="group relative min-h-[260px] overflow-hidden lg:col-span-5 lg:min-h-full">
                     <img
                         src={
                             settings.dormitory_pengasuh_photo_url ||
@@ -101,43 +105,44 @@ export function DormitoryTab({
                         }
                         className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 flex flex-col justify-end bg-black/60 p-5 text-white sm:p-6">
-                        <span className="mb-1.5 inline-block self-start rounded-full border border-amber-400/20 bg-black/50 px-3 py-1 text-[10px] font-black tracking-wider text-amber-300 uppercase backdrop-blur-xs sm:text-[11px]">
+                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-[#0d1e18] via-[#0d1e18]/60 to-transparent p-6 text-white sm:p-8">
+                        <span className="mb-2 inline-flex self-start items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[11px] font-bold tracking-wider text-amber-300 uppercase backdrop-blur-md">
                             Pengasuh &amp; Pengurus Asrama
                         </span>
-                        <h4 className="text-base leading-snug font-black text-white drop-shadow-md sm:text-lg">
+                        <h4 className="text-lg font-black tracking-tight text-white drop-shadow-sm sm:text-xl">
                             {settings.dormitory_pengasuh_name ||
                                 'Ustadz & Ustadzah Pengasuh'}
                         </h4>
-                        <p className="text-xs font-medium text-emerald-200">
+                        <p className="text-xs font-medium text-emerald-200/90">
                             {settings.dormitory_pengasuh_title ||
                                 'Tim Pembina Karakter & Tahfidz MAN'}
                         </p>
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-between space-y-6 p-6 sm:p-10 lg:col-span-8">
-                    <div className="space-y-3">
+                <div className="relative z-10 flex flex-col justify-between space-y-6 p-6 sm:p-8 lg:col-span-7 lg:p-10">
+                    <div className="space-y-4">
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="rounded-full bg-[#f59e0b] px-3.5 py-1 text-[10px] font-black tracking-widest text-white uppercase shadow-xs sm:text-[11px]">
-                                Ma'had &amp; Asrama Modern
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-extrabold tracking-wider text-emerald-300 uppercase backdrop-blur-md">
+                                <Building2 className="h-3.5 w-3.5 text-emerald-400" />
+                                <span>Ma'had &amp; Asrama Modern</span>
                             </span>
                         </div>
-                        <h3 className="font-sans text-2xl leading-tight font-black tracking-tight text-white sm:text-4xl">
+                        <h3 className="font-sans text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl lg:text-4xl">
                             {settings.dormitory_title ||
                                 'Lingkungan Hunian Islami, Disiplin, & Berprestasi'}
                         </h3>
-                        <p className="text-xs leading-relaxed font-medium text-emerald-100/90 sm:text-sm">
+                        <p className="text-xs leading-relaxed font-normal text-emerald-100/85 sm:text-sm">
                             {settings.dormitory_description ||
                                 "Asrama Ma'had MAN dirancang untuk membentuk karakter santri yang mandiri, berilmu, dan berakhlaqul karimah. Dilengkapi dengan program Tahfidzul Qur'an, kajian kitab kuning, bimbingan akademik intensif, serta pembiasaan kedisiplinan hidup sehari-hari di bawah pengawasan pengasuh berpengalaman."}
                         </p>
                     </div>
 
-                    <div className="border-t border-emerald-800/40 pt-3">
-                        <p className="mb-2.5 text-[11px] font-bold tracking-wider text-amber-300 uppercase">
+                    <div className="space-y-3 border-t border-emerald-700/30 pt-4">
+                        <p className="text-xs font-semibold tracking-wider text-amber-300/90 uppercase">
                             Pintasan Kontak &amp; Media Sosial Pengurus:
                         </p>
-                        <div className="flex flex-wrap items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2.5">
                             <a
                                 href={
                                     settings.dormitory_wa_putra ||
@@ -145,10 +150,10 @@ export function DormitoryTab({
                                 }
                                 target="_blank"
                                 rel="noreferrer"
-                                className="group inline-flex items-center gap-2 rounded-xl bg-emerald-600/30 px-4 py-2.5 text-xs font-bold text-white shadow-xs backdrop-blur-xs transition-all hover:bg-emerald-600"
+                                className="group inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:border-white hover:bg-white hover:text-[#142921]"
                             >
                                 <svg
-                                    className="h-4 w-4 fill-emerald-400 transition-colors group-hover:fill-white"
+                                    className="h-4 w-4 fill-current text-emerald-400 transition-colors group-hover:text-[#142921]"
                                     viewBox="0 0 24 24"
                                 >
                                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
@@ -163,10 +168,10 @@ export function DormitoryTab({
                                 }
                                 target="_blank"
                                 rel="noreferrer"
-                                className="group inline-flex items-center gap-2 rounded-xl bg-emerald-600/30 px-4 py-2.5 text-xs font-bold text-white shadow-xs backdrop-blur-xs transition-all hover:bg-emerald-600"
+                                className="group inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:border-white hover:bg-white hover:text-[#142921]"
                             >
                                 <svg
-                                    className="h-4 w-4 fill-emerald-400 transition-colors group-hover:fill-white"
+                                    className="h-4 w-4 fill-current text-emerald-400 transition-colors group-hover:text-[#142921]"
                                     viewBox="0 0 24 24"
                                 >
                                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
@@ -181,10 +186,10 @@ export function DormitoryTab({
                                 }
                                 target="_blank"
                                 rel="noreferrer"
-                                className="group inline-flex items-center gap-2 rounded-xl bg-[#f59e0b]/20 px-4 py-2.5 text-xs font-bold text-white shadow-xs backdrop-blur-xs transition-all hover:bg-[#f59e0b]"
+                                className="group inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:border-white hover:bg-white hover:text-[#142921]"
                             >
                                 <svg
-                                    className="h-4 w-4 fill-amber-300 transition-colors group-hover:fill-white"
+                                    className="h-4 w-4 fill-current text-amber-300 transition-colors group-hover:text-[#142921]"
                                     viewBox="0 0 24 24"
                                 >
                                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
@@ -199,10 +204,10 @@ export function DormitoryTab({
                                 }
                                 target="_blank"
                                 rel="noreferrer"
-                                className="group inline-flex items-center gap-2 rounded-xl bg-[#265243]/50 px-4 py-2.5 text-xs font-bold text-white shadow-xs backdrop-blur-xs transition-all hover:bg-[#265243]"
+                                className="group inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:border-white hover:bg-white hover:text-[#142921]"
                             >
                                 <svg
-                                    className="h-4 w-4 fill-emerald-300 transition-colors group-hover:fill-white"
+                                    className="h-4 w-4 fill-current text-emerald-300 transition-colors group-hover:text-[#142921]"
                                     viewBox="0 0 24 24"
                                 >
                                     <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.97v7.02c0 2.87-1.34 5.61-3.66 7.15-2.32 1.54-5.32 1.77-7.85.6-2.54-1.17-4.32-3.65-4.63-6.42-.31-2.77.86-5.55 3.06-7.19 1.83-1.37 4.23-1.85 6.43-1.28v4.03c-1.15-.38-2.45-.25-3.48.35-1.03.6-1.67 1.69-1.69 2.89-.02 1.2.6 2.31 1.62 2.94 1.02.63 2.33.59 3.32-.09.99-.68 1.48-1.85 1.48-3.04V.02z" />

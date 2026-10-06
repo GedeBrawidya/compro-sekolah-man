@@ -54,14 +54,23 @@ export default function NewsShow({
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
+        let ticking = false;
         const handleScroll = () => {
-            if (window.scrollY > 40) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    if (currentScrollY > 40) {
+                        setIsScrolled(true);
+                    } else if (currentScrollY < 15) {
+                        setIsScrolled(false);
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         };
-        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -125,15 +134,30 @@ export default function NewsShow({
 
             <div className="flex min-h-screen flex-col bg-[#f4f7f4] font-sans text-slate-900 selection:bg-[#265243] selection:text-white">
                 {/* ── TOP HEADER / NAVBAR (DYNAMIC MORPH ON SCROLL) ────────────────── */}
-                <div className="pointer-events-none sticky top-0 z-50 flex w-full justify-center transition-all duration-500 ease-in-out">
+                <div
+                    style={{
+                        transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                    className={`pointer-events-none sticky top-0 z-50 flex w-full justify-center ${
+                        isScrolled ? 'px-3 pt-2 sm:px-6 sm:pt-3' : 'px-0 pt-0'
+                    }`}
+                >
                     <header
-                        className={`pointer-events-auto flex items-center justify-between transition-all duration-500 ease-in-out ${
+                        style={{
+                            transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+                        }}
+                        className={`pointer-events-auto flex items-center justify-between border backdrop-blur-xl ${
                             isScrolled
-                                ? 'mt-3 w-[calc(100%-2rem)] max-w-6xl rounded-full border border-[#c8dac5] bg-white/90 px-6 py-2.5 shadow-2xl backdrop-blur-xl'
-                                : 'w-full max-w-full border-b border-[#c8dac5] bg-[#f4f8f3]/95 px-4 py-3.5 shadow-xs backdrop-blur-md sm:px-8'
+                                ? 'w-full max-w-6xl rounded-full border-[#c8dac5] bg-white/90 px-6 py-2.5 shadow-2xl'
+                                : 'w-full max-w-full rounded-none border-b border-[#c8dac5] bg-[#f4f8f3]/95 px-4 py-3.5 shadow-xs sm:px-8'
                         }`}
                     >
-                        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
+                        <div
+                            style={{
+                                transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+                            }}
+                            className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4"
+                        >
                             {/* Logo & School Name */}
                             <Link
                                 href="/"
