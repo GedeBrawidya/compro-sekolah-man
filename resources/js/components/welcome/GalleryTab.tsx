@@ -151,8 +151,8 @@ export function GalleryTab({
                         {paginatedGalleries.map((item, idx) => (
                             <div
                                 key={item.id}
-                                data-aos="zoom-in"
-                                data-aos-delay={idx * 60}
+                                data-aos="fade-up"
+                                data-aos-delay={idx * 40}
                                 onClick={() => setSelectedGallery(item)}
                                 style={{
                                     backgroundColor: '#ffffff',

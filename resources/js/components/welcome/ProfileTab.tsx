@@ -365,7 +365,7 @@ export function ProfileTab({
                         </div>
 
                         {/* VISI CARD */}
-                        <div data-aos="zoom-in" className="group relative overflow-hidden rounded-3xl border-none bg-[#142921] p-6 text-white shadow-xl sm:p-8">
+                        <div data-aos="fade-up" className="group relative overflow-hidden rounded-3xl border-none bg-[#142921] p-6 text-white shadow-xl sm:p-8">
                             <div className="relative z-10 space-y-4">
                                 <div className="flex items-center gap-3">
                                     <div>
@@ -586,7 +586,7 @@ export function ProfileTab({
             </div>
 
             {/* MOTTO SEKOLAH QUOTE BANNER */}
-            <div data-aos="zoom-in" className="relative space-y-4 overflow-hidden rounded-3xl border-none bg-[#142921] p-8 text-center text-white shadow-xl sm:p-12">
+            <div data-aos="fade-up" className="relative space-y-4 overflow-hidden rounded-3xl border-none bg-[#142921] p-8 text-center text-white shadow-xl sm:p-12">
                 <div className="flex justify-center">
                     <span className="inline-block rounded-full bg-[#f59e0b] px-4 py-1.5 text-xs font-black tracking-widest text-white uppercase shadow-md">
                         MOTTO SEKOLAH

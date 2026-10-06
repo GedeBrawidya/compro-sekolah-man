@@ -112,15 +112,18 @@ export default function Welcome({
 
     useEffect(() => {
         AOS.init({
-            duration: 800,
+            duration: 700,
             once: true,
             easing: 'ease-out-cubic',
-            offset: 50,
+            offset: 40,
         });
     }, []);
 
     useEffect(() => {
-        AOS.refresh();
+        const timer = setTimeout(() => {
+            AOS.refreshHard();
+        }, 120);
+        return () => clearTimeout(timer);
     }, [activeTab]);
 
     useEffect(() => {

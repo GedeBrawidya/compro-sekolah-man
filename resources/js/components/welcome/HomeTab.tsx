@@ -71,7 +71,7 @@ export function HomeTab({
     return (
         <>
             {/* ── 2. HERO BANNER SLIDER (FULL WIDTH max-w-[98%] xl:max-w-[96%]) ── */}
-            <div data-aos="fade-up" data-aos-duration="1000" className="relative z-20 mx-auto mt-2 w-full max-w-[98%] px-2 sm:mt-4 sm:px-4 xl:max-w-[96%]">
+            <div className="relative z-20 mx-auto mt-2 w-full max-w-[98%] px-2 sm:mt-4 sm:px-4 xl:max-w-[96%]">
                 <div
                     onTouchStart={handleBannerTouchStart}
                     onTouchEnd={handleBannerTouchEnd}
@@ -228,7 +228,7 @@ export function HomeTab({
             </div>
 
             {/* ── 3. SECTION: KOTAK PINTASAN CEPAT ── */}
-            <div data-aos="fade-up" data-aos-delay="100" className="relative z-30 mx-auto mt-4 w-full max-w-[98%] px-2 sm:mt-5 sm:px-4 xl:max-w-[96%]">
+            <div className="relative z-30 mx-auto mt-4 w-full max-w-[98%] px-2 sm:mt-5 sm:px-4 xl:max-w-[96%]">
                 <div className="overflow-hidden rounded-3xl border border-[#c8dac5] bg-white shadow-sm">
                     <div className="grid grid-cols-2 divide-x divide-y divide-[#c8dac5]/50 lg:grid-cols-4 lg:divide-y-0">
                         {[
@@ -284,7 +284,7 @@ export function HomeTab({
             <main className="mx-auto w-full max-w-7xl flex-1 space-y-12 px-4 pt-6 pb-16 sm:space-y-18 sm:px-6 sm:pt-8 lg:px-8">
                 <div className="space-y-12 sm:space-y-18 lg:space-y-20">
                     {/* SECTION: SAMBUTAN KEPALA SEKOLAH */}
-                    <section data-aos="fade-up" data-aos-duration="900" className="space-y-10 pb-4 sm:space-y-14 lg:pb-8">
+                    <section className="space-y-10 pb-4 sm:space-y-14 lg:pb-8">
                         <div className="relative -mx-2 mt-4 pt-4 sm:-mx-12 sm:mt-6 sm:pt-6 lg:-mx-20 lg:pt-8">
                             <div className="relative flex min-h-[500px] flex-col justify-between space-y-10 rounded-[2.5rem] bg-[#064e3b] p-5 text-white shadow-2xl sm:space-y-14 sm:rounded-[3.5rem] sm:p-12 lg:min-h-[550px] lg:p-16">
                                 {/* MAIN GRID */}
