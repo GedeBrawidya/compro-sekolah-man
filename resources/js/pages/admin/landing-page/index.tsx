@@ -1,4 +1,4 @@
-import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import {
     AlertTriangle,
     Award,
@@ -31,7 +31,7 @@ import {
     Video,
     X,
 } from 'lucide-react';
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { PageHeader } from '@/components/page-header';
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
@@ -172,9 +172,13 @@ function FieldTextarea({
 function BannerModal({
     editing,
     onClose,
+    onSuccess,
+    onError,
 }: {
     editing: BannerItem | null;
     onClose: () => void;
+    onSuccess?: (msg: string) => void;
+    onError?: (msg: string) => void;
 }) {
     const [title, setTitle] = useState(editing?.title ?? '');
     const [subtitle, setSubtitle] = useState(editing?.subtitle ?? '');
@@ -217,6 +221,8 @@ function BannerModal({
                 `/admin/landing-page/banners/${editing.id}`,
                 { _method: 'PUT', ...payload },
                 {
+                    onSuccess: () => onSuccess?.('Banner berhasil diperbarui.'),
+                    onError: () => onError?.('Gagal memperbarui banner.'),
                     onFinish: () => {
                         setProcessing(false);
                         onClose();
@@ -225,6 +231,8 @@ function BannerModal({
             );
         } else {
             router.post('/admin/landing-page/banners', payload as any, {
+                onSuccess: () => onSuccess?.('Banner berhasil ditambahkan.'),
+                onError: () => onError?.('Gagal menambahkan banner.'),
                 onFinish: () => {
                     setProcessing(false);
                     onClose();
@@ -361,33 +369,17 @@ export default function LandingPageIndex({
     banners,
     settings,
     milestones = [],
-    flash,
-}: Props) {
-    const page = usePage();
-    const flashSuccess = flash?.success || (page.props as any).flash?.success;
-    const flashError = flash?.error || (page.props as any).flash?.error;
-
+}: Omit<Props, 'flash'>) {
     const [toastModalMsg, setToastModalMsg] = useState<{
         type: 'success' | 'error';
         title: string;
         msg: string;
     } | null>(null);
 
-    useEffect(() => {
-        if (flashSuccess) {
-            setToastModalMsg({
-                type: 'success',
-                title: 'Berhasil!',
-                msg: flashSuccess,
-            });
-        } else if (flashError) {
-            setToastModalMsg({
-                type: 'error',
-                title: 'Terjadi Kesalahan!',
-                msg: flashError,
-            });
-        }
-    }, [flashSuccess, flashError]);
+    const showSuccess = (msg: string) =>
+        setToastModalMsg({ type: 'success', title: 'Berhasil!', msg });
+    const showError = (msg: string) =>
+        setToastModalMsg({ type: 'error', title: 'Terjadi Kesalahan!', msg });
 
     const handleFileSelect = (
         f: File | null,
@@ -472,6 +464,8 @@ export default function LandingPageIndex({
                 `/admin/landing-page/milestones/${milestoneModal.editing.id}`,
                 { _method: 'PUT', ...payload },
                 {
+                    onSuccess: () => showSuccess('Milestone berhasil diperbarui.'),
+                    onError: () => showError('Gagal memperbarui milestone.'),
                     onFinish: () => {
                         setMilestoneSaving(false);
                         closeMilestoneModal();
@@ -480,6 +474,8 @@ export default function LandingPageIndex({
             );
         } else {
             router.post('/admin/landing-page/milestones', payload, {
+                onSuccess: () => showSuccess('Milestone berhasil ditambahkan.'),
+                onError: () => showError('Gagal menambahkan milestone.'),
                 onFinish: () => {
                     setMilestoneSaving(false);
                     closeMilestoneModal();
@@ -693,8 +689,9 @@ export default function LandingPageIndex({
         if (footerBannerBgFile) data.footer_banner_bg = footerBannerBgFile;
 
         router.post('/admin/landing-page/settings', data, {
+            onSuccess: () => showSuccess('Pengaturan berhasil disimpan.'),
+            onError: () => showError('Gagal menyimpan pengaturan. Periksa kembali data Anda.'),
             onFinish: () => setSaving(false),
-            onError: () => setSaving(false),
         });
     };
 
@@ -706,6 +703,8 @@ export default function LandingPageIndex({
             confirmText: 'Ya, Hapus',
             onConfirm: () => {
                 router.delete(`/admin/landing-page/banners/${banner.id}`, {
+                    onSuccess: () => showSuccess('Banner berhasil dihapus.'),
+                    onError: () => showError('Gagal menghapus banner.'),
                     onFinish: () =>
                         setConfirmModal((prev) => ({ ...prev, isOpen: false })),
                 });
@@ -863,6 +862,8 @@ export default function LandingPageIndex({
                                         editing: null,
                                     })
                                 }
+                                onSuccess={showSuccess}
+                                onError={showError}
                             />
                         )}
                     </div>

@@ -1,6 +1,7 @@
-import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import {
     AlertCircle,
+    AlertTriangle,
     CheckCircle2,
     Edit3,
     Home,
@@ -36,8 +37,17 @@ interface Props {
 }
 
 export default function DormitoryIndex({ posts, settings, filters }: Props) {
-    const { flash } = usePage<{ flash: { success?: string; error?: string } }>()
-        .props;
+    const [toastModalMsg, setToastModalMsg] = useState<{
+        type: 'success' | 'error';
+        title: string;
+        msg: string;
+    } | null>(null);
+
+    const showSuccess = (msg: string) =>
+        setToastModalMsg({ type: 'success', title: 'Berhasil!', msg });
+    const showError = (msg: string) =>
+        setToastModalMsg({ type: 'error', title: 'Terjadi Kesalahan!', msg });
+
     const [search, setSearch] = useState(filters.search || '');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -75,6 +85,8 @@ export default function DormitoryIndex({ posts, settings, filters }: Props) {
         e.preventDefault();
         postSettings('/admin/dormitory/settings', {
             preserveScroll: true,
+            onSuccess: () => showSuccess('Pengaturan asrama berhasil disimpan.'),
+            onError: () => showError('Gagal menyimpan pengaturan asrama.'),
         });
     };
 
@@ -139,12 +151,15 @@ export default function DormitoryIndex({ posts, settings, filters }: Props) {
                 },
                 {
                     onSuccess: () => {
+                        showSuccess('Konten asrama berhasil diperbarui.');
                         setIsModalOpen(false);
                         reset();
                     },
                     onError: (errs) => {
                         if (errs.media) {
                             setFileError(errs.media);
+                        } else {
+                            showError('Gagal memperbarui konten asrama.');
                         }
                     },
                 },
@@ -152,12 +167,15 @@ export default function DormitoryIndex({ posts, settings, filters }: Props) {
         } else {
             post('/admin/dormitory', {
                 onSuccess: () => {
+                    showSuccess('Konten asrama berhasil ditambahkan.');
                     setIsModalOpen(false);
                     reset();
                 },
                 onError: (errs) => {
                     if (errs.media) {
                         setFileError(errs.media);
+                    } else {
+                        showError('Gagal menambahkan konten asrama.');
                     }
                 },
             });
@@ -185,7 +203,10 @@ export default function DormitoryIndex({ posts, settings, filters }: Props) {
             description: `Apakah Anda yakin ingin menghapus konten asrama "${item.title}"?`,
             confirmText: 'Ya, Hapus Konten',
             onConfirm: () => {
-                router.delete(`/admin/dormitory/${item.id}`);
+                router.delete(`/admin/dormitory/${item.id}`, {
+                    onSuccess: () => showSuccess('Konten asrama berhasil dihapus.'),
+                    onError: () => showError('Gagal menghapus konten asrama.'),
+                });
                 setConfirmModal((prev) => ({ ...prev, isOpen: false }));
             },
         });
@@ -196,14 +217,6 @@ export default function DormitoryIndex({ posts, settings, filters }: Props) {
             <Head title="Informasi Asrama - Admin - MAN TANJUNGPINANG" />
 
             <div className="w-full space-y-6 p-4 sm:p-6">
-                {/* Flash Messages */}
-                {flash?.success && (
-                    <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm text-emerald-600 dark:text-emerald-400">
-                        <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-                        <span>{flash.success}</span>
-                    </div>
-                )}
-
                 {/* Header Actions */}
                 <PageHeader
                     title="Profil Asrama"
@@ -779,6 +792,48 @@ export default function DormitoryIndex({ posts, settings, filters }: Props) {
                     </div>
                 )}
             </div>
+
+            {/* Success / Error Toast Modal */}
+            {toastModalMsg && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
+                    <div className="animate-in fade-in zoom-in w-full max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl duration-150">
+                        <div className="space-y-4 text-center">
+                            <div
+                                className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full shadow-xs ${
+                                    toastModalMsg.type === 'error'
+                                        ? 'bg-rose-100 text-rose-600'
+                                        : 'bg-emerald-100 text-[#265243]'
+                                }`}
+                            >
+                                {toastModalMsg.type === 'error' ? (
+                                    <AlertTriangle className="h-7 w-7 text-rose-600" />
+                                ) : (
+                                    <CheckCircle2 className="h-7 w-7 text-[#265243]" />
+                                )}
+                            </div>
+                            <div>
+                                <h3
+                                    className={`text-base font-bold ${toastModalMsg.type === 'error' ? 'text-rose-700' : 'text-slate-900'}`}
+                                >
+                                    {toastModalMsg.title}
+                                </h3>
+                                <p className="mt-1.5 text-xs leading-relaxed font-medium text-slate-600">
+                                    {toastModalMsg.msg}
+                                </p>
+                            </div>
+                            <div className="flex justify-center border-t border-slate-100 pt-3">
+                                <button
+                                    type="button"
+                                    onClick={() => setToastModalMsg(null)}
+                                    className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#265243] px-6 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#1f4337]"
+                                >
+                                    Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
